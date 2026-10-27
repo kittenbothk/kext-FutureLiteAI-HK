@@ -1,0 +1,102 @@
+{
+    "name": {
+        "en": "Future LiteAI HK",
+        "zh-cn": "Future LiteAI HK",
+        "zh-tw": "Future LiteAI HK"
+    },
+    "id": "futureboard-lite-mpy",
+    "version": "2.5.0",
+    "type": "micropy",
+    "fwtype": "uf2",
+    "replmode": true,
+    "execmode": true,
+    "kittenext": true,
+    "buildinpyb": true,
+    "l10n": "futureboard-lite-mpy.l10n.json",
+    "color1": "#0099FF",
+    "color2": "#0080ff",
+    "color3": "#0a7aea",
+    "firmware": "micropython.uf2",
+    "filesystem": "pyboard",
+    "disk": "kitten",
+    "masterExt": "futureboard-lite-mpy",
+    "libspath": "lib",
+    "listdevice": {
+        "vid": 12346
+    },
+    "tags": [
+        "hardware"
+    ],
+    "afterConnect": [
+        "from future import *",
+        "screens = Screen()",
+        "screens.init()",
+        "time.sleep(0.3)",
+        "screens.clear()",
+        "screens.text('Hello Future',32,60,1,(71,233,0))",
+        "screens.refresh()"
+    ],
+    "io": [
+        "serial",
+        "tcp",
+        "ble"
+    ],
+    "ble": {
+        "boardcast": "0x6e40",
+        "service": "6E400001-B5A3-F393-E0A9-E50E24DCCA9E",
+        "txChar": "6E400003-B5A3-F393-E0A9-E50E24DCCA9E",
+        "rxChar": "6E400002-B5A3-F393-E0A9-E50E24DCCA9E"
+    },
+    "connect": {
+        "no_reset": 1,
+        "wait": 5000
+    },
+    "file": "kblock.json5",
+    "subextensions": [
+        "_ext/sugar.json5",
+        "_ext/sugar_asr.json5",
+        "_ext/sugar_tts.json5",
+        "_ext/mp3_player.json5",
+        "_ext/sugar_camera.json5",
+        "_ext/sugar_gps.json5",
+        "_ext/koi2.json5",
+        "_ext/koi.json5",
+        "_ext/sonar.json5",
+        "_ext/keypad.json5",
+        "_ext/sugar_co2.json5",
+        "_ext/ges_sensor.json5",
+        "_ext/sugar_UV.json5",
+        "_ext/pmsa003i.json5",
+        "_ext/sugar_loadcell.json5",
+        "_ext/line_following_i2c.json5",
+        "_ext/ps2_i2c.json5",
+        "_ext/solar.json5",
+        "_ext/thermal_printer.json5",
+        "_ext/sugar_color.json5",
+        "_ext/infraTemp.json5",
+        "_ext/encoderMotor.json5",
+        "_ext/competitionCar.json5",
+        "_ext/chatBot.json5",
+        "_ext/thread.json5",
+        "_ext/fileOperations.json5",
+        "_ext/amap.json5",
+        "_ext/kbrequest.json5"
+    ],
+    "loadedextensions": [
+        "_ext/sugar.json5"
+    ],
+    "scripts": [
+        "extra.js"
+    ],
+    "gen": {
+        "imports": {
+            "fb": "from future import *"
+        }
+    },
+    "image": "futureboard-lite-mpy.png",
+    "imageconvert": {
+        "type": "png"
+    },
+    "weights": 995,
+    "mainboard": true
+}

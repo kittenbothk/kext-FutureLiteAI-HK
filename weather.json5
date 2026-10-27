@@ -1,0 +1,64 @@
+{
+    id: "futureboard-lite_weather",
+    name: "$$weather",
+    color1: "#30caf9",
+    color2: "#1cb1e5",
+    color3: "#2daae0",
+    tags: ['advanced'],
+    libs:{
+        wifi: { import: 'from uwifi import WIFI', instance: 'WIFI()' },
+    },
+    blocks: [
+        //-------------------------------------------
+        // "## $$futureboard-lite_title_weather",
+        {
+        opcode: 'setWeatherAPIKey',
+        blockType: 'command',
+        text: '$$futureboard-lite_weatherAPI',
+        pycode: "wifi.setAPIKey([APIKEY])",
+        arguments: {
+            APIKEY: {
+            type: 'string',
+            defaultValue: 'Enter your api key',
+            },
+        },
+        },
+        //-------------------------------------------
+        {
+        opcode: 'getWeatherData',
+        blockType: 'reporter',
+        text: '$$futureboard-lite_weatherData',
+        pycode: "wifi.get_weather([CITY],[DAY])[[TYPE]]",
+        arguments: {
+            CITY: {
+            type: 'string',
+            defaultValue: '440300',
+            },
+            DAY: {
+            type: 'number',
+            menu: 'DAYMAP',
+            defaultValue: 0,
+            },
+            TYPE: {
+            type: 'number',
+            menu: 'WEATHERTYPE',
+            defaultValue: 1,
+            },
+        },
+        },
+    ],
+    menus: {
+        WEATHERTYPE:[
+            {value: '1', text:'$$futureboard-lite_menu_TYPE_weather'},
+            {value: '2', text:'$$futureboard-lite_menu_TYPE_windDirection'},
+            {value: '3', text:'$$futureboard-lite_menu_TYPE_windPower'},
+            {value: '4', text:'$$futureboard-lite_menu_TYPE_temperature'},
+        ],
+        DAYMAP:[
+            {value: '0', text:'$$futureboard-lite_menu_DAY_0'},
+            {value: '1', text:'$$futureboard-lite_menu_DAY_1'},
+            {value: '2', text:'$$futureboard-lite_menu_DAY_2'},
+            {value: '3', text:'$$futureboard-lite_menu_DAY_3'},
+        ]
+    }
+}

@@ -1,0 +1,2372 @@
+{
+  libs:{
+    "*":{import:'from future import *'},
+    fb: { import: 'from future import *', keywords: ["MeowPin", "board", "IN", "OUT", "PWM", "ANALOG"]},
+    screens: { import: 'from screen import Screen', instance: 'Screen()'},
+    turtles: { import: 'from turtle import Turtle',instance: 'Turtle()'},
+    effect: { import: 'from effect import *'},
+    sensors: { import: 'from sensor import Sensor', instance: 'Sensor()' },
+    acc: { import: 'from sensor import IMU', instance: 'IMU()' },
+    au: { import: 'from uaudio import Audio', instance: 'Audio()' },
+    wifi: { import: 'from uwifi import WIFI', instance: 'WIFI()' },
+    buzzer: { instance: 'Buzz()',keywords: ["Buzz","CORRECT"]},
+    matrix: { instance: 'Matrix()',keywords: ["Matrix"]},
+    rtc: { import: 'from machine import RTC', instance: 'RTC()',},
+    socketpool: { import: 'import socketpool'},
+    motor: { instance: 'Motor()'},
+    time: { import: 'import time'},
+    // tcp: {import: 'from uwifi import TCP', instance: 'TCP()'},
+    ntp: { keywords: ["TIMEZONE","NTPSERVER"]},
+  },
+
+  blocks: [
+    //5x5点阵-------------------------------------------
+    "## $$futureboard-lite_title_mode5x5",
+    {
+      opcode: 'setMode5x5',
+      blockType: 'command',
+      text: '$$futureboard-lite_setMode5x5',
+      pycode: 'matrix.init(x=5, y=5)'
+    },
+    //-------------------------------------------
+    {
+      opcode: "showIcon5x5",
+      blockType: "command",
+      text: "$$futureboard-lite_showIcon5x5",
+      arguments: {
+        ICON: {
+          type: "matrix",
+          defaultValue: "0101010101100010101000100",
+        },
+      },
+      pycode: 'matrix.show([[ICON]])',
+    },
+    //-------------------------------------------
+    {
+      opcode: "showImage5x5",
+      blockType: "command",
+      text: "$$futureboard-lite_showImage5x5",
+      arguments: {
+        ICON1: {
+          type: "number",
+          menu: "#imageMenu#microbit",
+          defaultValue: "HEART",
+        },
+      },
+      pycode: "matrix.show([[ICON1]])",
+    },
+    //-------------------------------------------
+    {
+      opcode: "showString5x5",
+      blockType: "command",
+      text: "$$futureboard-lite_showString5x5",
+      arguments: {
+        STR: {
+          type: "string",
+          defaultValue: "hello",
+        },
+      },
+      pycode: "matrix.scroll(str([STR]))",
+    },
+    //-------------------------------------------
+    {
+      opcode: "showPix5x5",
+      blockType: "command",
+      text: "$$futureboard-lite_showPix5x5",
+      arguments: {
+        X: {
+          type: "slider",
+          defaultValue: "3",
+          min: "0",
+          max: "4",
+        },
+        Y: {
+          type: "slider",
+          defaultValue: "3",
+          min: "0",
+          max: "4",
+        },
+        STATE: {
+          type: "slider",
+          defaultValue: "255",
+          max:"255",
+          min:"0"
+        },
+      },
+      pycode: "matrix.pix([X], [Y], [STATE])",
+    },
+    //-------------------------------------------
+    {
+      opcode: 'clear5x5',
+      blockType: 'command',
+      text: '$$futureboard-lite_clear5x5',
+      pycode: 'matrix.show([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])'
+    },
+    "---",
+    //8x8点阵-------------------------------------------
+     "## $$futureboard-lite_title_mode8x8",
+    {
+      opcode: 'setMode8x8',
+      blockType: 'command',
+      text: '$$futureboard-lite_setMode8x8',
+      pycode: 'matrix.init(x=8,y=8)'
+    },
+    //-------------------------------------------
+    {
+      opcode: "showIcon8x8",
+      blockType: "command",
+      text: "$$futureboard-lite_showIcon8x8",
+      arguments: {
+        ICON: {
+          type: "bitleds",
+          defaultValue: "1110011011100110111001101110011011110111111110111111110111111110",
+          dimx: '8',
+          dimy: '8',
+        },
+      },
+      timeout: 5000,
+      pycode: 'matrix.show([[ICON]])',
+    },
+    //-------------------------------------------
+    {
+      opcode: "showImage8x8",
+      blockType: "command",
+      text: "$$futureboard-lite_showImage8x8",
+      timeout: 5000,
+      arguments: {
+        ICON1: {
+          type: "number",
+          menu: "#image8x8#microbit",
+          defaultValue: "HEART",
+        },
+      },
+      pycode: "matrix.show([[ICON1]])",
+    },
+    //-------------------------------------------
+    {
+      opcode: "showString8x8",
+      blockType: "command",
+      text: "$$futureboard-lite_showString8x8",
+      wait: true,
+      arguments: {
+        STR: {
+          type: "string",
+          defaultValue: "hello",
+        },
+      },
+      pycode: "matrix.scroll(str([STR]))",
+    },
+    //-------------------------------------------
+    {
+      opcode: "showPix8x8",
+      blockType: "command",
+      text: "$$futureboard-lite_showPix8x8",
+      arguments: {
+        X: {
+          type: "slider",
+          defaultValue: "3",
+          min: "0",
+          max: "7",
+        },
+        Y: {
+          type: "slider",
+          defaultValue: "3",
+          min: "0",
+          max: "7",
+        },
+        STATE: {
+          type: "slider",
+          defaultValue: "255",
+          max:"255",
+          min:"0"
+        },
+      },
+      pycode: "matrix.pix([X], [Y], [STATE])",
+    },
+    //-------------------------------------------
+    {
+      opcode: 'clear8x8',
+      blockType: 'command',
+      text: '$$futureboard-lite_clear8x8',
+      pycode: 'matrix.show([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])'
+    },
+    "---",
+    '## $$futureboard-lite_title_modeScreen',
+    //-------------------------------------------
+    {
+      opcode: 'setModeScreen',
+      blockType: 'command',
+      text: '$$futureboard-lite_setModeScreen',
+      pycode: 'screens.init()'
+    },
+    {
+      opcode: 'setBrightness',
+      blockType: 'command',
+      text: '$$futureboard-lite_setBrightness',
+      pycode: 'screens.setBrightness([STATE])',
+      arguments: {
+        STATE: {
+          type: "number",
+          menu: "SWITCH1",
+          defaultValue: 1
+        }
+      }
+    },
+    //-------------------------------------------
+    {
+      opcode: 'setOrientation',
+      blockType: 'command',
+      text: '$$futureboard-lite_screen_orientation',
+      pycode: 'screens.setRotation([DIR])',
+      arguments: {
+        DIR: {
+          type: "number",
+          menu: "SCREEN_ORIENTATION",
+          defaultValue: 90
+        }
+      }
+    },
+    {
+      opcode: 'screenSync',
+      blockType: 'command',
+      text: '$$futureboard-lite_screenSync',
+      arguments: {
+        SWITCH: {
+          type: 'number',
+          menu: 'SYNC_SWITCH',
+          defaultValue: 'False'
+        },
+      },
+      pycode: 'screens.autoRefresh([SWITCH])'
+    },
+    //-------------------------------------------
+    {
+      opcode: 'screenRefresh',
+      blockType: 'command',
+      text: '$$futureboard-lite_screenRefresh',
+      pycode: 'screens.refresh()'
+    },
+    //-------------------------------------------
+    {
+      opcode: 'screenFill',
+      blockType: 'command',
+      text: '$$futureboard-lite_screenFill',
+      arguments: {
+        COLOR: {
+          type: 'colorrgb',
+          defaultValue: '#000000',
+          
+        }
+      },
+      pycode: 'screens.fill([COLOR])'
+    },
+    //-------------------------------------------
+    {
+      opcode: 'screenClear',
+      blockType: 'command',
+      text: '$$futureboard-lite_screenClear',
+      pycode: 'screens.clear()'
+    },
+    //-------------------------------------------
+    '---',
+    {
+      opcode: 'screenPix',
+      blockType: 'command',
+      text: '$$futureboard-lite_screenPix',
+      arguments: {
+        X: {
+          type: 'slider',
+          defaultValue: 50,
+          min: 0, max: 160
+        },
+        Y: {
+          type: 'slider',
+          defaultValue: 50,
+          min: 0, max: 128
+        },
+        COLOR: {
+          type: 'colorrgb',
+          defaultValue: '#00aaaa',
+          
+        }
+      },
+      pycode: 'screens.pixel([X], [Y], [COLOR])'
+    },
+    //-------------------------------------------
+    {
+      opcode: 'screenLine',
+      blockType: 'command',
+      text: '$$futureboard-lite_screenLine',
+      arguments: {
+        X0: {
+          type: 'slider',
+          defaultValue: 5,
+          min: 0, max: 160
+        },
+        Y0: {
+          type: 'slider',
+          defaultValue: 5,
+          min: 0, max: 128
+        },
+        X1: {
+          type: 'slider',
+          defaultValue: 100,
+          min: 0, max: 160
+        },
+        Y1: {
+          type: 'slider',
+          defaultValue: 50,
+          min: 0, max: 128
+        },
+        COLOR: {
+          type: 'colorrgb',
+          defaultValue: '#00aaaa',
+        }
+      },
+      pycode: 'screens.line([X0],[Y0],[X1],[Y1],[COLOR])'
+    },
+    //-------------------------------------------
+    {
+      opcode: 'screenRect',
+      blockType: 'command',
+      text: '$$futureboard-lite_screenRect',
+      arguments: {
+        X: {
+          type: 'slider',
+          defaultValue: 5,
+          min: 0, 
+          max: 160
+        },
+        Y: {
+          type: 'slider',
+          defaultValue: 5,
+          min: 0, 
+          max: 128
+        },
+        W: {
+          type: 'number',
+          defaultValue: 50
+        },
+        H: {
+          type: 'number',
+          defaultValue: 20
+        },
+        COLOR: {
+          type: 'colorrgb',
+          defaultValue: '#00aaaa',
+        },
+        FILL: {
+          type: 'string',
+          menu: 'FILL',
+          defaultValue: '0'
+        }
+      },
+      pycode: 'screens.rect([X],[Y],[W],[H],[COLOR],[FILL])'
+    },
+    //-------------------------------------------
+    {
+      opcode: 'screenCircle',
+      blockType: 'command',
+      text: '$$futureboard-lite_screenCircle',
+      arguments: {
+        X: {
+          type: 'slider',
+          defaultValue: 100,
+          min: 0, max: 160
+        },
+        Y: {
+          type: 'slider',
+          defaultValue: 50,
+          min: 0, max: 128
+        },
+        R: {
+          type: 'number',
+          defaultValue: 20
+        },
+        COLOR: {
+          type: 'colorrgb',
+          defaultValue: '#00aaaa',
+        },
+        FILL: {
+          type: 'string',
+          menu: 'FILL',
+          defaultValue: '0'
+        }
+      },
+      pycode:'screens.circle([X],[Y],[R],[COLOR],[FILL])'
+    },
+    //-------------------------------------------
+    {
+      opcode: 'screenTriangle',
+      blockType: 'command',
+      text: '$$futureboard-lite_screenTriangle',
+      arguments: {
+        X0: {
+          type: 'slider',
+          defaultValue: 5,
+          min: 0, max: 160
+        },
+        Y0: {
+          type: 'slider',
+          defaultValue: 5,
+          min: 0, max: 128
+        },
+        X1: {
+          type: 'slider',
+          defaultValue: 100,
+          min: 0, max: 160
+        },
+        Y1: {
+          type: 'slider',
+          defaultValue: 50,
+          min: 0, max: 128
+        },
+        X2: {
+          type: 'slider',
+          defaultValue: 50,
+          min: 0, max: 160
+        },
+        Y2: {
+          type: 'slider',
+          defaultValue: 100,
+          min: 0, max: 128
+        },
+        COLOR: {
+          type: 'colorrgb',
+          defaultValue: '#00aaaa',
+        },
+        FILL: {
+          type: 'string',
+          menu: 'FILL',
+          defaultValue: '0'
+        }
+      },
+      pycode: 'screens.triangle([X0],[Y0],[X1],[Y1],[X2],[Y2],[COLOR],[FILL])'
+    },
+    //-------------------------------------------
+    {
+      opcode: 'screenPolygon',
+      blockType: 'command',
+      text: '$$futureboard-lite_screenPolygon',
+      arguments: {
+        X: {
+          type: 'slider',
+          defaultValue: 50,
+          min: 0, max: 160
+        },
+        Y: {
+          type: 'slider',
+          defaultValue: 50,
+          min: 0, max: 128
+        },
+        SIDES: {
+          type: 'number',
+          defaultValue: 3,
+          min: 0, max: 30
+        },
+        RADIUS: {
+          type: 'slider',
+          defaultValue: 50,
+          min: 0, max: 100
+        },
+        ROT: {
+          type: 'slider',
+          defaultValue: 0,
+          min: 0, max: 360
+        },
+        TH: {
+          type: 'number',
+          defaultValue: 3
+        },
+        COLOR: {
+          type: 'colorrgb',
+          defaultValue: '#00aaaa',
+        },
+        FILL: {
+          type: 'string',
+          menu: 'FILL',
+          defaultValue: '0'
+        }
+      },
+      pycode:'screens.polygon([X],[Y],[SIDES],[RADIUS],[TH],[ROT],[COLOR],[FILL])'
+    },
+    //-------------------------------------------
+		'---',
+    {
+      opcode: 'screenText',
+      blockType: 'command',
+      text: '$$futureboard-lite_screenText',
+      arguments: {
+        TXT: {
+          type: 'string',
+          hook: "textUnicode",
+          defaultValue: '$$futureboard-lite_screenTextDemo'
+        },
+        X: {
+          type: 'slider',
+          defaultValue: 5,
+          min: 0, max: 160
+        },
+        Y: {
+          type: 'slider',
+          defaultValue: 10,
+          min: 0, max: 128
+        },
+        COLOR: {
+          type: 'colorrgb',
+          defaultValue: '#00aaaa',
+        },
+        EXT: {
+          type: 'string',
+          menu: 'ENLARGE_MENU',
+          defaultValue: '1'
+        }
+      },
+      pycode: 'screens.text([TXT],[X],[Y],[EXT],[COLOR])'
+    },
+    //-------------------------------------------
+    {
+      opcode: 'screenSmartText',
+      blockType: 'command',
+      text: '$$futureboard-lite_screenSmartText',
+      arguments: {
+        TXT: {
+          type: 'string',
+          hook: "textUnicode",
+          defaultValue: '$$futureboard-lite_screenTextDemo'
+        },
+        X: {
+          type: 'slider',
+          defaultValue: 0,
+          min: 0, max: 160
+        },
+        Y: {
+          type: 'slider',
+          defaultValue: 0,
+          min: 0, max: 128
+        },
+        COLOR: {
+          type: 'colorrgb',
+          defaultValue: '#00aaaa',
+        }
+      },
+      pycode: 'screens.smartText([TXT],[X],[Y],color=[COLOR])'
+    },    
+		'---',
+    {
+      opcode: 'screenLoadImg',
+      blockType: 'command',
+      text: '$$futureboard-lite_screenLoadImg',
+      arguments: {
+        IMG: {
+          type: 'string',
+          hook: "textUnicode",
+          defaultValue: 'kittenbot.png'
+        },
+        X: {
+          type: 'slider',
+          defaultValue: 50,
+          min: 0, max: 160
+        },
+        Y: {
+          type: 'slider',
+          defaultValue: 100,
+          min: 0, max: 128
+        },
+      },
+      pycode: 'screens.loadimg([IMG],[X],[Y])'
+    },
+    //-------------------------------------------
+    {
+      opcode: 'screenGifCreate',
+      blockType: 'command',
+      text: '$$futureboard-lite_screenGifCreate',
+      micropy: {
+          import: "from screen import Gif"
+      },
+      pycode: '[NAME] = Gif([IMG], loop=[LOOP])',
+      arguments: {
+        NAME: {
+          type: 'number',
+          menu: 'GIF_NAME',
+          defaultValue: 'gif1'
+        },
+        IMG: {
+          type: 'string',
+          hook: "textUnicode",
+          defaultValue: 'pdx.gif'
+        },
+        LOOP: {
+          type: 'number',
+          menu: 'GIF_LOOP',
+          defaultValue: 'True'
+        }
+      },
+    },
+    //-------------------------------------------
+    {
+      opcode: 'screenGifRefresh',
+      blockType: 'command',
+      text: '$$futureboard-lite_screenGifRefresh',
+      arguments: {
+        NAME: {
+          type: 'number',
+          menu: 'GIF_NAME',
+          defaultValue: 'gif1'
+        },
+        X: {
+          type: 'slider',
+          defaultValue: 0,
+          min: 0, max: 160
+        },
+        Y: {
+          type: 'slider',
+          defaultValue: 0,
+          min: 0, max: 128
+        }
+      },
+      pycode: '[NAME].refresh([X], [Y])'
+    },
+    "---",
+    {
+      opcode: 'screenQRCode',
+      blockType: 'command',
+      text: '$$futureboard-lite_screenQRCode',
+      arguments: {
+        TEXT: {
+          type: 'string',
+          hook: "textUnicode",
+          defaultValue: 'https://www.kittenbot.cn'
+        },
+        X: {
+          type: 'slider',
+          defaultValue: 0,
+          min: 0, max: 160
+        },
+        Y: {
+          type: 'slider',
+          defaultValue: 0,
+          min: 0, max: 128
+        }
+      },
+      pycode: 'screens.show_qrcode([TEXT], x=[X], y=[Y])'
+    },
+    //-------------------------------------------
+    "## $$futureboard-lite_title_turtle",
+    {
+      opcode: 'turtleSetColor',
+      blockType: 'command',
+      text: '$$futureboard-lite_turtleSetColor',
+      arguments: {
+        COLOR: {
+          type: 'colorrgb',
+  
+        }
+      },
+      pycode: 'turtles.fillcolor([COLOR])'
+    },
+    //-------------------------------------------
+    {
+      opcode: 'turtleForward',
+      blockType: 'command',
+      text: '$$futureboard-lite_turtleForward',
+      arguments: {
+        PIX: {
+          type: 'number',
+          defaultValue: 10
+        }
+      },
+      pycode: 'turtles.forward([PIX])'
+    },
+    //------------------------------------------- 
+    {
+      opcode: 'turtleLeft',
+      blockType: 'command',
+      text: '$$futureboard-lite_turtleLeft',
+      arguments: {
+        DEG: {
+          type: 'number',
+          defaultValue: 90
+        }
+      },
+      pycode: 'turtles.left([DEG])'
+    },
+    //-------------------------------------------
+    {
+      opcode: 'turtleRight',
+      blockType: 'command',
+      text: '$$futureboard-lite_turtleRight',
+      arguments: {
+        DEG: {
+          type: 'number',
+          defaultValue: 90
+        }
+      },
+      pycode: 'turtles.right([DEG])'
+    },
+    //-------------------------------------------
+    {
+      opcode: 'turtleHeading',
+      blockType: 'command',
+      text: '$$futureboard-lite_turtleHeading',
+      arguments: {
+        DEG: {
+          type: 'number',
+          defaultValue: 90
+        }
+      },
+      pycode: 'turtles.setheading([DEG])'
+    },
+    //-------------------------------------------
+    {
+      opcode: 'turtleGoto',
+      blockType: 'command',
+      text: '$$futureboard-lite_turtleGoto',
+      arguments: {
+        X: {
+          type: 'slider',
+          defaultValue: 50,
+          min: 0, max: 160
+        },
+        Y: {
+          type: 'slider',
+          defaultValue: 100,
+          min: 0, max: 128
+        },
+      },
+      pycode: 'turtles.goto([X], [Y])'
+    },
+    //-------------------------------------------
+    {
+      opcode: 'turtleSetX',
+      blockType: 'command',
+      text: '$$futureboard-lite_turtleSetX',
+      arguments: {
+        POS: {
+          type: 'slider',
+          defaultValue: 100,
+          min: 0, max: 160
+        }
+      },
+      pycode: 'turtles.setx([POS])'
+    },
+    //-------------------------------------------
+    {
+      opcode: 'turtleSetY',
+      blockType: 'command',
+      text: '$$futureboard-lite_turtleSetY',
+      arguments: {
+        POS: {
+          type: 'slider',
+          defaultValue: 100,
+          min: 0, max: 128
+        }
+      },
+      pycode: 'turtles.sety([POS])'
+    },
+    //-------------------------------------------
+    {
+      opcode: 'turtleCircle',
+      blockType: 'command',
+      text: '$$futureboard-lite_turtleCircle',
+      arguments: {
+        R: {
+          type: 'number',
+          defaultValue: 20
+        },
+        DEG: {
+          type: 'number',
+          defaultValue: 360
+        },
+      },
+      pycode: 'turtles.circle([R], [DEG])'
+    },
+    //-------------------------------------------
+    {
+      opcode: 'turtleDot',
+      blockType: 'command',
+      text: '$$futureboard-lite_turtleDot',
+      arguments: {
+        SIZE: {
+          type: 'number',
+          defaultValue: 5
+        }
+      },
+      pycode: 'turtles.dot([SIZE])'
+    },
+    //-------------------------------------------
+    {
+      opcode: 'turtleBeginFill',
+      blockType: 'command',
+      text: '$$futureboard-lite_turtleBeginFill',
+      pycode: 'turtles.begin_fill()'
+    },
+    //-------------------------------------------
+    {
+      opcode: 'turtleEndFill',
+      blockType: 'command',
+      text: '$$futureboard-lite_turtleEndFill',
+      pycode: 'turtles.end_fill()'
+    },
+    //-------------------------------------------
+    {
+      opcode: 'turtlePenDown',
+      blockType: 'command',
+      text: '$$futureboard-lite_turtlePenDown',
+      pycode: 'turtles.pendown()'
+    },
+    //-------------------------------------------
+    {
+      opcode: 'turtlePenUp',
+      blockType: 'command',
+      text: '$$futureboard-lite_turtlePenUp',
+      pycode: 'turtles.penup()'
+    },
+    //-------------------------------------------
+    {
+      opcode: 'turtleClear',
+      blockType: 'command',
+      text: '$$futureboard-lite_turtleClear',
+      pycode: 'turtles.clear()'
+    },
+
+    "---",
+    //-------------------------------------------
+    "## $$futureboard-lite_title_sensor",
+    {
+      opcode: 'getBtns',
+      blockType: 'boolean',
+      text: '$$futureboard-lite_getBtns',
+      arguments: {
+        BTN: {
+          type: 'string',
+          menu: 'BTNLIST',
+          defaultValue: 'a'
+        }
+      },
+      pycode: 'sensors.btnValue([BTN])'
+    },
+    //-------------------------------------------
+    {
+      opcode: 'imuAcc',
+      blockType: 'reporter',
+      text: '$$futureboard-lite_imuAcc',
+      arguments: {
+        AXIS: {
+          type: 'number',
+          menu: 'AXIS',
+          defaultValue: 'X'
+        }
+      },
+      pycode: 'acc.acc[AXIS]()'
+    },
+    //-------------------------------------------
+    {
+      opcode: 'imuGes',
+      blockType: 'boolean',
+      text: '$$futureboard-lite_imuGes',
+      arguments: {
+          GESTURE: {
+              type: 'string',
+              menu: 'GESTURE',
+              defaultValue: 'face_up'
+          }
+      },
+      pycode: 'acc.gesture([GESTURE])'
+    },
+    //-------------------------------------------
+    {
+      opcode: 'imuAxis',
+      blockType: 'reporter',
+      text: '$$futureboard-lite_imuAxis',
+      arguments: {
+        PITCHROLL: {
+          type: 'number',
+          menu: 'PITCHROLL',
+          defaultValue: 'pitch'
+        }
+      },
+      pycode: 'acc.[PITCHROLL]()'
+    },
+    //-------------------------------------------
+    {
+      opcode: 'getLight',
+      blockType: 'reporter',
+      text: '$$futureboard-lite_getLight',
+      arguments: {
+      },
+      pycode: 'sensors.getLight()'
+    },
+    //-------------------------------------------
+    {
+      opcode: 'runtime',
+      blockType: 'reporter',
+      text: '$$futureboard-lite_runtime',
+      pycode: 'time.ticks_ms()/1000',
+		},
+    {
+      opcode: 'cpuTemp',
+      blockType: 'reporter',
+      micropy:{
+        import:"import sensor"
+      },
+      text: '$$futureboard-lite_cpuTemp',
+      pycode: 'sensor.cpuTemp()',
+		},
+    "---",
+    //-------------------------------------------
+    '## $$futureboard-lite_title_music',
+    {
+      opcode: 'buzzTone',
+      blockType: 'command',
+      text: '$$futureboard-lite_buzzTone',
+      arguments: {
+        FREQ: {
+          type: 'number',
+          defaultValue: 440
+        },
+        DELAY: {
+          type: 'number',
+          defaultValue: 1.0
+        },
+      },
+      pycode: 'buzzer.tone([FREQ], [DELAY])'
+    },
+    //-------------------------------------------
+    {
+      opcode: 'buzzKeep',
+      blockType: 'command',
+      text: '$$futureboard-lite_buzzKeep',
+      arguments: {
+        FREQ: {
+          type: 'number',
+          defaultValue: 440
+        },
+      },
+      pycode: 'buzzer.tone([FREQ], -1)',
+      hide: true
+    },
+    //-------------------------------------------
+    {
+      opcode: 'buzzNote',
+      blockType: 'command',
+      text: '$$futureboard-lite_buzzNote',
+      arguments: {
+        NOTE: {
+          type: 'note',
+          defaultValue: 60
+        },
+        CLAP: {
+          type: 'number',
+          menu: 'BEAT',
+          defaultValue: 0.5
+        },
+      },
+      pycode: 'buzzer.note([NOTE], [CLAP])'
+    },
+    //-------------------------------------------
+    {
+      opcode: 'buzzRest',
+      blockType: 'command',
+      text: '$$futureboard-lite_buzzRest',
+      arguments: {
+        CLAP: {
+          type: 'number',
+          menu: 'BEAT',
+          defaultValue: 0.5
+        },
+      },
+      micropy: {
+        import: 'from time import sleep'
+      },
+      pycode: 'sleep([CLAP])'
+    },
+    //-------------------------------------------
+    {
+      opcode: 'buzzMelody',
+      blockType: 'command',
+      text: '$$futureboard-lite_buzzMelody',
+      arguments: {
+        NOTES: {
+          type: 'string',
+          defaultValue: 'c4:4 r d4:3 r:2 e4:2 '
+        },
+        BPM: {
+          type: 'number',
+          defaultValue: 250
+        }
+      },
+      pycode: 'buzzer.melody([NOTES],[BPM])'
+    },
+    //-------------------------------------------
+    {
+      opcode: 'buzzMeloduChoice',
+      blockType: 'command',
+      text: '$$futureboard-lite_buzzMelodyChoice',
+      arguments: {
+        NOTES: {
+          type: 'number',
+          menu: 'TONEMENU',
+          defaultValue: 'CORRECT'
+        },
+        BPM: {
+          type: 'number',
+          defaultValue: 350
+        }
+      },
+      pycode: 'buzzer.melody([NOTES],[BPM])'
+    },
+    {
+      opcode: 'buzzStop',
+      blockType: 'command',
+      text: '$$futureboard-lite_buzzStop',
+      pycode: 'buzzer.stop()',
+      hide: true
+    },
+    '## $$futureboard-lite_title_musicAIVersion',
+    {
+      opcode: 'musicTTS',
+      blockType: 'command',
+      text: '$$futureboard-lite_musicTTS',
+      arguments: {
+        TEXT: {
+          type: 'string',
+          hook: "textUnicode",
+          defaultValue: 'hello'
+        },
+        VoiceType: {
+          type: 'number',
+          defaultValue: 101016,
+        }
+      },
+      pycode: 'buzzer.tts([TEXT],[VoiceType])'
+    },
+    {
+      opcode: 'musicPlayMP3',
+      blockType: 'command',
+      text: '$$futureboard-lite_musicPlayMP3',
+      arguments: {
+        FILENAME: {
+          type: 'string',
+          defaultValue: 'audio_ts.mp3'
+        }
+      },
+      pycode: 'buzzer.playmp3([FILENAME])'
+    },
+    "---",
+    //-------------------------------------------
+    '## $$futureboard-lite_title_port',
+    {
+      opcode: 'portMode',
+      blockType: 'command',
+      text: '$$futureboard-lite_portMode',
+      arguments: {
+        PORT: {
+          type: 'value',
+          menu: 'PIN_3Pin_MENU',
+          defaultValue: 'P1'
+        },
+        MODE: {
+          type: 'string',
+          menu: 'PORTMODE',
+          defaultValue: 'OUT'
+        }
+      },
+      pycode: "[PORT] = MeowPin('[PORT]', [MODE])"
+    },
+    //-------------------------------------------
+    {
+      opcode: 'portDigWrite',
+      blockType: 'command',
+      text: '$$futureboard-lite_portDigWrite',
+      arguments: {
+        PORT: {
+          type: 'value',
+          menu: 'PIN_3Pin_MENU',
+          defaultValue: 'P1'
+        },
+        LVL: {
+          type: 'number',
+          menu: 'HIGHLOW',
+          defaultValue: '1'
+        }
+      },
+      pycode: '[PORT].setDigital([LVL])'
+    },
+    //-------------------------------------------
+    {
+      opcode: 'portDigRead',
+      blockType: 'boolean',
+      text: '$$futureboard-lite_portDigRead',
+      arguments: {
+        PORT: {
+          type: 'value',
+          menu: 'PIN_3Pin_MENU',
+          defaultValue: 'P1'
+        }
+      },
+      pycode: '[PORT].getDigital()'
+    },
+    //-------------------------------------------
+    {
+      opcode: 'portAnaWrite',
+      blockType: 'command',
+      text: '$$futureboard-lite_portAnaWrite',
+      arguments: {
+        PORT: {
+          type: 'number',
+          menu: 'PIN_3Pin_MENU',
+          defaultValue: 'P1'
+        },
+        PWM: {
+          type: 'slider',
+          defaultValue: 0,
+          min: 0,
+          max: 4095
+        }
+      },
+      pycode: '[PORT].setAnalog([PWM])'
+    },
+    {
+      opcode: 'portsetFrequency',
+      blockType: 'command',
+      text: '$$futureboard-lite_PWMFrequency',
+      arguments: {
+        PORT: {
+          type: 'number',
+          menu: 'PIN_3Pin_MENU',
+          defaultValue: 'P1'
+        },
+        HZ: {
+          type: 'slider',
+          defaultValue: 50,
+          min: 1,
+          max: 122
+        }
+      },
+      pycode: '[PORT].setFrequency([HZ])'
+    },
+    //-------------------------------------------
+    {
+      opcode: 'portAnaRead',
+      blockType: 'reporter',
+      text: '$$futureboard-lite_portAnaRead',
+      arguments: {
+        PORT: {
+          type: 'value',
+          menu: 'PIN_3Pin_MENU',
+          defaultValue: 'P1'
+        }
+      },
+      pycode: '[PORT].getAnalog()'
+    },
+
+    "---",
+    //-------------------------------------------
+    '## $$futureboard-lite_title_neopixel',
+    {
+      opcode: 'neopixelInit',
+      blockType: 'command',
+      text: '$$futureboard-lite_neopixelInit',
+      arguments: {
+        PIN: {
+          type: 'string',
+          menu: 'PIN_RGB_MENU',
+          defaultValue: 'NEOPIX'
+        },
+        PIXELS: {
+          type: 'number',
+          defaultValue: 3
+        }
+      },
+      pycode: 'neopix=NeoPixel([PIN], [PIXELS])'
+    },
+    {
+      opcode: 'futureboard-lite_rgbtuple',
+      blockType: 'reporter',
+      text: 'R [R] G [G] B [B]',
+      script: 'rgb2hex',
+      pycode: '([R], [G], [B])',
+      arguments: {
+        R: {
+          type: 'number',
+          defaultValue: '0',
+        },
+        G: {
+          type: 'number',
+          defaultValue: '0',
+        },
+        B: {
+          type: 'number',
+          defaultValue: '0',
+        },
+      },
+    },
+    //-------------------------------------------
+    {
+      opcode: 'neopixelSetBrightness',
+      blockType: 'command',
+      text: '$$futureboard-lite_neopixelSetBrightness',
+      arguments: {
+        BRG: {
+          type: 'slider',
+          defaultValue: 100,
+          min: 0,
+          max: 100,
+        }
+      },
+      pycode: 'neopix.setbrightness([BRG])'
+    },
+    {
+      opcode: 'neopixelSetColor',
+      blockType: 'command',
+      text: '$$futureboard-lite_neopixelSetColor',
+      arguments: {
+        PIX: {
+          type: 'number',
+          defaultValue: 1
+        },
+        COLOR: {
+          type: 'colorrgb',
+          defaultValue: '#ff0000',
+        }
+      },
+      pycode: 'neopix.setColor([PIX] - 1, [COLOR])'
+    },
+    //-------------------------------------------
+    {
+      opcode: 'neopixelSetRGB',
+      blockType: 'command',
+      text: '$$futureboard-lite_neopixelSetRGB',
+      arguments: {
+        PIX: {
+          type: 'number',
+          defaultValue: 1
+        },
+        RED: {
+          type: 'slider',
+          defaultValue: 0,
+          min: 0,
+          max: 255
+        },
+        GREEN: {
+          type: 'slider',
+          defaultValue: 0,
+          min: 0,
+          max: 255
+        },
+        BLUE: {
+          type: 'slider',
+          defaultValue: 255,
+          min: 0,
+          max: 255
+        }
+      },
+      pycode: 'neopix.setColor([PIX] - 1, ([RED],[GREEN],[BLUE]))'
+    },
+    //-------------------------------------------
+    {
+      opcode: 'neopixelSetAll',
+      blockType: 'command',
+      text: '$$futureboard-lite_neopixelSetAll',
+      arguments: {
+        COLOR: {
+          type: 'colorrgb',
+          defaultValue: '#ff0000',
+        }
+      },
+      pycode: 'neopix.setColorAll([COLOR])'
+    },
+    //-------------------------------------------
+    {
+      opcode: 'neopixelSetRGBAll',
+      blockType: 'command',
+      text: '$$futureboard-lite_neopixelSetRGBAll',
+      arguments: {
+        RED: {
+          type: 'slider',
+          defaultValue: 0,
+          min: 0,
+          max: 255
+        },
+        GREEN: {
+          type: 'slider',
+          defaultValue: 0,
+          min: 0,
+          max: 255
+        },
+        BLUE: {
+          type: 'slider',
+          defaultValue: 255,
+          min: 0,
+          max: 255
+        }
+      },
+      pycode: 'neopix.setColorAll(([RED],[GREEN],[BLUE]))'
+    },
+    //-------------------------------------------
+    {
+      opcode: 'neopixelShut',
+      blockType: 'command',
+      text: '$$futureboard-lite_neopixelShut',
+      arguments: {
+        PIX: {
+          type: 'number',
+          defaultValue: 1
+        }
+      },
+      pycode: 'neopix.setColor([PIX] - 1, (0,0,0))'
+    },
+    //-------------------------------------------
+    {
+      opcode: 'neopixelShutAll',
+      blockType: 'command',
+      text: '$$futureboard-lite_neopixelShutAll',
+      pycode: 'neopix.setColorAll((0,0,0))'
+    },
+    //-------------------------------------------
+    {
+      opcode: 'neopixelUpdate',
+      blockType: 'command',
+      text: '$$futureboard-lite_neopixelUpdate',
+      pycode: 'neopix.update()'
+    },
+    //-------------------------------------------
+    {
+      opcode: 'neopixelEffects',
+      blockType: 'command',
+      text: '$$futureboard-lite_neopixelEffects',
+      arguments: {
+        EFFECTS: {
+          type: 'value',
+          menu: 'EFFECT_LIST',
+          defaultValue: 'breath'
+        }
+      },
+      pycode: '[EFFECTS](neopix)',
+      micropy: {
+        import: 'from effect import *'
+      }
+    },
+    "---",
+    //-------------------------------------------
+    '## $$futureboard-lite_title_actuator',
+    {
+      opcode: "motorRun",
+      blockType: "command",
+      text: "$$futureboard-lite_motorRun",
+      arguments: {
+        MOTOR: {
+          type: "string",
+          menu: "motorIndex",
+          defaultValue: "1",
+        },
+        SPEED: {
+          type: "slider",
+          defaultValue: 100,
+          max:100,
+          min:-100,
+        },
+      },
+      pycode: "motor.setSpeed([MOTOR], [SPEED],0)",
+    },
+    //-------------------------------------------
+    {
+      opcode: "motorRunDelay",
+      blockType: "command",
+      text: "$$futureboard-lite_motorRunDelay",
+      arguments: {
+        MOTOR: {
+          type: "string",
+          menu: "motorIndex",
+          defaultValue: "1",
+        },
+        SPEED: {
+          type: "slider",
+          defaultValue: 100,
+          max:100,
+          min:-100,
+        },
+        DELAY: {
+          type: "number",
+          defaultValue: 2,
+        },
+      },
+      pycode: "motor.setSpeed([MOTOR], [SPEED], [DELAY])",
+    },
+    //-------------------------------------------
+    {
+      opcode: "motorStop",
+      blockType: "command",
+      text: "$$futureboard-lite_motorStop",
+      arguments: {
+        MOTOR: {
+          type: "string",
+          menu: "motorIndex",
+          defaultValue: "1",
+        },
+      },
+      pycode: "motor.stopMotor([MOTOR])",
+    },
+    //-------------------------------------------
+    {
+      opcode: "motorStopAll",
+      blockType: "command",
+      text: "$$futureboard-lite_motorStopAll",
+      pycode: "motor.stopMotor(0)",
+    },
+    //-------------------------------------------
+    "---",
+    {
+      opcode: "geekservo9gDegree",
+      blockType: "command",
+      text: "$$futureboard-lite_geekservo9gDegree",
+      arguments: {
+        SERVO: {
+          type: "string",
+          menu: "PIN_3Pin_MENU",
+          defaultValue: "P1",
+        },
+        DEGREE: {
+          type: "slider",
+          defaultValue: 90,
+          min: -45,
+          max: 225,
+        },
+      },
+      pycode: "geekservo9g([SERVO],int([DEGREE]))",
+    },
+    "---",
+    //-------------------------------------------
+    '## $$futureboard-lite_title_radio',
+    {
+      opcode: 'radioSet',
+      blockType: 'command',
+      text: '$$futureboard-lite_radioSet',
+      micropy:{
+        import: 'from uwifi import Radio',
+      },
+      pycode: 'radio = Radio([CHANNEL])',
+      arguments: {
+        CHANNEL: {
+          type: 'slider',
+          defaultValue: 12,
+          max: 13,
+          min: 1,
+        },
+      },
+    },
+    //-------------------------------------------
+    {
+      opcode: 'radioSend',
+      blockType: 'command',
+      text: '$$futureboard-lite_radioSend',
+      pycode: "radio.send([MSG])",
+      arguments: {
+        MSG: {
+          type: 'string',
+          hook: "textUnicode",
+          defaultValue: 'hello',
+        },
+      },
+    },
+    //-------------------------------------------
+    {
+      opcode: 'radioReceive',
+      blockType: 'reporter',
+      text: '$$futureboard-lite_radioReceive',
+      pycode: 'radio.read()',
+    }, 
+    //-------------------------------------------
+    {
+      opcode: 'radioSendForKey',
+      blockType: 'command',
+      text: '$$futureboard-lite_radioSendForKey',
+      pycode: "radio.sendForKey([KEY],[MSG])",
+      arguments: {
+        KEY: {
+          type: 'string',
+          defaultValue: 'car',
+        },
+        MSG: {
+          type: 'string',
+          defaultValue: 'hello',
+        },
+      },
+    },
+    //-------------------------------------------
+    {
+      opcode: 'radioReceiveFroKey',
+      blockType: 'reporter',
+      text: '$$futureboard-lite_radioReceiveForKey',
+      pycode: 'radio.readForKey([KEY])',
+      arguments: {
+        KEY: {
+          type: 'string',
+          defaultValue: 'car',
+        },
+      },
+    }, 
+
+    "---",
+    //-------------------------------------------
+    "## $$futureboard-lite_title_microphone",
+    {
+      opcode: 'audioStrength',
+      blockType: 'reporter',
+      text: '$$futureboard-lite_audioStrength',
+      pycode: 'au.loudness()',
+    },
+    {
+      opcode: 'audioReconize',
+      blockType: 'reporter',
+      text: '$$futureboard-lite_audioReconize',
+      timeout: 10000,
+      pycode: 'au.recognize(vid=[LANG], sec=[DELAY])',
+      arguments: {
+        LANG: {
+          type: 'string',
+          menu: 'LANGUAGE',
+          defaultValue: '1',
+        },
+        DELAY: {
+          type: 'slider',
+          defaultValue: 3,
+          max: 4,
+          min: 1,
+        },
+      },
+    },
+
+    "---",
+    //-------------------------------------------
+    '## $$futureboard-lite_title_uart',
+    {
+        opcode: 'uartInit',
+        blockType: "command",
+        text: "$$futureboard-lite_uartInit",
+        micropy: {
+            import: "from future import Uart"
+        },
+        pycode: "[uartPort] = Uart('[uartPort]',[baudrate])",
+        arguments:{
+            uartPort:{
+                type: "value",
+                defaultValue: 'uart0', 
+                menu: 'UART_PORT'
+            },
+            baudrate:{
+                type: "number",
+                defaultValue: 115200, 
+            }
+        }
+    },
+    {
+        opcode: 'uartExistData',
+        blockType: "Boolean",
+        text: "$$futureboard-lite_uartexistData",
+        pycode: "[uartPort].existData()",
+        arguments:{
+            uartPort:{
+                type: "value",
+                defaultValue: 'uart0', 
+                menu: 'UART_PORT'
+            },
+        }
+    },
+    //-------------------------------------------
+    {
+        opcode: 'uartReadAll',
+        blockType: "reporter",
+        text: "$$futureboard-lite_uartReadAll",
+        pycode: "[uartPort].readAll()",
+        arguments:{
+            uartPort:{
+                type: "value",
+                defaultValue: 'uart0', 
+                menu: 'UART_PORT'
+            },
+        }
+    },
+    //-------------------------------------------
+    {
+        opcode: 'uartReadLine',
+        blockType: "reporter",
+        text: "$$futureboard-lite_uartReadLine",
+        pycode: "[uartPort].readLine()",
+        arguments:{
+            uartPort:{
+                type: "value",
+                defaultValue: 'uart0', 
+                menu: 'UART_PORT'
+            },
+        }
+    },
+    {
+        opcode: 'uartReadLen',
+        blockType: "reporter",
+        text: "$$futureboard-lite_uartReadLen",
+        pycode: "[uartPort].readLen([LEN])",
+        arguments:{
+            uartPort:{
+                type: "value",
+                defaultValue: 'uart0', 
+                menu: 'UART_PORT'
+            },
+            LEN:{
+                type: "number",
+                defaultValue: 10, 
+            },
+        }
+    },
+    //-------------------------------------------
+    {
+        opcode: 'uartWriteText',
+        blockType: "command",
+        text: "$$futureboard-lite_uartWriteText",
+        pycode: "[uartPort].writeText([DATA],[LINEFEED])",
+        arguments: {
+          uartPort:{
+              type: "value",
+              defaultValue: 'uart0', 
+              menu: 'UART_PORT'
+          },
+          DATA: {
+            type: 'string',
+            defaultValue: 'kittenbot',
+          },
+          LINEFEED: {
+            type: 'value',
+            defaultValue: 'True',
+            menu: 'LINE'
+          },
+        },
+    },
+    {
+        opcode: 'uartWriteByte',
+        blockType: "command",
+        text: "$$futureboard-lite_uartWriteByte",
+        pycode: "[uartPort].writeByte(bytearray([[DATA]]))",
+        arguments: {
+          uartPort:{
+              type: "value",
+              defaultValue: 'uart0', 
+              menu: 'UART_PORT'
+          },
+          DATA: {
+            type: 'value',
+            defaultValue: '0x01,0x02',
+          },
+        },
+    },
+
+
+    "---",
+    //-------------------------------------------
+    '## $$futureboard-lite_title_wifi',
+    {
+      opcode: 'wifi_connect',
+      blockType: 'command',
+      text: '$$futureboard-lite_WIFIconnect',
+      pycode: "wifi.connect([NAME], [PWD])",
+      isAsync: true,
+      timeout: 20000,
+      arguments: {
+        NAME: {
+          type: 'string',
+          defaultValue: 'name',
+          hook: "forceString"
+        },
+        PWD: {
+          type: 'string',
+          defaultValue: 'pwd',
+          hook: "forceString"
+        },
+      },
+    },
+    //-------------------------------------------
+    {
+      opcode: 'wifi_is_connected',
+      blockType: 'Boolean',
+      text: '$$futureboard-lite_WIFIisconnected',
+      pycode: 'wifi.isconnect()',
+    },
+    //-------------------------------------------
+    {
+      opcode: 'wifi_config',
+      blockType: 'reporter',
+      text: '$$futureboard-lite_WIFIconfig',
+      pycode: 'wifi.Configuration()',
+    },
+    //-------------------------------------------
+    {
+      opcode: 'wifi_config_withopt',
+      blockType: 'reporter',
+      text: '$$futureboard-lite_WIFIconfigWithopt',
+      pycode: 'wifi.[TYPE]',
+      arguments: {
+        TYPE: {
+          type: 'number',
+          defaultValue: 'ip',
+          menu: 'IFTYPE',
+        },
+      },
+    },
+    //-------------------------------------------
+    // TODO: 不要在积木块中做函数操作
+    // {
+    //   opcode: 'wifi_mac',
+    //   blockType: 'reporter',
+    //   text: '$$futureboard-lite_WIFImac',
+    //   disableMonitor: 1,
+    //   importCode: {
+    //     _machine: 'import machine',
+    //     ubinascii: 'import ubinascii',
+    //   },
+    //   pycode: 'ubinascii.hexlify(machine.unique_id()).decode().upper()',
+    // },
+    {
+      opcode: 'wifi_disconected',
+      blockType: 'command',
+      text: '$$futureboard-lite_WIFIdisconected',
+      pycode: 'wifi.disconnect()',
+    },
+    "---",
+    //-------------------------------------------
+    {
+      opcode: 'WIFImqttconnectKittenBot',
+      blockType: 'command',
+      text: '$$futureboard-lite_WIFImqttconnectKittenBot',
+      pycode: "wifi.mqttConnect('iot.kittenbot.cn',[ID],'','')",
+      arguments: {
+        ID: {
+          type: 'string',
+          defaultValue: 'id',
+        },
+      },
+    },
+    //-------------------------------------------
+    {
+      opcode: 'WIFImqttconnect',
+      blockType: 'command',
+      text: '$$futureboard-lite_WIFImqttconnect',
+      pycode: "wifi.mqttConnect([HOST],[ID],'','')",
+      arguments: {
+        HOST: {
+          type: 'string',
+          defaultValue: 'iot.kittenbot.cn',
+        },
+        ID: {
+          type: 'string',
+          defaultValue: 'id',
+        },
+      },
+    },
+    //-------------------------------------------
+    {
+      opcode: 'WIFImqttconnectUser',
+      blockType: 'command',
+      text: '$$futureboard-lite_WIFImqttconnectUser',
+      pycode: "wifi.mqttConnect([HOST],[ID],[NAME],[PWD])",
+      arguments: {
+        HOST: {
+          type: 'string',
+          defaultValue: 'iot.kittenbot.cn',
+        },
+        ID: {
+          type: 'string',
+          defaultValue: 'id',
+        },
+        NAME: {
+          type: 'string',
+          defaultValue: 'name',
+        },
+        PWD: {
+          type: 'string',
+          defaultValue: 'password',
+        },
+      },
+    },
+    //-------------------------------------------
+    {
+      opcode: 'wifi_mqtt_subscribe',
+      blockType: 'command',
+      text: '$$futureboard-lite_WIFImqttsubscribe',
+      pycode: "wifi.subscribe([TOPIC])",
+      arguments: {
+        TOPIC: {
+          type: 'string',
+          defaultValue: '/topic',
+        },
+      },
+    },
+    //-------------------------------------------
+    {
+      opcode: 'wifi_mqtt_read',
+      blockType: 'reporter',
+      text: '$$futureboard-lite_WIFImqttread',
+      pycode: "wifi.getMessage([TOPIC])",
+      arguments: {
+        TOPIC: {
+          type: 'string',
+          defaultValue: '/topic',
+        }
+      },
+    },
+    //-------------------------------------------
+    {
+      opcode: 'wifi_mqtt_publish',
+      blockType: 'command',
+      text: '$$futureboard-lite_WIFImqttpublish',
+      pycode: "wifi.publish([TOPIC], [MSG])",
+      arguments: {
+        TOPIC: {
+          type: 'string',
+          defaultValue: '/topic',
+        },
+        MSG: {
+          type: 'string',
+          defaultValue: 'message',
+        },
+      },
+    },
+
+    "---",
+    //-------------------------------------------
+    "## $$futureboard-lite_title_ntp",
+    {
+      opcode: 'ntp_sync',
+      blockType: 'command',
+      text: '$$futureboard-lite_ntpSync',
+      pycode: "wifi.initNTP(tz_offset=int ([TIMEZONE]),server=[NTPSERVER])",
+      arguments: {
+        TIMEZONE: {
+          type: 'string',
+          defaultValue: '0',
+          menu: 'TIMEZONEMENU',
+        },
+        NTPSERVER: {
+          type: 'string',
+          defaultValue: 'ntp1.aliyun.com',
+        },
+      },
+    },
+    //-------------------------------------------
+    {
+      opcode: 'ntp_update_time',
+
+      blockType: 'command',
+      text: '$$futureboard-lite_updateNtpTime',
+      pycode: "wifi.updateNTPtime()",
+      hide: true
+    },
+    //-------------------------------------------
+    {
+      opcode: 'ntp_get_time',
+      blockType: 'reporter',
+      text: '$$futureboard-lite_ntpGettime',
+      pycode: "wifi.getNTPtime([TIMEFORMAT])",
+      arguments: {
+        TIMEFORMAT: {
+          type: 'string',
+          defaultValue: "hour",
+          menu: 'TIMEFORMAT',
+        },
+      },
+    },
+    // "---",
+    // "## $$futureboard-lite_title_tcp",
+    // {
+    //   opcode: 'tcpStart',
+    //   blockType: 'command',
+    //   text: '$$futureboard-lite_title_tcpStart',
+    //   pycode: "tcp.tcpStart([PORT])",
+    //   arguments: {
+    //     PORT: {
+    //       type: 'number',
+    //       defaultValue: "5000"
+    //     },
+    //   },
+    // },
+    // {
+    //   opcode: 'tcpRead',
+    //   blockType: 'reporter',
+    //   text: '$$futureboard-lite_title_read',
+    //   pycode: "tcp.read()",
+    // },
+    // {
+    //   opcode: 'tcpSend',
+    //   blockType: 'command',
+    //   text: '$$futureboard-lite_title_send',
+    //   pycode: "tcp.send([MESSAGE])",
+    //   arguments: {
+    //     MESSAGE: {
+    //       type: 'string',
+    //       defaultValue: "hello"
+    //     },
+    //   },
+    // },
+    "---",
+    "## $$futureboard-lite_title_debug",
+    {
+      opcode: 'debug_print',
+      blockType: 'command',
+      text: '$$futureboard-lite_debugPrint',
+      pycode: "print([DATA])",
+      arguments: {
+        DATA: {
+          type: 'string',
+          defaultValue: 'test',
+        },
+      },
+    },
+    {
+      opcode: 'debug_exec',
+      blockType: 'command',
+      text: '$$futureboard-lite_debugExec',
+      pycode: "exec([DATA])",
+      arguments: {
+        DATA: {
+          type: 'string',
+          defaultValue: 'import os;print(os.listdir())',
+        },
+      },
+    },
+    "---",
+  ],
+
+  menus: {
+    BTNLIST: [
+      {text:'A',value:'a'},
+      {text:'M',value:'m'},
+      {text:'B',value:'b'},
+    ],
+    AXIS: ['X', 'Y', 'Z'],
+    GESTURE: [
+      {text: '$$futureboard-lite_GestureMenusShake', value: 'shake'},
+      {text: '$$futureboard-lite_GestureMenusFreefall', value: 'freefall'},
+      {text: '$$futureboard-lite_GestureMenusTiltUp', value: 'tilt_up'},
+      {text: '$$futureboard-lite_GestureMenusTiltDown', value: 'tilt_down'},
+      {text: '$$futureboard-lite_GestureMenusTiltLeft', value: 'tilt_left'},
+      {text: '$$futureboard-lite_GestureMenusTiltRight', value: 'tilt_right'},
+      {text: '$$futureboard-lite_GestureMenusFaceUp', value: 'face_up'},
+      {text: '$$futureboard-lite_GestureMenusFaceDown', value: 'face_down'}
+    ],
+
+    PITCHROLL:[
+      {text:'$$futureboard-lite_menu_pitchroolVertical', value: 'pitch'},
+      {text:'$$futureboard-lite_menu_pitchroolAcross', value: 'roll'}
+    ],
+
+    SWITCH: [
+      { text: '$$futureboard-lite_menu_switch_off', value: 'off' },
+      { text: '$$futureboard-lite_menu_switch_on', value: 'on' }
+      ],
+
+    SWITCH1: [
+      { text:'$$futureboard-lite_menu_switch_off', value:'1' },
+      { text: '$$futureboard-lite_menu_switch_on', value: '0'}
+    ],
+
+    SCREEN_PIX:['1','0'],
+
+    FILL: [
+      {text: '$$futureboard-lite_menu_fillNo', value:'0'},
+      {text: '$$futureboard-lite_menu_fillYes', value: '1'}
+    ],
+
+    TONEMENU: [
+      {value: 'CORRECT', text: "$$futureboard-lite_menu_BuzzCORRECT"},
+      {value: 'NOTICE', text: "$$futureboard-lite_menu_BuzzNOTICE"},
+      {value: 'ERROR', text: "$$futureboard-lite_menu_BuzzERROR"},
+      {value: 'BA_DING', text: "$$futureboard-lite_menu_BuzzBA_DING"},
+      {value: 'JUMP_UP', text: "$$futureboard-lite_menu_BuzzJUMP_UP"},
+      {value: 'JUMP_DOWN', text: "$$futureboard-lite_menu_BuzzJUMP_DOWN"},
+      {value: 'POWER_UP', text: "$$futureboard-lite_menu_BuzzPOWER_UP"},
+      {value: 'POWER_DOWN', text: "$$futureboard-lite_menu_BuzzPOWER_DOWN"},
+      {value: 'DADA', text: "$$futureboard-lite_menu_BuzzDADA"},
+      {value: 'PUNCHLINE', text: "$$futureboard-lite_menu_BuzzPUNCHLINE"},
+      {value: 'ENTERTAINER', text: "$$futureboard-lite_menu_BuzzENTERTAINER"},
+      {value: 'ODE', text: "$$futureboard-lite_menu_BuzzODE"},
+      {value: 'WEDDING', text: "$$futureboard-lite_menu_BuzzWEDDING"},
+      {value: 'BIRTHDAY', text: "$$futureboard-lite_menu_BuzzBIRTHDAY"},
+      {value: 'CHASE', text: "$$futureboard-lite_menu_BuzzCHASE"},
+      {value: 'BLUES', text: "$$futureboard-lite_menu_BuzzBLUES"},
+      {value: 'PRELUDE', text: "$$futureboard-lite_menu_BuzzPRELUDE"},
+      {value: 'NYAN', text: "$$futureboard-lite_menu_BuzzNYAN"},
+      {value: 'RING', text: "$$futureboard-lite_menu_BuzzRING"},
+      {value: 'FUNK', text: "$$futureboard-lite_menu_BuzzFUNK"},
+      {value: 'FUNERAL', text: "$$futureboard-lite_menu_BuzzFUNERAL"},
+      {value: 'BADDY', text: "$$futureboard-lite_menu_BuzzBADDY"},
+      {value: 'WAWA', text: "$$futureboard-lite_menu_BuzzWAWA"},
+    ],
+    ENLARGE_MENU:[
+      { text: '$$futureboard-lite_enlarge_menu_1', value: '1' },
+      { text: '$$futureboard-lite_enlarge_menu_2', value: '2' },
+      { text: '$$futureboard-lite_enlarge_menu_3', value: '3' },
+    ],
+    BMPLIST: {type: 'fs', filter: '.bmp'},
+    BEAT: [
+      { text: '1', value: '1'},
+      { text: '1/2', value: '0.5'},
+      { text: '1/4', value: '0.25'},
+      { text: '1/8', value: '0.125'},
+      { text: '1/16', value: '0.0625'},
+      { text: '2', value: '2'},
+      { text: '4', value: '4'},
+    ],
+
+    PIN_3Pin_MENU:[
+      { text: 'Port1', value: 'P1'},
+      { text: 'Port2', value: 'P2'},
+      { text: 'Port3', value: 'P3'},
+      { text: 'Port4', value: 'P4'},
+    ],
+    PIN_RGB_MENU:[     
+      { text: '$$futureboard-lite_menu_pinRGB', value: 'NEOPIX'},
+      { text: 'Port1', value: 'P1'},
+      { text: 'Port2', value: 'P2'},
+      { text: 'Port3', value: 'P3'},
+      { text: 'Port4', value: 'P4'},
+    ],
+    PORTMODE: [
+      { text: '$$futureboard-lite_menu_portModeIN', value: 'IN'},
+      { text: '$$futureboard-lite_menu_portModeOUT', value: 'OUT'},
+      { text: '$$futureboard-lite_menu_portModePWM', value: 'PWM'},
+      { text: '$$futureboard-lite_menu_portModeANALOG', value: 'ANALOG'}
+    ],
+    HIGHLOW: [
+      { text: '$$futureboard-lite_menu_high', value: '1'},
+      { text: '$$futureboard-lite_menu_low', value: '0'}
+    ],
+    EFFECT_LIST: [
+      { text: '$$futureboard-lite_menu_breath', value: 'breath' },
+      { text: '$$futureboard-lite_menu_flow', value: 'flow' },
+      { text: '$$futureboard-lite_menu_rainbow', value: 'rainbow' },
+      { text: '$$futureboard-lite_menu_firefly', value: 'firefly' },
+      { text: '$$futureboard-lite_menu_blink', value: 'blink' },
+      { text: '$$futureboard-lite_menu_heartbeat', value: 'heartbeat' },
+      { text: '$$futureboard-lite_menu_brighter', value: 'brighter' },
+      { text: '$$futureboard-lite_menu_dimmer', value: 'dimmer' },
+    ],
+
+    motorIndex: [
+      {
+        text: "M1",
+        value: "1",
+      },
+      {
+        text: "M2",
+        value: "2",
+      },
+    ],
+    SET: [
+      { text: 'M1', value: '1'},
+      { text: 'M2', value: '2'}
+
+    ],
+    LANGUAGE: [
+        { text: '$$futureboard-lite_menu_languageMardarine', value: '1' },
+        { text: '$$futureboard-lite_menu_languageCantonese', value: '2' },
+        { text: '$$futureboard-lite_menu_languageEnglish', value: '3' },
+        { text: '$$futureboard-lite_menu_languageSichuan', value: '4' },
+    ],
+    IFTYPE: [
+        { text: '$$futureboard-lite_menu_iftypeIP', value: 'ip' },
+        { text: '$$futureboard-lite_menu_iftypeMAC', value: 'netmask' },
+        { text: '$$futureboard-lite_menu_iftypeGateway', value: 'gateway' },
+        { text: '$$futureboard-lite_menu_iftypeDNS', value: 'dns' },
+    ],
+    TIMEZONEMENU: [
+        { text: '$$futureboard-lite_menu_timezoneWest1', value: '-7 ' },
+        { text: '$$futureboard-lite_menu_timezoneWest2', value: '-6 ' },
+        { text: '$$futureboard-lite_menu_timezoneWest3', value: '-5 ' },
+        { text: '$$futureboard-lite_menu_timezoneWest4', value: '-4 ' },
+        { text: '$$futureboard-lite_menu_timezoneWest5', value: '-3 ' },
+        { text: '$$futureboard-lite_menu_timezoneWest6', value: '-2 ' },
+        { text: '$$futureboard-lite_menu_timezoneWest7', value: '-1 ' },
+        { text: '$$futureboard-lite_menu_timezoneWest8', value: '0 ' },
+        { text: '$$futureboard-lite_menu_timezoneWest9', value: '1 ' },
+        { text: '$$futureboard-lite_menu_timezoneWest10', value: '2 ' },
+        { text: '$$futureboard-lite_menu_timezoneWest11', value: '3 ' },
+        { text: '$$futureboard-lite_menu_timezoneWest12', value: '4 ' },
+        { text: '$$futureboard-lite_menu_timezoneMid', value: '0' },
+        { text: '$$futureboard-lite_menu_timezoneEast1', value: ' -7' },
+        { text: '$$futureboard-lite_menu_timezoneEast2', value: ' -6' },
+        { text: '$$futureboard-lite_menu_timezoneEast3', value: ' -5' },
+        { text: '$$futureboard-lite_menu_timezoneEast4', value: ' -4' },
+        { text: '$$futureboard-lite_menu_timezoneEast5', value: ' -3' },
+        { text: '$$futureboard-lite_menu_timezoneEast6', value: ' -2' },
+        { text: '$$futureboard-lite_menu_timezoneEast7', value: ' -1' },
+        { text: '$$futureboard-lite_menu_timezoneEast8', value: ' 0' },
+        { text: '$$futureboard-lite_menu_timezoneEast9', value: ' 1' },
+        { text: '$$futureboard-lite_menu_timezoneEast10', value: ' 2' },
+        { text: '$$futureboard-lite_menu_timezoneEast11', value: ' 3' },
+        { text: '$$futureboard-lite_menu_timezoneEast12', value: ' 4' },
+    ],
+    TIMEFORMAT: [
+        { text: '$$futureboard-lite_menu_timeformatY', value: 'year' },
+        { text: '$$futureboard-lite_menu_timeformatM', value: 'mon' },
+        { text: '$$futureboard-lite_menu_timeformatD', value: 'mday' },
+        { text: '$$futureboard-lite_menu_timeformatWeek', value: 'wday' },
+        { text: '$$futureboard-lite_menu_timeformatH', value: 'hour' },
+        { text: '$$futureboard-lite_menu_timeformatm', value: 'min' },
+        { text: '$$futureboard-lite_menu_timeformatS', value: 'sec' },
+        { text: '$$futureboard-lite_menu_timeformatMS', value: 'yday' },
+    ],
+    '#image8x8#microbit': [
+      {
+        src: 'img/bigHeart.png',
+        value: '0,1,1,0,0,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,0,0,0,1,1,1,1,0,0,0,0,0,1,1,0,0,0'
+      },
+      {
+        src: 'img/smallHeart.png',
+        value: '0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,1,1,1,1,1,1,0,0,1,1,1,1,1,1,0,0,0,1,1,1,1,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0'
+      },
+      {
+        src: 'img/right.png',
+        value: '0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,1,0,0,0,0,0,1,1,0,1,0,0,0,1,1,0,0,1,1,0,1,1,0,0,0,0,1,1,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0'
+      },
+      {
+        src: 'img/error.png',
+        value: '1,1,0,0,0,0,0,1,0,1,1,0,0,0,1,1,0,0,1,1,0,1,1,0,0,0,0,1,1,1,0,0,0,0,1,1,1,0,0,0,0,1,1,0,1,1,0,0,1,1,0,0,0,1,1,0,1,0,0,0,0,0,1,1'
+      },
+      {
+        src: 'img/happy.png',
+        value: '0,0,0,0,0,0,0,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,0,1,0,0,0,0,1,0,0,0,1,1,1,1,0,0'
+      },
+      {
+        src: 'img/sigh.png',
+        value: '0,0,0,0,0,0,0,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0'
+      },
+    ],
+    '#imageMenu#microbit': [
+      {
+          src: 'static/extension-assets/microbit/heart.png',
+          value: '0,1,0,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1,0,0,0,1,0,0',
+          width: 48,
+          height: 48,
+          alt: 'heart'
+      },
+      {
+          src: 'static/extension-assets/microbit/smallheart.png',
+          value: '0,0,0,0,0,0,1,0,1,0,0,1,1,1,0,0,0,1,0,0,0,0,0,0,0',
+          width: 48,
+          height: 48,
+          alt: 'HEART_SMALL'
+      },
+      {
+          src: 'static/extension-assets/microbit/yes.png',
+          value: '0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,1,0,1,0,0,0,1,0,0,0',
+          width: 48,
+          height: 48,
+          alt: 'yes'
+      },
+      {
+          src: 'static/extension-assets/microbit/no.png',
+          value: '1,0,0,0,1,0,1,0,1,0,0,0,1,0,0,0,1,0,1,0,1,0,0,0,1',
+          width: 48,
+          height: 48,
+          alt: 'no'
+      },
+      {
+          src: 'static/extension-assets/microbit/happy.png',
+          value: '0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,1,0,0,0,1,0,1,1,1,0',
+          width: 48,
+          height: 48,
+          alt: 'happy'
+      },
+      {
+          src: 'static/extension-assets/microbit/sad.png',
+          value: '0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,1,1,1,0,1,0,0,0,1',
+          width: 48,
+          height: 48,
+          alt: 'sad'
+      },
+      {
+          src: 'static/extension-assets/microbit/confused.png',
+          value: '0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,1,0,1,0,1,0,1,0,1',
+          width: 48,
+          height: 48,
+          alt: 'confused'
+      },
+      {
+          src: 'static/extension-assets/microbit/angry.png',
+          value: '1,0,0,0,1,0,1,0,1,0,0,0,0,0,0,1,1,1,1,1,1,0,1,0,1',
+          width: 48,
+          height: 48,
+          alt: 'angry'
+      },
+      {
+          src: 'static/extension-assets/microbit/asleep.png',
+          value: '0,0,0,0,0,1,1,0,1,1,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0',
+          width: 48,
+          height: 48,
+          alt: 'asleep'
+      },
+      {
+          src: 'static/extension-assets/microbit/surprised.png',
+          value: '0,1,0,1,0,0,0,0,0,0,0,0,1,0,0,0,1,0,1,0,0,0,1,0,0',
+          width: 48,
+          height: 48,
+          alt: 'surprised'
+      },
+      {
+          src: 'static/extension-assets/microbit/silly.png',
+          value: '1,0,0,0,1,0,0,0,0,0,1,1,1,1,1,0,0,1,0,1,0,0,1,1,1',
+          width: 48,
+          height: 48,
+          alt: 'silly'
+      },
+      {
+          src: 'static/extension-assets/microbit/fabulous.png',
+          value: '1,1,1,1,1,1,1,0,1,1,0,0,0,0,0,0,1,0,1,0,0,1,1,1,0',
+          width: 48,
+          height: 48,
+          alt: 'fabulous'
+      },
+      {
+          src: 'static/extension-assets/microbit/meh.png',
+          value: '1,1,0,1,1,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0',
+          width: 48,
+          height: 48,
+          alt: 'meh'
+      },
+      {
+          src: 'static/extension-assets/microbit/tshirt.png',
+          value: '1,1,0,1,1,1,1,1,1,1,0,1,1,1,0,0,1,1,1,0,0,1,1,1,0',
+          width: 48,
+          height: 48,
+          alt: 'tshirt'
+      },
+      {
+          src: 'static/extension-assets/microbit/rollerskate.png',
+          value: '0,0,0,1,1,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,1,0,1,0',
+          width: 48,
+          height: 48,
+          alt: 'rollerskate'
+      },
+      {
+          src: 'static/extension-assets/microbit/duck.png',
+          value: '0,1,1,0,0,1,1,1,0,0,0,1,1,1,1,0,1,1,1,0,0,0,0,0,0',
+          width: 48,
+          height: 48,
+          alt: 'duck'
+      },
+      {
+          src: 'static/extension-assets/microbit/house.png',
+          value: '0,0,1,0,0,0,1,1,1,0,1,1,1,1,1,0,1,1,1,0,0,1,0,1,0',
+          width: 48,
+          height: 48,
+          alt: 'house'
+      },
+      {
+          src: 'static/extension-assets/microbit/tortoise.png',
+          value: '0,0,0,0,0,0,1,1,1,0,1,1,1,1,1,0,1,0,1,0,0,0,0,0,0',
+          width: 48,
+          height: 48,
+          alt: 'tortoise'
+      },
+      {
+          src: 'static/extension-assets/microbit/butterfly.png',
+          value: '1,1,0,1,1,1,1,1,1,1,0,0,1,0,0,1,1,1,1,1,1,1,0,1,1',
+          width: 48,
+          height: 48,
+          alt: 'butterfly'
+      },
+      {
+          src: 'static/extension-assets/microbit/stickfigure.png',
+          value: '0,0,1,0,0,1,1,1,1,1,0,0,1,0,0,0,1,0,1,0,1,0,0,0,1',
+          width: 48,
+          height: 48,
+          alt: 'stickfigure'
+      },
+      {
+          src: 'static/extension-assets/microbit/ghost.png',
+          value: '0,1,1,1,0,1,0,1,0,1,1,1,1,1,1,1,1,1,1,1,1,0,1,0,1',
+          width: 48,
+          height: 48,
+          alt: 'ghost'
+      },
+      {
+          src: 'static/extension-assets/microbit/sword.png',
+          value: '0,0,1,0,0,0,0,1,0,0,0,0,1,0,0,0,1,1,1,0,0,0,1,0,0',
+          width: 48,
+          height: 48,
+          alt: 'sword'
+      },
+      {
+          src: 'static/extension-assets/microbit/giraffe.png',
+          value: '1,1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1,1,1,0,0,1,0,1,0',
+          width: 48,
+          height: 48,
+          alt: 'giraffe'
+      },
+      {
+          src: 'static/extension-assets/microbit/skull.png',
+          value: '0,1,1,1,0,1,0,1,0,1,1,1,1,1,1,0,1,1,1,0,0,1,1,1,0',
+          width: 48,
+          height: 48,
+          alt: 'skull'
+      },
+      {
+          src: 'static/extension-assets/microbit/umbrella.png',
+          value: '0,1,1,1,0,1,1,1,1,1,0,0,1,0,0,1,0,1,0,0,0,1,1,0,0',
+          width: 48,
+          height: 48,
+          alt: 'umbrella'
+      },
+      {
+          src: 'static/extension-assets/microbit/snake.png',
+          value: '1,1,0,0,0,1,1,0,1,1,0,1,0,1,0,0,1,1,1,0,0,0,0,0,0',
+          width: 48,
+          height: 48,
+          alt: 'snake'
+      },
+      {
+          src: 'static/extension-assets/microbit/rabbit.png',
+          value: '1,0,1,0,0,1,0,1,0,0,1,1,1,1,0,1,1,0,1,0,1,1,1,1,0',
+          width: 48,
+          height: 48,
+          alt: 'rabbit'
+      },
+      {
+          src: 'static/extension-assets/microbit/cow.png',
+          value: '1,0,0,0,1,1,0,0,0,1,1,1,1,1,1,0,1,1,1,0,0,0,1,0,0',
+          width: 48,
+          height: 48,
+          alt: 'cow'
+      },
+    ],
+    UART_PORT:[
+        {value:'uart0', text:'UART0'},
+        {value:'uart1', text:'UART1'}
+    ],
+    LINE:[
+        {value:'True', text:'$$futureboard-lite_menu_writeLine'},
+        {value:'False', text:'$$futureboard-lite_menu_write'}
+    ],
+    SYNC_SWITCH:[
+      {value:'True', text:'$$futureboard-lite_menuScreenSyncOn'},
+      {value:'False', text:'$$futureboard-lite_menuScreenSyncOff'}
+    ],
+    GIF_NAME:[
+      {value:'gif1', text:'gif1'},
+      {value:'gif2', text:'gif2'},
+      {value:'gif3', text:'gif3'},
+      {value:'gif4', text:'gif4'}
+    ],
+    GIF_LOOP:[
+      {value:'True', text:'$$futureboard-lite_menu_gifLoopYes'},
+      {value:'False', text:'$$futureboard-lite_menu_gifLoopNo'}
+    ],
+    SCREEN_ORIENTATION:[
+      {value:'90', text:'$$futureboard-lite_menu_screenDir_up'},
+      {value:'270', text:'$$futureboard-lite_menu_screenDir_down'},
+      {value:'180', text:'$$futureboard-lite_menu_screenDir_left'},
+      {value:'0', text:'$$futureboard-lite_menu_screenDir_right'},
+    ]
+  }
+}
+
+
