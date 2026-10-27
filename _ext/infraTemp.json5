@@ -1,0 +1,52 @@
+{
+    id: "futureboard-lite_infraTemp",
+    name: "$$infraTemp",
+    color1: "#363F6A",
+    color2: "#22294A",
+    color3: "#191F3B",
+    image: "_img/infraTemp.png",
+    description: "$$infraTemp_description",
+    tags: ['module'],
+    libs:{
+        "infra": {
+            import: 'from infraTemp import *',
+            instance: "InfraTemp()"
+        },
+    },
+    blocks: 
+    [
+        {
+            opcode: 'infraTemp',
+            blockType: "reporter",
+            text: "$$infra_temp",
+            pycode: 'infra.InfraTemp()',
+        },
+        {
+            opcode: 'infraEnviron',
+            blockType: "reporter",
+            text: "$$infra_environ",
+            pycode: 'infra.EnvironTemp()',
+        },
+        {
+            opcode: 'infraSetLED',
+            blockType: "command",
+            text: "$$infra_setLED",
+            pycode: 'infra.setLed([LED])',
+            arguments:{
+                LED :{
+                    type: "number",
+                    defaultValue: '0', 
+                    menu: 'LEDINDEX'
+                },
+            }
+        },
+        '---'
+    ],
+    menus:{
+        LEDINDEX:[
+            {value:'0', text: "$$infra_led_index_red"},
+            {value:'1', text: "$$infra_led_index_greed"},
+            {value:'2', text: "$$infra_led_index_yellow"}
+        ],
+    }
+}

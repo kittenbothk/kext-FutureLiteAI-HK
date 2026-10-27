@@ -1,0 +1,89 @@
+{
+    id: "futureboard_ps2I2C",
+    name: "$$ps2I2C",
+    color1: "#9B59B6",
+    color2: "#8E44AD",
+    color3: "#7D3C98",
+    image: "_img/ps2.png",
+    description: "$$ps2I2C_description",
+    tags: ['sensor'],
+    libs:{
+        "ps2":{
+            import: "from sugar_ps2 import PS2",
+            instance: "PS2()",
+            version: '1.0.0'
+        },
+    },
+    blocks: 
+    [
+        {
+            opcode: 'buttonPressed',
+            blockType: "Boolean",
+            text: "$$ps2I2C_buttonPressed",
+            pycode: 'ps2.is_button_pressed([KEY])',
+            arguments:{
+                KEY :{
+                    type: "string",
+                    defaultValue: "UP",
+                    menu: "PS2_KEY"
+                },
+            }
+        },
+        {
+            opcode: 'stickPressed',
+            blockType: "Boolean",
+            text: "$$ps2I2C_stickPressed",
+            pycode: 'ps2.is_button_pressed([STICK])',
+            arguments:{
+                STICK :{
+                    type: "string",
+                    defaultValue: "L3",
+                    menu: "PS2_STICK"
+                },
+            }
+        },
+        {
+            opcode: 'getAxis',
+            blockType: "reporter",
+            text: "$$ps2I2C_getAxis",
+            pycode: 'ps2.get_axis([AXIS])',
+            arguments:{
+                AXIS :{
+                    type: "string",
+                    defaultValue: "LX",
+                    menu: "PS2_AXIS"
+                },
+            }
+        },
+    ],
+    menus: {
+        PS2_KEY:[
+            { text: '$$ps2I2C_menu_key_up', value: "UP"},
+            { text: '$$ps2I2C_menu_key_right', value: "RIGHT"},
+            { text: '$$ps2I2C_menu_key_down', value: "DOWN"},
+            { text: '$$ps2I2C_menu_key_left', value: "LEFT"},
+            { text: '$$ps2I2C_menu_key_triangle', value: "TRIANGLE"},
+            { text: '$$ps2I2C_menu_key_circle', value: "CIRCLE"},
+            { text: '$$ps2I2C_menu_key_cross', value: "CROSS"},
+            { text: '$$ps2I2C_menu_key_square', value: "SQUARE"},
+            { text: '$$ps2I2C_menu_key_select', value: "SELECT"},
+            { text: '$$ps2I2C_menu_key_start', value: "START"},
+            { text: '$$ps2I2C_menu_key_l1', value: "L1"},
+            { text: '$$ps2I2C_menu_key_r1', value: "R1"},
+            { text: '$$ps2I2C_menu_key_l2', value: "L2"},
+            { text: '$$ps2I2C_menu_key_r2', value: "R2"},
+        ],
+        PS2_STICK:[
+            { text: '$$ps2I2C_menu_stick_left', value: "L3"},
+            { text: '$$ps2I2C_menu_stick_right', value: "R3"},
+        ],
+        PS2_AXIS:[
+            { text: '$$ps2I2C_menu_axis_lx', value: "LX"},
+            { text: '$$ps2I2C_menu_axis_ly', value: "LY"},
+            { text: '$$ps2I2C_menu_axis_rx', value: "RX"},
+            { text: '$$ps2I2C_menu_axis_ry', value: "RY"},
+        ],
+    }
+}
+
+

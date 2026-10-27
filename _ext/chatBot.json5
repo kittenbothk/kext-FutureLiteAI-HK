@@ -1,0 +1,106 @@
+{
+
+    id: "futureboard-lite_chatBot",
+    name: "$$chatBot",
+    color1: "#9F6DD2",
+    color2: "#8F61BE",
+    color3: "#8250B4",
+    image: "./_img/chatBot.png",
+    description: "$$chatBot_description",
+    tags: ["advanced"],
+    libs: {
+            '*':{
+                import: 'from chatBot import *'
+            },
+    },
+    blocks: [
+        {
+            opcode: 'initRobot',
+            blockType: 'command',
+            text: '$$chatBot_runRobot',
+            pycode: "chatBot = ChatBot([deviceID],[robotId],display=[enable])",
+                arguments: {
+                    deviceID: {
+                        type: 'string',
+                        defaultValue: '',
+                    },
+                    robotId: {
+                        type: 'string',
+                        defaultValue: '',
+                    }, 
+                    enable:{
+                        type: 'number',
+                        defaultValue: 1,
+                        menu: "displayEnable"
+                    }
+                },
+        },
+        "---",
+        "## $$chatBot_title_chat",
+        {
+            opcode: 'chat',
+            blockType: 'reporter',
+            text: '$$chatBot_chat',
+            pycode: "chatBot.chat([txt])",
+                arguments: {
+                    txt:{
+                        type:'string',
+                        defaultValue:'$$chatBot_default_chat_txt',
+                        hook: "textUnicode"
+                    }
+                },
+        },
+        {
+            opcode: 'chatWithImage',
+            blockType: 'reporter',
+            text: '$$chatBot_chat_with_image',
+            pycode: "chatBot.chat_with_image([txt],[BUF])",
+                arguments: {
+                    txt:{
+                        type:'string',
+                        defaultValue:'$$chatBot_default_chat_with_image_txt',
+                        hook: "textUnicode"
+                    },
+                    BUF:{
+                        type: "value",
+                        defaultValue: "",
+                    }
+                },
+        },
+        "---",
+        "## $$chatBot_title_setting",
+        {
+            opcode: 'asr',
+            blockType: 'reporter',
+            text: '$$chatBot_asr',
+            timeout: 10000,
+            pycode: "chatBot.record([sec])",
+                arguments: {
+                    sec:{
+                        type:'number',
+                        defaultValue:'2'
+                    }
+                },
+        },
+        {
+            opcode: 'tts',
+            blockType: 'command',
+            text: '$$chatBot_tts',
+            pycode: "chatBot.tts([txt])",
+                arguments: {
+                    txt:{
+                        type:'string',
+                        defaultValue:'$$chatBot_default_tts_txt',
+                        hook: "textUnicode"
+                    }
+                },
+        },
+        '---',
+    ],
+    menus:{
+        displayEnable:[
+            {value: 0, text:'$$chatBot_menuDisplayEnable_off'},
+            {value: 1, text:'$$chatBot_menuDisplayEnable_on'}
+        ],
+    }
+}

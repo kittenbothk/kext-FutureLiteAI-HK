@@ -1,0 +1,55 @@
+{
+    id: "futureboardlite_sugarLoadcell",
+    name: "$$sugarLoadcell",
+    color1: "#388EE5",
+    color2: "#2771BC",
+    color3: "#1C5FA2",
+    image: "_img/loadcell.png",
+    description: "$$sugarLoadcell_description",
+    tags: ['module'],
+    libs:{
+        "myScale":{
+            import: "from sugar_loadcell import *",
+            instance: "SugarLoadcell()"
+        },
+    },
+    blocks: 
+    [
+        {
+            opcode: 'sugarLoadcellbegin',
+            blockType: "command",
+            text: "$$sugarLoadcell_begin",
+            pycode: 'myScale.begin()',
+        },
+                {
+            opcode: 'sugarLoadcellGetWeight',
+            blockType: "reporter",
+            text: "$$sugarLoadcell_getWeight",
+            pycode: 'myScale.getWeightPeel()',
+        },
+        {
+            opcode: 'sugarLoadcellSetPeel',
+            blockType: "command",
+            text: "$$sugarLoadcell_setPeel",
+            pycode: 'myScale.setPeel()',
+        },
+        '---',
+        {
+            opcode: 'sugarLoadcellCalibrateScale',
+            blockType: "command",
+            text: "$$sugarLoadcell_calibrateScale",
+            pycode: 'myScale.calibrateScale([WEIGHT])',
+            arguments:{
+                WEIGHT:{
+                    type: "number",
+                    defaultValue: '100'
+                },
+            }
+        },
+
+
+    ],
+    menus: {
+    }
+
+}

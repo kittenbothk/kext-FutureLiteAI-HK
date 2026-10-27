@@ -1,0 +1,101 @@
+{
+    id: "futureboard-lite_FouderRobot",
+    name: "$$FouderRobot",
+    color1: "#30caf9",
+    color2: "#1cb1e5",
+    color3: "#2daae0",
+    image: "_img/fouderRobot.png",
+    description: "$$FouderRobot_description",
+    tags: ["module"],
+    libs: {
+        gps:{
+            import: 'from fouderRobot import FouderRobot'
+        },
+    },
+    blocks: [
+        {
+            opcode: 'FouderRobotInit',
+            blockType: "command",
+            text: "$$FouderRobot_runInit",
+            micropy: {
+                import: "from fouderRobot import FouderRobot"
+            },
+            pycode: "fouder = FouderRobot([UARTPOART])",
+            arguments:{
+                UARTPOART:{
+                    type: "string",
+                    defaultValue: 'uart0', 
+                    menu: 'uartPort'
+                },
+            }
+        },
+        { 
+            opcode: 'FouderRobotupdate', 
+            blockType: 'command',
+            pycode: 'fouder.control([KEY])', 
+            text: "$$FouderRobot_control",
+            arguments:{
+                KEY:{
+                    type: "string",
+                    defaultValue: 'LA', 
+                    menu: 'CONTROLKEYS'
+                },
+            }
+        },
+        { 
+            opcode: 'FouderRobotSetServo', 
+            blockType: 'command',
+            pycode: 'fouder.setServo([INDEX],[ANGLE])',
+            text: "$$FouderRobot_setServo", 
+            arguments:{
+                INDEX:{
+                    type: "number",
+                    defaultValue: '1', 
+                    menu: 'servoIndex'
+                },
+                ANGLE:{
+                    type: "number",
+                    defaultValue: '90',
+                },
+            }
+        }
+    ],
+    menus:{
+        uartPort:[
+            {value:'uart0', text:'UART0'},
+            {value:'uart1', text:'UART1'}
+        ],
+        servoIndex:[
+            '1',
+            '2',
+            '3',
+            '4',
+            '5',
+            '6',
+            '7',
+            '8'
+        ],
+        CONTROLKEYS:[
+            'LA',
+            'LB',
+            'LC',
+            'LD',
+            'UP',
+            'DW',
+            'LF',
+            'RG',
+            'Y',
+            'A',
+            'x',
+            'B',
+            'RA',
+            'RB',
+            'RC',
+            'RD',
+            'L2',
+            'L1',
+            'R2',
+            'R1',
+            'RESET']
+    }
+}

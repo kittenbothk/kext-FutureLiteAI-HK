@@ -1,0 +1,919 @@
+{
+    id: "futureboardLite_koiv4",
+    name: "$$koi2",
+    color1: "#fc6e00",
+    color2: "#df6100",
+    color3: "#cc621b",
+    image: "./_img/koi-2.png",
+    description: "$$koi2_description",
+    tutorial_url: "https://www.yuque.com/kittenbot/hardwares/koi2",
+    tags: ['module'],
+    libs:{
+        "*":{
+            import: 'from koi2 import KOI2',
+        }
+    },   
+
+    blocks: 
+    [
+        {
+            opcode: 'koiv3RunInit',
+            blockType: "command",
+            text: "$$koi2_KOIRunInit",
+            pycode: "koi = KOI2([UARTPOART])",
+            arguments:{
+                UARTPOART:{
+                    type: "string",
+                    defaultValue: 'uart0', 
+                    menu: 'uartPort'
+                },
+            }
+        },
+        {
+            opcode: 'koiv3SetModel',
+            blockType: "command",
+            text: "$$koi2_KOISetModel",
+            pycode: "koi.setModel([MODEL])",
+            arguments:{
+                MODEL:{
+                    type: "number",
+                    defaultValue: 0x0, 
+                    menu: 'model'
+                },
+            }
+        },
+        {
+            opcode: 'koiv3KOIUpdateData',
+            blockType: "command",
+            text: "$$koi2_KOIUpdateData",
+            pycode: "koi.read_from_uart()",
+        },
+
+        "---",
+        "## $$koi2_title_basic",
+        {
+            opcode: 'koiv3GetJpgBuf',
+            blockType: "reporter",
+            text: "$$koi2_GetJpgBuf",
+            pycode: "koi.getJpgBuf(display=[DISPLAY])",
+            arguments:{
+                DISPLAY:{
+                    type: "number",
+                    defaultValue: 0,
+                    menu: 'jpgBufDisplay'
+                },
+            }
+        },
+        {
+            opcode: 'koiv3SensorDir',
+            blockType: "command",
+            text: "$$koi2_KOISensorDir",
+            pycode: "koi.direction([DIR])",
+            arguments:{
+                DIR:{
+                    type: "number",
+                    defaultValue: '2', 
+                    menu: 'dir'
+                },
+            }
+        },
+        {
+            opcode: 'koiv3SensorMirror',
+            blockType: "command",
+            text: "$$koi2_KOISensorMirror",
+            pycode: "koi.mirror([ENABLED])",
+            arguments:{
+                ENABLED:{
+                    type: "number",
+                    defaultValue: '1', 
+                    menu: 'switch'
+                },
+            }
+        },
+        "---",
+        {
+            opcode: 'koiv3ButtonState',
+            blockType: "Boolean",
+            text: "$$koi2_KOIBtenState",
+            pycode: "koi.getBtnState([BTN])",
+            arguments:{
+                BTN:{
+                    type: "string",
+                    defaultValue: 'A', 
+                    menu: 'BTNLIST'
+                },
+            }
+        },
+        {
+            opcode: 'koiv3Record',
+            blockType: "command",
+            text: "$$koi2_KOIRecord",
+            pycode: "koi.recorded('/sd/'+[FILE],[SEC])",
+            arguments:{
+                FILE:{
+                    type: "string",
+                    defaultValue: 'abc.wav'
+                },
+                SEC:{
+                    type: "number",
+                    defaultValue: '3'
+                }
+
+            }
+        },
+        {
+            opcode: 'koiv3PlayAudio',
+            blockType: "command",
+            text: "$$koi2_KOIPlayAudio",
+            pycode: "koi.playAudio('/sd/'+[FILE])",
+            arguments:{
+                FILE:{
+                    type: "string",
+                    defaultValue: 'abc.wav'
+                },
+            }
+        },
+        {
+            opcode: 'koiv3KOITakePic',
+            blockType: "command",
+            text: "$$koi2_KOITakePic",
+            pycode: "koi.takePic([DIR]+[PATH])",
+            arguments:{
+                DIR:{
+                    type: "string",
+                    menu: "svaePath",
+                    defaultValue: "/sd/"
+                },
+                PATH:{
+                    type: "string",
+                    defaultValue: 'abc.jpg'
+                },
+            }
+        },
+        {
+            opcode: 'koiv3KOIDisplayPic',
+            blockType: "command",
+            text: "$$koi2_KOIDisplayPic",
+            pycode: "koi.displayPic([DIR]+[PATH],[SEC]*1000)",
+            arguments:{
+                DIR:{
+                    type: "string",
+                    menu: "svaePath",
+                    defaultValue: "/sd/"
+                },
+                PATH:{
+                    type: "string",
+                    defaultValue: 'abc.jpg'
+                },
+                SEC:{
+                    type: "number",
+                    defaultValue: '3',
+                }
+            }
+        },
+        {
+            opcode: 'koiv3KOIDisplayText',
+            blockType: "command",
+            text: "$$koi2_KOIDisplayText",
+            pycode: "koi.displayText([X]+40,[Y],[DELAY]*1000,[COLOUR],[TEXT])",
+            arguments:{
+                X:{
+                    type: "number",
+                    defaultValue: '0',
+                },
+                Y:{
+                    type: "number",
+                    defaultValue: '0',
+                },
+                DELAY:{
+                    type: "number",
+                    defaultValue: '3',
+                },
+                COLOUR:{
+                    type: "colorrgb",
+                },
+                TEXT:{
+                    type: "string",
+                    defaultValue: 'hello',
+                }
+            }
+        },
+        "---",
+        {
+            opcode: 'koiv3KOIDisplayFileList',
+            blockType: "command",
+            text: "$$koi2_KOIDisplayFileList",
+            pycode: "koi.displayFileList([ADDR],[PAGE])",
+            arguments:{
+                ADDR:{
+                    type: "string",
+                    menu: "fileAddress",
+                    defaultValue: "/sd"
+                },
+                PAGE:{
+                    type: "number",
+                    defaultValue: 1
+                }
+            }
+        },
+        {
+            opcode: 'koiv3KOICloseFileList',
+            blockType: "command",
+            text: "$$koi2_KOICloseFileList",
+            pycode: "koi.closeFileList()"
+        },
+        {
+            opcode: 'koiv3KOIDeleteFile',
+            blockType: "command",
+            text: "$$koi2_KOIDeleteFile",
+            pycode: "koi.deleteFile([PATH])",
+            arguments:{
+                PATH:{
+                    type: "string",
+                    defaultValue: "/sd/test.txt"
+                }
+            }
+        },
+        {
+            opcode: 'koiv3KOICopyFile',
+            blockType: "command",
+            text: "$$koi2_KOICopyFile",
+            pycode: "koi.copyFile([SRC_PATH],[DST_PATH])",
+            arguments:{
+                SRC_PATH:{
+                    type: "string",
+                    defaultValue: "/sd/test.txt"
+                },
+                DST_PATH:{
+                    type: "string",
+                    defaultValue: "/flash/test.txt"
+                }
+            }
+        },
+        "---",   
+        "## $$koi2_title_ColorBlob",
+        {
+            opcode: 'koiv3ColorBlobSetColor',
+            blockType: "command",
+            text: "$$koi2_ColorBlobSetColor",
+            pycode: "koi.colorSwitch([HUE])",
+            arguments:{
+                HUE:{
+                    type: "number",
+                    defaultValue: '0',
+                    menu: 'ColorBlobMenu'
+                },
+            }
+        },
+        {
+            opcode: 'koiv3ColorBlobCalibrate',
+            blockType: "command",
+            text: "$$koi2_ColorBlobCalibrate",
+            pycode: "koi.colorCalibration()"
+        },
+        {
+            opcode: 'koiv3ColorBlobCoord',
+            blockType: "reporter",
+            text: "$$koi2_ColorBlobCoord",
+            pycode: "koi.xywh[[XYWH]]",
+            arguments:{
+                XYWH:{
+                    type: "number",
+                    defaultValue: 0, 
+                    menu: 'coord'
+                },
+            }
+        },
+        "---",  
+        "## $$koi2_title_line",
+        {
+            opcode: 'koiv3lineSetColor',
+            blockType: "command",
+            text: "$$koi2_lineSetColor",
+            pycode: "koi.lineSwitch([HUE])",
+            arguments:{
+                HUE:{
+                    type: "number",
+                    defaultValue: '0',
+                    menu: 'lineMenu'
+                },
+            }
+        },
+        {
+            opcode: 'koiv3lineCalibrate',
+            blockType: "command",
+            text: "$$koi2_lineCalibrate",
+            pycode: "koi.colorCalibration()"
+        },
+        {
+            opcode: 'koiv3lineCoord',
+            blockType: "reporter",
+            text: "$$koi2_lineCoord",
+            pycode: "koi.xy12[[XY12]]",
+            arguments:{
+                XY12:{
+                    type: "number",
+                    defaultValue: 0, 
+                    menu: 'coord12'
+                },
+            }
+        },
+        // "## $$koi2_title_face",
+        // {
+        //     opcode: 'koiv3faceCoord',
+        //     blockType: "reporter",
+        //     text: "$$koi2_FaceCoord",
+        //     pycode: "koi.xywh[[XYWH]]",
+        //     arguments:{
+        //         XYWH:{
+        //             type: "number",
+        //             defaultValue: 0, 
+        //             menu: 'coord'
+        //         },
+        //     }
+        // },
+        // {
+        //     opcode: 'koiv3faceQuantity',
+        //     blockType: "reporter",
+        //     text: "$$koi2_FaceQuantity",
+        //     pycode: "koi.numberVal",
+        // },
+        "---",  
+        "## $$koi2_title_FaceAttr",
+        {
+            opcode: 'koiv3FaceAttrMainCoord',
+            blockType: "reporter",
+            text: "$$koi2_FaceAttrMainCoord",
+            pycode: "koi.xywh[[COORD]]",
+            arguments:{
+                COORD:{
+                    type: "number",
+                    defaultValue: 0,
+                    menu: 'coord'
+                },
+            }
+        },
+        {
+            opcode: 'koiv3FaceAttrNumber',
+            blockType: "reporter",
+            text: "$$koi2_FaceAttrNumber",
+            pycode: "int(koi.getFaceAttr([TYPE]))",
+            arguments:{
+                TYPE:{
+                    type: "number",
+                    defaultValue: 8,
+                    menu: 'faceAttrQuantity'
+                },
+            }
+        },
+        {
+            opcode: 'koiv3FaceAttrMain',
+            blockType: "Boolean",
+            text: "$$koi2_FaceAttrMain",
+            pycode: "int(koi.getFaceAttr([TYPE]))",
+            arguments:{
+                TYPE:{
+                    type: "number",
+                    defaultValue: 6,
+                    menu: 'faceAttrMan'
+                },
+            }
+        },
+        "---",  
+        "## $$koi2_title_faceMask",
+        {
+            opcode: 'koiv3FaceMaskCoord',
+            blockType: "reporter",
+            text: "$$koi2_FaceMaskCoord",
+            pycode: "koi.xywh[[XYWH]]",
+            arguments:{
+                XYWH:{
+                    type: "number",
+                    defaultValue: 0, 
+                    menu: 'coord'
+                },
+            }
+        },
+        {
+            opcode: 'koiv3FaceMaskState',
+            blockType: "Boolean",
+            text: "$$koi2_FaceMaskState",
+            pycode: "koi.strVal == 'with-mask'",
+        },
+        "---",  
+        "## $$koi2_title_TrafficSign",
+        {
+            opcode: 'koiv3TrafficSignCoord',
+            blockType: "reporter",
+            text: "$$koi2_TrafficSignCoord",
+            pycode: "koi.xywh[[XYWH]]",
+            arguments:{
+                XYWH:{
+                    type: "number",
+                    defaultValue: 0, 
+                    menu: 'coord'
+                },
+            }
+        },
+        {
+            opcode: 'koiv3TrafficSignType',
+            blockType: "Boolean",
+            text: "$$koi2_TrafficSignType",
+            pycode: "koi.strVal == [TYPE]",
+            arguments:{
+                TYPE:{
+                    type: "string",
+                    defaultValue: "stop", 
+                    menu: 'trafficSignMenu'
+                },
+            }
+        },
+        {
+            opcode: 'koiv3TrafficSignName',
+            blockType: "reporter",
+            text: "$$koi2_TrafficSignName",
+            pycode: "koi.strVal",
+        },
+        "---", 
+        "## $$koi2_title_Object20",
+        {
+            opcode: 'koiv3Object20Coord',
+            blockType: "reporter",
+            text: "$$koi2_Object20Coord",
+            pycode: "koi.xywh[[XYWH]]",
+            arguments:{
+                XYWH:{
+                    type: "number",
+                    defaultValue: 0, 
+                    menu: 'coord'
+                },
+            }
+        },
+        {
+            opcode: 'koiv3Object20Type',
+            blockType: "Boolean",
+            text: "$$koi2_Object20Type",
+            pycode: "koi.strVal == [TYPE]",
+            arguments:{
+                TYPE:{
+                    type: "string",
+                    defaultValue: "car", 
+                    menu: 'object20Menu'
+                },
+            }
+        },
+        {
+            opcode: 'koiv3Object20Name',
+            blockType: "reporter",
+            text: "$$koi2_Object20Name",
+            pycode: "koi.strVal",
+        },
+        "---", 
+        "## $$koi2_title_Letter",
+        {
+            opcode: 'koiv3LetterCoord',
+            blockType: "reporter",
+            text: "$$koi2_LetterCoord",
+            pycode: "koi.xywh[[XYWH]]",
+            arguments:{
+                XYWH:{
+                    type: "number",
+                    defaultValue: 0, 
+                    menu: 'coord'
+                },
+            }
+        },
+        {
+            opcode: 'koiv3LetterType',
+            blockType: "Boolean",
+            text: "$$koi2_LetterType",
+            pycode: "koi.strVal == [TYPE]",
+            arguments:{
+                TYPE:{
+                    type: "string",
+                    defaultValue: "A", 
+                    menu: 'LetterMenu'
+                },
+            }
+        },
+        {
+            opcode: 'koiv3LetterName',
+            blockType: "reporter",
+            text: "$$koi2_LetterName",
+            pycode: "koi.strVal",
+        },
+        "---", 
+        "## $$koi2_title_Number",
+        {
+            opcode: 'koiv3NumberCoord',
+            blockType: "reporter",
+            text: "$$koi2_NumberCoord",
+            pycode: "koi.xywh[[XYWH]]",
+            arguments:{
+                XYWH:{
+                    type: "number",
+                    defaultValue: 0, 
+                    menu: 'coord'
+                },
+            }
+        },
+        {
+            opcode: 'koiv3NumberType',
+            blockType: "Boolean",
+            text: "$$koi2_NumberType",
+            pycode: "koi.numberVal == [TYPE]",
+            arguments:{
+                TYPE:{
+                    type: "number",
+                    defaultValue: "0", 
+                    menu: 'NumberMenu'
+                },
+            }
+        },
+        {
+            opcode: 'koiv3NumberName',
+            blockType: "reporter",
+            text: "$$koi2_NumberName",
+            pycode: "koi.numberVal",
+        },
+        "---", 
+        "## $$koi2_title_CodeScan",
+        {
+            opcode: 'koiv3CodeScanType',
+            blockType: "command",
+            text: "$$koi2_CodeScanType",
+            pycode: "koi.scanCodeSwitchType([TYPE])",
+            arguments:{
+                TYPE:{
+                    type: "number",
+                    defaultValue: '0',
+                    menu: 'codeScanMenu'
+                },
+            }
+        },
+        {
+            opcode: 'koiv3ApriltagType',
+            blockType: "command",
+            text: "$$koi2_ApriltagType",
+            pycode: "koi.setApriltagType([TYPE])",
+            arguments:{
+                TYPE:{
+                    type: "number",
+                    defaultValue: '16',
+                    menu: 'apriltagTypeMenu'
+                },
+            }
+        },
+        {
+            opcode: 'koiv3CodeScanCoord',
+            blockType: "reporter",
+            text: "$$koi2_CodeScanCoord",
+            pycode: "koi.xywh[[XYWH]]",
+            arguments:{
+                XYWH:{
+                    type: "number",
+                    defaultValue: 0, 
+                    menu: 'coord'
+                },
+            }
+        },
+        {
+            opcode: 'koiv3CodeScanName',
+            blockType: "reporter",
+            text: "$$koi2_CodeScanName",
+            pycode: "koi.strVal",
+        },
+        "---", 
+        "## $$koi2_title_Classifier",
+        {
+            opcode: 'koiv3ClassifierAdd',
+            blockType: "command",
+            text: "$$koi2_ClassifierAdd",
+            pycode: "koi.classifierAddTag([CLASS])",
+            arguments:{
+                CLASS:{
+                    type: "string",
+                    defaultValue: 'A',
+                },
+            }
+        },
+        {
+            opcode: 'koiv3ClassifierName',
+            blockType: "reporter",
+            text: "$$koi2_ClassifierName",
+            pycode: "koi.strVal",
+        },
+        {
+            opcode: 'koiv3ClassifierReset',
+            blockType: "command",
+            text: "$$koi2_ClassifierReset",
+            pycode: "koi.classifierReset()"
+        },
+        {
+            opcode: 'koiv3ClassifierGetMostSimilarResults',
+            blockType: "command",
+            text: "$$koi2_ClassifierGetMostSimilarResults",
+            pycode: "koi.classifierGetMostSimilarResults()",
+        },
+        {
+            opcode: 'koiv3ClassifierSetDetectionTarget',
+            blockType: "command",
+            text: "$$koi2_ClassifierSetDetectionTarget",
+            pycode: "koi.setDetectionTarget([CLASS])",
+            arguments:{
+                CLASS:{
+                    type: "string",
+                    defaultValue: 'A',
+                },
+            }
+        },
+        {
+            opcode: 'koiv3ClassifierP',
+            blockType: "reporter",
+            text: "$$koi2_ClassifierP",
+            pycode: "koi.getSimilarity()"
+        },
+        {
+            opcode: 'koiv3ClassifierSave',
+            blockType: "command",
+            text: "$$koi2_ClassifierSave",
+            pycode: "koi.classifierSave([DIR]+[FILE])",
+            arguments:{
+                DIR:{
+                    type: "string",
+                    menu: "svaePath",
+                    defaultValue: "/sd/"
+                },
+                FILE:{
+                    type: "string",
+                    defaultValue: 'abc.json',
+                },
+            }
+        },
+        {
+            opcode: 'koiv3ClassifierLoad',
+            blockType: "command",
+            text: "$$koi2_ClassifierLoad",
+            pycode: "koi.classifierLoad([DIR]+[FILE])",
+            arguments:{
+                DIR:{
+                    type: "string",
+                    menu: "svaePath",
+                    defaultValue: "/sd/"
+                },
+                FILE:{
+                    type: "string",
+                    defaultValue: 'abc.json',
+                },
+            }
+        },
+        // "## $$koi2_title_ASR",
+        // {
+        //     opcode: 'koiv3ASRRegister',
+        //     blockType: "command",
+        //     text: "$$koi2_ASRRegister",
+        //     pycode: "koi.asrSetKey([WORD])",
+        //     arguments:{
+        //         WORD:{
+        //             type: "string",
+        //             defaultValue: 'xiao-miao-ke-ji',
+        //         },
+        //     }
+        // },
+        // {
+        //     opcode: 'koiv3ASRReturnRec',
+        //     blockType: "reporter",
+        //     text: "$$koi2_ASRReturnRec",
+        //     pycode: "koi.strVal",
+        // },
+        "---", 
+        "## $$koi2_title_CustomModel",
+        {
+            opcode: 'koiv3CustomModelInitSD',
+            blockType: "command",
+            text: "$$koi2_CustomModelInitSD",
+            pycode: "koi.initCustomModel([ADDR],[ANCHOR])",
+            arguments:{
+                ADDR:{
+                    type: "string",
+                    defaultValue: '/sd/ballRGB.kmodel',
+                },
+                ANCHOR:{
+                    type: "value",
+                    defaultValue: '[1.25,1.25,1.50,1.50,1.72,1.72,1.97,1.97,2.34,2.31]',
+                },
+            }
+        },
+        {
+            opcode: 'koiv3CustomModelInitKoi',
+            blockType: "command",
+            text: "$$koi2_CustomModelInitKoi",
+            pycode: "koi.initCustomModel(0x860000,[ANCHOR])",
+            arguments:{
+                ANCHOR:{
+                    type: "value",
+                    defaultValue: '[1.25,1.25,1.50,1.50,1.72,1.72,1.97,1.97,2.34,2.31]',
+                },
+            }
+        },
+        {
+            opcode: 'koiv3CustomCoord',
+            blockType: "reporter",
+            text: "$$koi2_CustomCoord",
+            pycode: "koi.xywh[[XYWH]]",
+            arguments:{
+                XYWH:{
+                    type: "number",
+                    defaultValue: 0, 
+                    menu: 'coord'
+                },
+            }
+        },
+        {
+            opcode: 'koiv3CustomId',
+            blockType: "reporter",
+            text: "$$koi2_CustomId",
+            pycode: "koi.numberVal",
+        },
+        {
+            opcode: 'koiv3CustomIDconfidence',
+            blockType: "reporter",
+            text: "$$koi2_CustomIDconfidence",
+            pycode: "koi.IDconfidence",
+        },
+        "---", 
+        "## $$koi2_title_ClassifierCustomModel",
+        {
+            opcode: 'koiv3ClassifierLoadKmodel',
+            blockType: "command",
+            text: "$$koi2_ClassifierLoadKmodel",
+            pycode: "koi.loadClassifierModel([PATH])",
+            arguments:{
+                PATH:{
+                    type: "string",
+                    defaultValue: '/sd/cls.kmodel'
+                }
+            }
+        },
+        {
+            opcode: 'koiv3ClassifierLoadKmodelFlash',
+            blockType: "command",
+            text: "$$koi2_ClassifierLoadKmodelFlash",
+            pycode: "koi.loadClassifierModel(0x860000, type_val=0)"
+        },
+        {
+            opcode: 'koiv3ClassifierResultIndex',
+            blockType: "reporter",
+            text: "$$koi2_ClassifierResultIndex",
+            pycode: "koi.getClassifierResult()[0]"
+        },
+        {
+            opcode: 'koiv3ClassifierResultConfidence',
+            blockType: "reporter",
+            text: "$$koi2_ClassifierResultConfidence",
+            pycode: "koi.getClassifierResult()[1]"
+        },
+    ],
+    menus:{
+        uartPort:[
+            {value:'uart0', text:'UART0'},
+            {value:'uart1', text:'UART1'}
+        ],
+        BTNLIST:['A','B',"AB"],
+        dir:[
+            {text:'$$KOI_DIR_FRONT', value:'0'},
+            {text:'$$KOI_DIR_BACK', value:'2'},
+        ],
+        switch:[
+            {text:'$$KOI_MIRROR_ENABLE', value:'1'},
+            {text:'$$KOI_MIRROR_DISABLE', value:'0'},
+        ],
+        jpgBufDisplay:[
+            {text:'$$koi2_JpgBufDisplayNone', value: 0},
+            {text:'$$koi2_JpgBufDisplayScaled', value: 2},
+        ],
+        model:
+        [
+            {text:'$$KOI_MODEL_None', value: 0x0},
+            {text:'$$KOI_MODEL_ClassifyImageKmodel', value: 0x31},
+            {text:'$$KOI_MODEL_CustomModel', value : 0x3},
+            {text:'$$KOI_MODEL_FaceAttr', value: 0x9},
+            {text:'$$KOI_MODEL_MaskDetection', value: 0x7},
+            {text:'$$KOI_MODEL_ColorBlobTracking', value: 0x10},
+            {text:'$$KOI_MODEL_LineFollower', value: 0x20},
+            {text:'$$KOI_MODEL_ClassifyImage', value: 0x5},
+            {text:'$$KOI_MODEL_TrafficSign', value: 0x1},
+            {text:'$$KOI_MODEL_NumberRecognition', value: 0x4},
+            {text:'$$KOI_MODEL_LetterRecognition', value: 0x6},
+            {text:'$$KOI_MODEL_ObjectTracking', value: 0x2},
+            {text:'$$KOI_MODEL_CodeScanApp', value: 0x100},
+        ],
+        iotSw:[
+            {text:'$$KOI_MODEL_IOTAppClose', value: 0x80},
+            {text:'$$KOI_MODEL_IOTAppOpen', value: 0x0},
+        ],
+        coord:[
+            {text:'x', value: 0},
+            {text:'y', value: 1},
+            {text:'w', value: 2},
+            {text:'h', value: 3},
+        ],
+        pointCoord:[
+            {text:'x', value: 0},
+            {text:'y', value: 1},
+        ],
+        facePoint4:[
+            {text:'$$koi2_FacePoint4LeftEye', value: 0},
+            {text:'$$koi2_FacePoint4RightEye', value: 1},
+            {text:'$$koi2_FacePoint4Nose', value: 2},
+            {text:'$$koi2_FacePoint4Mouth', value: 3},
+        ],
+        coord12:[
+            {text:'x1', value: 0},
+            {text:'y1', value: 1},
+            {text:'x2', value: 2},
+            {text:'y2', value: 3},
+        ],
+        trafficSignMenu:[
+            {text:'$$koi2_TrafficSignMenu_U-Turn', value: "U-Turn"},
+            {text:'$$koi2_TrafficSignMenu_forward', value: "forward"},
+            {text:'$$koi2_TrafficSignMenu_left', value: "left"},
+            {text:'$$koi2_TrafficSignMenu_right', value: "right"},
+            {text:'$$koi2_TrafficSignMenu_limit-30', value: "limit-30"},
+            {text:'$$koi2_TrafficSignMenu_stop', value: "stop"},
+            {text:'$$koi2_TrafficSignMenu_tunnel', value: "tunnel"},
+        ],
+        object20Menu:[
+            {text:'$$koi2_Object20Menu_aeroplane', value: "aeroplane"},
+            {text:'$$koi2_Object20Menu_bicycle', value: "bicycle"},
+            {text:'$$koi2_Object20Menu_bird', value: "bird"},
+            {text:'$$koi2_Object20Menu_boat', value: "boat"},
+            {text:'$$koi2_Object20Menu_bottle', value: "bottle"},
+            {text:'$$koi2_Object20Menu_bus', value: "bus"},
+            {text:'$$koi2_Object20Menu_car', value: "car"},
+            {text:'$$koi2_Object20Menu_cat', value: "cat"},
+            {text:'$$koi2_Object20Menu_chair', value: "chair"},
+            {text:'$$koi2_Object20Menu_cow', value: "cow"},
+            {text:'$$koi2_Object20Menu_diningtable', value: "diningtable"},
+            {text:'$$koi2_Object20Menu_dog', value: "dog"},
+            {text:'$$koi2_Object20Menu_horse', value: "horse"},
+            {text:'$$koi2_Object20Menu_motorbike', value: "motorbike"},
+            {text:'$$koi2_Object20Menu_person', value: "person"},
+            {text:'$$koi2_Object20Menu_pottedplant', value: "pottedplant"},
+            {text:'$$koi2_Object20Menu_sheep', value: "sheep"},
+            {text:'$$koi2_Object20Menu_sofa', value: "sofa"},
+            {text:'$$koi2_Object20Menu_train', value: "train"},
+            {text:'$$koi2_Object20Menu_tvmonitor', value: "tvmonitor"},
+        ],
+        LetterMenu:['A','B','C','D','E','F'],
+        NumberMenu:['0','1','2','3','4','5','6','7','8','9'],
+        ColorBlobMenu:[
+            {text:'$$koi2_ColorBlobColor_menu_red', value: 0},
+            {text:'$$koi2_ColorBlobColor_menu_blue', value: 1},
+            {text:'$$koi2_ColorBlobColor_menu_green', value: 2},
+            {text:'$$koi2_ColorBlobColor_menu_yellow', value: 3},
+            {text:'$$koi2_ColorBlobColor_menu_custom', value: 9},
+        ],
+        lineMenu:[
+            {text:'$$koi2_line_menu_red', value: 0},
+            {text:'$$koi2_line_menu_blue', value: 1},
+            {text:'$$koi2_line_menu_black', value: 3},
+            {text:'$$koi2_line_menu_custom', value: 4},
+        ],
+        codeScanMenu:[
+            {text:'$$koi2_CodeScanMenu_qrcode', value: 0},
+            {text:'$$koi2_CodeScanMenu_barcode', value: 1},
+            {text:'$$koi2_CodeScanMenu_apriltag', value: 2},
+        ],
+        apriltagTypeMenu:[
+            {text:'TAG16H5', value: 1},
+            {text:'TAG25H7', value: 2},
+            {text:'TAG25H9', value: 4},
+            {text:'TAG36H10', value: 8},
+            {text:'TAG36H11', value: 16},
+            {text:'ARTOOLKIT', value: 32},
+        ],
+        faceAttrQuantity:[
+            {text:'$$koi2_FaceAttrNumberMenu_count', value: 8},
+            {text:'$$koi2_FaceAttrNumberMenu_smile', value: 11},
+            {text:'$$koi2_FaceAttrNumberMenu_glasses', value: 12},
+            {text:'$$koi2_FaceAttrNumberMenu_openMouth', value: 10},
+            {text:'$$koi2_FaceAttrNumberMenu_male', value: 9},
+            {text:'$$koi2_FaceAttrNumberMenu_female', value: 13},
+        ],
+        faceAttrMan:[
+            {text:'$$koi2_FaceAttrNumberMenu_smile', value: 6},
+            {text:'$$koi2_FaceAttrNumberMenu_glasses', value: 7},
+            {text:'$$koi2_FaceAttrNumberMenu_openMouth', value: 5},
+            {text:'$$koi2_FaceAttrNumberMenu_male', value: 4}, 
+        ],
+        svaePath:[
+            {text:'$$koi2_SavePath_sd', value: '/sd/'},
+            {text:'$$koi2_SavePath_flash', value: '/flash/'},
+        ],
+        fileAddress:[
+            {text:'$$koi2_SavePath_sd', value: '/sd'},
+            {text:'$$koi2_SavePath_flash', value: '/flash'},
+        ]
+    }
+}

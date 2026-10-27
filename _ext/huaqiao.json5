@@ -1,0 +1,64 @@
+{
+    id: "futureboard-lite_huaqiao",
+    name: "$$huaqiao",
+    color1: "#FF6B6B",
+    color2: "#FF5252",
+    color3: "#FF1744",
+    image: "./_img/huaqiao.png",
+    description: "$$huaqiao_description",
+    libs: {
+            'huaqiao':{
+                instance: "ChatBot()",
+                import: 'from chatbot_huaqiao import *'
+            },
+    },
+    blocks: [
+        {
+            opcode: 'setCharacter',
+            blockType: 'command',
+            text: '$$huaqiao_setCharacter',
+            pycode: "huaqiao.set_custom_character([prompt], [role_name], [model], [speech])",
+            arguments: {
+                prompt: {
+                    type: 'string',
+                    defaultValue: '你是齐天大圣孙悟空',
+                },
+                role_name: {
+                    type: 'string',
+                    defaultValue: 'Friday',
+                },
+                model: {
+                    type: 'string',
+                    defaultValue: 'deepseek',
+                    menu: "modelMenu"
+                },
+                speech: {
+                    type: 'string',
+                    defaultValue: 'female-chengshu',
+                    menu: "speechMenu"
+                }
+            },
+        },
+        {
+            opcode: 'runChat',
+            blockType: 'command',
+            text: '$$huaqiao_runChat',
+            pycode: "huaqiao.run()",
+        },
+        '---',
+    ],
+    menus:{
+        modelMenu:[
+            {value: 'deepseek', text:'$$huaqiao_model_deepseek'},
+            {value: 'wenxinyiyan', text:'$$huaqiao_model_gpt35'},
+            {value: 'doubao', text:'$$huaqiao_model_gpt4'},
+        ],
+        speechMenu:[
+            {value: 'keai_nvtong', text:'$$huaqiao_speech_keai_nvtong'},
+            {value: 'clever_boy', text:'$$huaqiao_speech_clever_boy'},
+            {value: 'female-chengshu', text:'$$huaqiao_speech_female_chengshu'},
+            {value: 'male-chengshu', text:'$$huaqiao_speech_male_chengshu'},
+            {value: 'lovely_girl', text:'$$huaqiao_speech_lovely_girl'}
+        ],
+    }
+}

@@ -1,0 +1,57 @@
+{
+    id: "futureboard-lite_p2p",
+    name: "$$p2p",
+    color1: "#363F6A",
+    color2: "#22294A",
+    color3: "#191F3B",
+    image: "_img/keypad.png",
+    description: "$$p2p_description",
+    tags: ['module'],
+    libs:{
+        "*": {
+            import: 'from p2p import *'
+        },
+    },
+    blocks: 
+    [
+        {
+            opcode: 'p2pInit',
+            blockType: "command",
+            text: "$$p2p_Init",
+            pycode: "p = P2P()",
+        },
+        {
+            opcode: 'p2pSetChannel',
+            blockType: "command",
+            text: "$$p2p_SetChannel",
+            pycode: "p.channel = [C]",
+            arguments:{
+                C :{
+                    type: "slider",
+                    defaultValue: '0', 
+                    min:1,
+                    max:13,
+                },
+            }
+        },
+        {
+            opcode: 'p2pSend',
+            blockType: "command",
+            text: "$$p2p_Send",
+            pycode: "p.send([MSG])",
+            arguments:{
+                MSG :{
+                    type: "string",
+                    defaultValue: 'hello', 
+                },
+            }
+        },        
+        {
+            opcode: 'p2pread',
+            blockType: "reporter",
+            text: "$$p2p_Read",
+            pycode: 'p.read()',
+        },
+        '---'
+    ],
+}

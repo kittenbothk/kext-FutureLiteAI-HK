@@ -1,0 +1,45 @@
+{
+    id: "futureboard-lite_co2",
+    name: "$$co2Detection",
+    color1: "#388EE5",
+    color2: "#2771BC",
+    color3: "#1C5FA2",
+    image: "_img/co2.png",
+    description: "$$co2Detection_description",
+    tags: ['module'],
+    libs: {
+        "*": {
+            import: 'from sugar_co2 import *'
+        },
+        "co2":{
+            instance: "Sugarco2()"
+        },
+    },
+
+    blocks: 
+	[
+        {
+            opcode: 'getCo2',
+            blockType: "reporter",
+            text: "$$scd_get_co2",
+            pycode: 'co2.CO2',
+			
+        },
+        {
+            opcode: 'getTemperature',
+            blockType: "reporter",
+            text: "$$scd_get_temperature",
+            pycode: 'co2.temperature',
+			
+        },
+        {
+            opcode: 'getRelativeHumidity',
+            blockType: "reporter",
+            text: "$$scd_get_relative_humidity",
+            pycode: 'co2.relative_humidity',
+			
+        },
+    ],
+	menus: {
+    }
+}

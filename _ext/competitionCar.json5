@@ -1,0 +1,344 @@
+{
+    id: "futureboard_competitionCar",
+    name: "$$competitionCar",
+    color1: "#4C97FF",
+    color2: "#4280D7",
+    color3: "#3373CC",
+    image: "./_img/competitionCar.png",
+    description: "$$competitionCar_description",
+    tags: ['actuator'],
+    libs: {
+        "competition_car": {
+            import: 'from competitionCar import init_robot, move_forward, move_backward, rotate_left, rotate_right, stop, set_encoder_motor, move_mm, rotate_deg, move_continuous, set_motor_speeds, pid_line_following, reset_pid, check_junction_type, get_junction_condition_code, repeat_until_time_elapsed',
+            file: 'competitionCar.py',
+            version: '1.1.0'
+        },
+        "encoder_motor": {
+            import: 'from encoderMotor import EncoderMotor'
+        },
+        "lfi2c": {
+            import: "from line_following_i2c import LineFollowingI2C",
+            instance: "LineFollowingI2C()",
+        }
+    },
+    blocks: [
+        "## 初始化（必须）",
+        {
+            opcode: 'competitionCarInit',
+            blockType: "command",
+            text: "$$competitionCar_init",
+            micropy: {
+                import: "from competitionCar import init_robot, set_encoder_motor\nfrom encoderMotor import EncoderMotor"
+            },
+            pycode: "encoder_motor = EncoderMotor([UART]); set_encoder_motor(encoder_motor); encoder_motor.set_mode(2); init_robot([LEFT_MOTOR_ID], [LEFT_DIRECTION], [RIGHT_MOTOR_ID], [RIGHT_DIRECTION], [WHEEL_DIAMETER], [WHEEL_DISTANCE])",
+            arguments: {
+                UART: {
+                    type: "string",
+                    defaultValue: "uart1",
+                    menu: "uartPort"
+                },
+                LEFT_MOTOR_ID: {
+                    type: "number",
+                    defaultValue: "1",
+                    menu: "MOTOR_ID"
+                },
+                LEFT_DIRECTION: {
+                    type: "number",
+                    defaultValue: "1",
+                    menu: "ROTATION_DIRECTION"
+                },
+                RIGHT_MOTOR_ID: {
+                    type: "number",
+                    defaultValue: "2",
+                    menu: "MOTOR_ID"
+                },
+                RIGHT_DIRECTION: {
+                    type: "number",
+                    defaultValue: "0",
+                    menu: "ROTATION_DIRECTION"
+                },
+                WHEEL_DIAMETER: {
+                    type: "number",
+                    defaultValue: "30.8"
+                },
+                WHEEL_DISTANCE: {
+                    type: "number",
+                    defaultValue: "67.7"
+                }
+            }
+        },
+        {
+            opcode: 'competitionCarPidInit',
+            blockType: "command",
+            text: "$$competitionCar_pidInit",
+            micropy: {
+                import: "from competitionCar import pid_set_params, reset_pid"
+            },
+            pycode: "pid_set_params([BASE_SPEED_PERCENT], [KP], [KI], [KD], [LEFT_SENSOR_INDEX], [RIGHT_SENSOR_INDEX]); reset_pid()",
+            arguments: {
+                BASE_SPEED_PERCENT: {
+                    type: "number",
+                    defaultValue: "80"
+                },
+                KP: {
+                    type: "number",
+                    defaultValue: "3"
+                },
+                KI: {
+                    type: "number",
+                    defaultValue: "0"
+                },
+                KD: {
+                    type: "number",
+                    defaultValue: "2"
+                },
+                LEFT_SENSOR_INDEX: {
+                    type: "number",
+                    defaultValue: "1",
+                    menu: "SENSOR_INDEX"
+                },
+                RIGHT_SENSOR_INDEX: {
+                    type: "number",
+                    defaultValue: "3",
+                    menu: "SENSOR_INDEX"
+                }
+            }
+        },
+        '---',
+        "## 基础运动",
+        {
+            opcode: 'competitionCarMove',
+            blockType: "command",
+            text: "$$competitionCar_move",
+            micropy: {
+                import: "from competitionCar import move_mm"
+            },
+            pycode: "move_mm([DISTANCE], [SPEED_PERCENT], [MOVE_DIRECTION], [CORRECTION_FACTOR])",
+            arguments: {
+                MOVE_DIRECTION: {
+                    type: "string",
+                    defaultValue: "move_forward",
+                    menu: "MOVE_DIRECTION"
+                },
+                DISTANCE: {
+                    type: "number",
+                    defaultValue: "100"
+                },
+                SPEED_PERCENT: {
+                    type: "number",
+                    defaultValue: "50"
+                },
+                CORRECTION_FACTOR: {
+                    type: "number",
+                    defaultValue: "1.0"
+                }
+            }
+        },
+        {
+            opcode: 'competitionCarRotate',
+            blockType: "command",
+            text: "$$competitionCar_rotate",
+            micropy: {
+                import: "from competitionCar import rotate_deg"
+            },
+            pycode: "rotate_deg([DEGREES], [SPEED_PERCENT], [ROTATE_DIRECTION], [CORRECTION_FACTOR])",
+            arguments: {
+                ROTATE_DIRECTION: {
+                    type: "string",
+                    defaultValue: "rotate_right",
+                    menu: "ROTATE_DIRECTION"
+                },
+                DEGREES: {
+                    type: "number",
+                    defaultValue: "90"
+                },
+                SPEED_PERCENT: {
+                    type: "number",
+                    defaultValue: "50"
+                },
+                CORRECTION_FACTOR: {
+                    type: "number",
+                    defaultValue: "1.0"
+                }
+            }
+        },
+        {
+            opcode: 'competitionCarMoveContinuous',
+            blockType: "command",
+            text: "$$competitionCar_moveContinuous",
+            micropy: {
+                import: "from competitionCar import move_continuous"
+            },
+            pycode: "move_continuous([SPEED_PERCENT], [MOVE_DIRECTION])",
+            arguments: {
+                SPEED_PERCENT: {
+                    type: "number",
+                    defaultValue: "50"
+                },
+                MOVE_DIRECTION: {
+                    type: "string",
+                    defaultValue: "move_forward",
+                    menu: "MOVE_DIRECTION"
+                }
+            }
+        },
+        {
+            opcode: 'competitionCarSetMotorSpeeds',
+            blockType: "command",
+            text: "$$competitionCar_setMotorSpeeds",
+            micropy: {
+                import: "from competitionCar import set_motor_speeds"
+            },
+            pycode: "set_motor_speeds([LEFT_SPEED_PERCENT], [RIGHT_SPEED_PERCENT])",
+            arguments: {
+                LEFT_SPEED_PERCENT: {
+                    type: "number",
+                    defaultValue: "-50"
+                },
+                RIGHT_SPEED_PERCENT: {
+                    type: "number",
+                    defaultValue: "50"
+                }
+            }
+        },
+        {
+            opcode: 'competitionCarStop',
+            blockType: "command",
+            text: "$$competitionCar_stop",
+            micropy: {
+                import: "from competitionCar import stop"
+            },
+            pycode: "stop()"
+        },
+        '---',
+        "## PID寻线",
+        {
+            opcode: 'competitionCarPidFollowUntilJunction',
+            blockType: "command",
+            text: "$$competitionCar_pidFollowUntilJunction",
+            micropy: {
+                import: "from competitionCar import pid_follow_until_junction"
+            },
+            pycode: "pid_follow_until_junction([JUNCTION_TYPE], [SPEED_PERCENT], [KP], [KI], [KD])",
+            arguments: {
+                JUNCTION_TYPE: {
+                    type: "string",
+                    defaultValue: "T",
+                    menu: "JUNCTION_TYPE"
+                },
+                SPEED_PERCENT: {
+                    type: "number",
+                    defaultValue: "80"
+                },
+                KP: {
+                    type: "number",
+                    defaultValue: "3"
+                },
+                KI: {
+                    type: "number",
+                    defaultValue: "0"
+                },
+                KD: {
+                    type: "number",
+                    defaultValue: "2"
+                }
+            }
+        },
+        {
+            opcode: 'competitionCarPidFollowUntilTime',
+            blockType: "command",
+            text: "$$competitionCar_pidFollowUntilTime",
+            micropy: {
+                import: "from competitionCar import pid_follow_until_time"
+            },
+            pycode: "pid_follow_until_time([TARGET_TIME], [SPEED_PERCENT], [KP], [KI], [KD])",
+            arguments: {
+                TARGET_TIME: {
+                    type: "number",
+                    defaultValue: "3000"
+                },
+                SPEED_PERCENT: {
+                    type: "number",
+                    defaultValue: "80"
+                },
+                KP: {
+                    type: "number",
+                    defaultValue: "3"
+                },
+                KI: {
+                    type: "number",
+                    defaultValue: "0"
+                },
+                KD: {
+                    type: "number",
+                    defaultValue: "2"
+                }
+            }
+        },
+        '---',
+        "## 无线功能",
+        {
+            opcode: 'competitionCarWirelessInit',
+            blockType: "command",
+            text: "$$competitionCar_wirelessInit",
+            micropy: {
+                import: "from competitionCar import WirelessSingleCtrol"
+            },
+            pycode: "wireless_ctrl = WirelessSingleCtrol()"
+        },
+        {
+            opcode: 'competitionCarWirelessSend',
+            blockType: "command",
+            text: "$$competitionCar_wirelessSend",
+            micropy: {
+                import: "from competitionCar import WirelessSingleCtrol"
+            },
+            pycode: "wireless_ctrl.send([MSG])",
+            arguments: {
+                MSG: {
+                    type: "string",
+                    defaultValue: "hello"
+                }
+            }
+        }
+    ],
+    menus: {
+        MOTOR_ID: [
+            { text: "$$competitionCar_menu_id1", value: 1 },
+            { text: "$$competitionCar_menu_id2", value: 2 }
+        ],
+        ROTATION_DIRECTION: [
+            { text: "$$competitionCar_menu_clockwise", value: 1 },
+            { text: "$$competitionCar_menu_counterclockwise", value: 0 }
+        ],
+        MOVE_DIRECTION: [
+            { text: "$$competitionCar_menu_forward", value: "move_forward" },
+            { text: "$$competitionCar_menu_backward", value: "move_backward" }
+        ],
+        ROTATE_DIRECTION: [
+            { text: "$$competitionCar_menu_clockwise", value: "rotate_right" },
+            { text: "$$competitionCar_menu_counterclockwise", value: "rotate_left" }
+        ],
+        SENSOR_INDEX: [
+            { text: '$$lineFollowingI2C_menu_index0', value: 0},
+            { text: '$$lineFollowingI2C_menu_index1', value: 1},
+            { text: '$$lineFollowingI2C_menu_index2', value: 2},
+            { text: '$$lineFollowingI2C_menu_index3', value: 3},
+            { text: '$$lineFollowingI2C_menu_index4', value: 4},
+        ],
+        JUNCTION_TYPE: [
+            { text: "$$competitionCar_menu_junctionT", value: "T" },
+            { text: "$$competitionCar_menu_junctionLeft", value: "LEFT" },
+            { text: "$$competitionCar_menu_junctionRight", value: "RIGHT" },
+            { text: "$$competitionCar_menu_junctionWhite", value: "WHITE" }
+        ],
+        uartPort: [
+            { value: 'uart0', text: 'UART0' },
+            { value: 'uart1', text: 'UART1' }
+        ]
+    },
+    python: {
+        "wireless_ctrl": "None"
+    }
+}
+

@@ -1,0 +1,77 @@
+{
+    id: "futureboard-lite_sonar",
+    name: "$$sonar",
+    color1: "#363F6A",
+    color2: "#22294A",
+    color3: "#191F3B",
+    image: "_img/meowsonar.png",
+    description: "$$sonar_description",
+    tags: ['sensor'],
+    libs:{
+        "*": {
+            import: 'from sonar import *'
+        },
+        "ultrasonic_[PIN]": {
+            instance: "MeowSonar('[PIN]')"
+        },
+        "hcsr04_[PIN]": {
+            instance: "HCSR04('[PIN]')"
+        },
+    },
+    blocks: 
+    [
+        {
+            opcode: "getMeowSonarDistance",
+            blockType: "reporter",
+            text: "$$sonar_getMeowSonarDistance",
+            pycode: "ultrasonic_[PIN].checkdist([UNIT])",
+            arguments:{
+                PIN:{
+                    menu:"PIN_3Pin_MENU",
+                    type: "value",
+                    defaultValue: 'P1', 
+                },
+                UNIT:{
+                    menu:"UNIT_MENU",
+                    type: "string",
+                    defaultValue: 'cm', 
+                }
+            }
+        },
+        {
+            opcode: "getHCSR04Distance",
+            blockType: "reporter",
+            text: "$$sonar_getHCSR04Distance",
+            pycode: "hcsr04_[PIN].checkdist([UNIT])",
+            arguments:{
+                PIN:{
+                    menu:"uartPort",
+                    type: "value",
+                    defaultValue: 'uart0', 
+                },
+                UNIT:{
+                    menu:"UNIT_MENU",
+                    type: "string",
+                    defaultValue: 'cm', 
+                }
+            }
+        },
+        '---'
+    ],
+    menus:{
+        PIN_3Pin_MENU:[
+            { text: 'Port1', value: 'P1'},
+            { text: 'Port2', value: 'P2'},
+            { text: 'Port3', value: 'P3'},
+            { text: 'Port4', value: 'P4'},
+        ],
+        UNIT_MENU:[
+            { text: '$$sonar_menu_unit_cm', value: 'cm' },
+            { text: '$$sonar_menu_unit_mm', value: 'mm' }
+        ],
+        uartPort:[
+            {value:'uart0', text:'UART0'},
+            {value:'uart1', text:'UART1'}
+        ]
+    }
+}

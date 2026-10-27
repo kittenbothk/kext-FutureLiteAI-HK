@@ -1,0 +1,266 @@
+{
+    id: "futureboard-lite_thermal_printer",
+    name: "$$thermal_printer",
+    color1: "#37c87b",
+    color2: "#139b53",
+    color3: "#16ae5d",
+    image: "_img/printer.png",
+    description: "$$thermal_printer_description",
+    tags: ['module'],
+    libs: {
+        "thermal_printer": {
+            import: 'from sugar_thermal_printer import *'
+        },
+    },
+
+    blocks: [
+        {
+            opcode: 'initPrinter',
+            blockType: "command",
+            text: "$$thermal_printer_init",
+            micropy: {
+                import: "from sugar_thermal_printer import SugarThermalPrinter"
+            },
+            pycode: "printer = SugarThermalPrinter([UART])",
+            arguments: {
+                UART: {
+                    type: "string",
+                    defaultValue: "uart1",
+                    menu: "UART",
+                }
+            }
+        },
+        "## $$thermal_printer_title_setting",
+        {
+            opcode: 'setPrintDensity',
+            blockType: "command",
+            text: "$$thermal_printer_setPrintDensity",
+            pycode: 'printer.set_print_density([DENSITY])',
+            arguments: {
+                DENSITY: {
+                    type: "number",
+                    defaultValue: 3000,
+                    menu: "DENSITY",
+                }
+            }
+        },
+        {
+            opcode: 'setLineGap',
+            blockType: "command",
+            text: "$$thermal_printer_setLineGap",
+            pycode: 'printer.set_line_gap([GAP])',
+            arguments: {
+                GAP: {
+                    type: "number",
+                    defaultValue: 8,
+                }
+            }
+        },
+        "## $$thermal_printer_title_content",
+        {
+            opcode: 'printText',
+            blockType: "command",
+            text: "$$thermal_printer_printText",
+            pycode: 'printer.print_text([TEXT], align=[ALIGN], scale=[SCALE], invert=[INVERT])',
+            arguments: {
+                TEXT: {
+                    type: "string",
+                    defaultValue: "你好，这里是KittenBot",
+                    hook: "textUnicode",
+                },
+                ALIGN: {
+                    type: "string",
+                    defaultValue: "left",
+                    menu: "ALIGN",
+                },
+                SCALE: {
+                    type: "number",
+                    defaultValue: 1,
+                    menu: "TEXT_SCALE",
+                },
+                INVERT: {
+                    type: "value",
+                    defaultValue: "False",
+                    menu: "BOOL_INVERT",
+                }
+            }
+        },
+        {
+            opcode: 'printQRCode',
+            blockType: "command",
+            text: "$$thermal_printer_printQRCode",
+            pycode: 'printer.print_qrcode([TEXT], align=[ALIGN])',
+            arguments: {
+                TEXT: {
+                    type: "string",
+                    defaultValue: "https://www.kittenbot.cn",
+                    hook: "textUnicode",
+                },
+                ALIGN: {
+                    type: "string",
+                    defaultValue: "center",
+                    menu: "ALIGN",
+                },
+            }
+        },
+        {
+            opcode: 'printImageFile',
+            blockType: "command",
+            text: "$$thermal_printer_printImageFile",
+            pycode: 'printer.print_png([FILENAME], size_mode=[SIZE_MODE], align=[ALIGN])',
+            arguments: {
+                FILENAME: {
+                    type: "string",
+                    defaultValue: "image.png",
+                },
+                SIZE_MODE: {
+                    type: "string",
+                    defaultValue: "fit",
+                    menu: "SIZE_MODE",
+                },
+                ALIGN: {
+                    type: "string",
+                    defaultValue: "center",
+                    menu: "ALIGN",
+                },
+            }
+        },
+        {
+            opcode: 'printPngUrl',
+            blockType: "command",
+            text: "$$thermal_printer_printPngUrl",
+            pycode: 'printer.print_png_url([URL], size_mode=[SIZE_MODE], align=[ALIGN])',
+            arguments: {
+                URL: {
+                    type: "string",
+                    defaultValue: "https://cdn.kittenbot.cn/kittenbot_logo.png",
+                    hook: "textUnicode",
+                },
+                SIZE_MODE: {
+                    type: "string",
+                    defaultValue: "fit",
+                    menu: "SIZE_MODE",
+                },
+                ALIGN: {
+                    type: "string",
+                    defaultValue: "center",
+                    menu: "ALIGN",
+                },
+            }
+        },
+        {
+            opcode: 'printScreenContent',
+            blockType: "command",
+            text: "$$thermal_printer_printScreenContent",
+            pycode: 'printer.print_screen(size_mode=[SIZE_MODE])',
+            arguments: {
+                SIZE_MODE: {
+                    type: "string",
+                    defaultValue: "fit",
+                    menu: "SIZE_MODE",
+                },
+            }
+        },
+        {
+            opcode: 'printStyledLine',
+            blockType: "command",
+            text: "$$thermal_printer_printStyledLine",
+            pycode: 'printer.print_styled_line(style=[STYLE])',
+            arguments: {
+                STYLE: {
+                    type: "string",
+                    defaultValue: "solid",
+                    menu: "LINE_STYLE",
+                }
+            }
+        },
+        {
+            opcode: 'stepMotor',
+            blockType: "command",
+            text: "$$thermal_printer_stepMotor",
+            pycode: 'printer.step([STEP])',
+            arguments: {
+                STEP: {
+                    type: "number",
+                    defaultValue: 32,
+                }
+            }
+        },
+        "## $$thermal_printer_title_advanced",
+        {
+            opcode: 'calibrateLabel',
+            blockType: "command",
+            text: "$$thermal_printer_calibrateLabel",
+            pycode: 'printer.calibrate_label_info()',
+        },
+        {
+            opcode: 'seekLabelStart',
+            blockType: "command",
+            text: "$$thermal_printer_seekLabelStart",
+            pycode: 'printer.seek_label_start(timeout_ms=[TIMEOUT]*1000)',
+            arguments: {
+                TIMEOUT: {
+                    type: "number",
+                    defaultValue: 40,
+                    menu: "SEEK_TIMEOUT",
+                }
+            }
+        },
+        {
+            opcode: 'queryPaperAdcValue',
+            blockType: "reporter",
+            text: "$$thermal_printer_queryPaperAdcValue",
+            pycode: 'printer.query_paper_adc_value()',
+        },
+        {
+            opcode: 'queryBatteryPercent',
+            blockType: "reporter",
+            text: "$$thermal_printer_queryBatteryPercent",
+            pycode: 'printer.battery(attr="percent")',
+        },
+    ],
+    menus: {
+        UART: [
+            { value: "uart0", text: "UART0" },
+            { value: "uart1", text: "UART1" }
+        ],
+        DENSITY: [
+            { value: 2000, text: "$$thermal_printer_menu_density_low" },
+            { value: 3000, text: "$$thermal_printer_menu_density_mid" },
+            { value: 4000, text: "$$thermal_printer_menu_density_high" }
+        ],
+        ALIGN: [
+            { value: "left", text: "$$thermal_printer_menu_align_left" },
+            { value: "center", text: "$$thermal_printer_menu_align_center" },
+            { value: "right", text: "$$thermal_printer_menu_align_right" }
+        ],
+        TEXT_SCALE: [
+            { value: 1, text: "1" },
+            { value: 2, text: "2" },
+            { value: 3, text: "3" },
+            { value: 4, text: "4" }
+        ],
+        SIZE_MODE: [
+            { value: "original", text: "$$thermal_printer_menu_size_original" },
+            { value: "fit", text: "$$thermal_printer_menu_size_fit" }
+        ],
+        LINE_STYLE: [
+            { value: "solid", text: "$$thermal_printer_menu_style_solid" },
+            { value: "dashed", text: "$$thermal_printer_menu_style_dashed" },
+            { value: "dotted", text: "$$thermal_printer_menu_style_dotted" },
+            { value: "dot_dash", text: "$$thermal_printer_menu_style_dot_dash" },
+            { value: "double", text: "$$thermal_printer_menu_style_double" },
+            { value: "star", text: "$$thermal_printer_menu_style_star" },
+            { value: "wave", text: "$$thermal_printer_menu_style_wave" }
+        ],
+        SEEK_TIMEOUT: [
+            { value: 10, text: "10" },
+            { value: 20, text: "20" },
+            { value: 40, text: "40" }
+        ],
+        BOOL_INVERT: [
+            { value: "False", text: "$$thermal_printer_menu_off" },
+            { value: "True", text: "$$thermal_printer_menu_on" }
+        ]
+    }
+}

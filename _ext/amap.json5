@@ -1,0 +1,183 @@
+{
+  id: "futureboard-lite@kext_amap",
+  name: "$$amap",
+  tags: ["advanced"],
+  color1: "#1A66FF",
+  color2: "#074EDE",
+  color3: "#0A47C3",
+  image: "./_img/amap.png",
+  description: "$$amap_description",
+  libs: {
+    amap_request: {      
+      import: 'from amap import *',
+      instance: 'Amap()'
+    },
+  },
+  blocks:[
+    {
+      opcode: 'key',
+      blockType: "command",
+      text: "$$amap_key",
+      pycode: "amap_request.setAppKey([KEY])",
+      arguments: {
+        KEY: {
+          type: "string",
+          defaultValue: ''
+        }
+      }
+    },
+    '---',
+    "## $$amap_title_weather",
+    {
+      opcode: 'weatherLives',
+      blockType: "command",
+      text: "$$amap_weatherLives",
+      pycode: 'amap_request.getWeatherLives([TEXTCH])',
+      arguments: {
+        TEXTCH: {
+          type: "string",
+          defaultValue: '深圳',
+          hook: 'TEXTCH'
+        }
+      }
+    },
+    {
+      opcode: 'weatherLivesRes',
+      blockType: "reporter",
+      text: "$$amap_weatherLivesRes",
+      pycode: "amap_request.weatherLives([TYPE])",
+      arguments: {
+        TYPE: {
+          type: "string",
+          defaultValue: 'weather',
+          menu: 'WEATHER_LIVES'
+        },
+      }
+    },
+    '---',
+    {
+      opcode: 'weatherForecast',
+      blockType: "command",
+      text: "$$amap_weatherForecast",
+      pycode: 'amap_request.getWeatherForecast([TEXTCH])',
+      arguments: {
+        TEXTCH: {
+          type: "string",
+          defaultValue: '深圳',
+          hook: 'TEXTCH'
+        },
+
+      }
+    },
+    {
+      opcode: 'weatherForecastRes',
+      blockType: "reporter",
+      text: "$$amap_weatherForecastRes",
+      pycode: "amap_request.weatherForecast([DAY],[TYPE])",
+      arguments: {
+        TYPE: {
+          type: "string",
+          defaultValue: 'dayweather',
+          menu: 'WEATHER_PREDIT'
+        },
+        DAY: {
+          type: "slider",
+          defaultValue: '3',
+          max: 3,
+          min: 1
+        },
+      }
+    },
+    '---',
+    "## $$amap_title_location",
+    {
+      opcode: 'getcoordsysGCJ',
+      blockType: "reporter",
+      text: "$$amap_getcoordsysGCJ",
+      pycode: "amap_request.togcj([LOCATION],[SYS])",
+      arguments: {
+        LOCATION: {
+          type: "string",
+          defaultValue: '113.926666666,22.749152832032',
+        },
+        SYS: {
+          type: "string",
+          defaultValue: 'gps',
+          menu: 'COORDSYS'
+        },
+      }
+    },
+    {
+      opcode: 'searchLocation',
+      blockType: "reporter",
+      text: "$$amap_searchLocation",
+      pycode: "amap_request.searchLocation([PLACE])",
+      arguments: {
+        PLACE: {
+          type: "string",
+          hook: "textUnicode",
+          defaultValue: '深圳市南山区世界之窗',
+        },
+      }
+    },
+    {
+      opcode: 'displayStaticMap',
+      blockType: "command",
+      text: "$$amap_displayStaticMap",
+      pycode: "amap_request.displayStaticMap([LOCATION],[ZOOM])",
+      arguments: {
+        LOCATION: {
+          type: "string",
+          defaultValue: '113.931543782553,22.749152832032',
+        },
+        ZOOM: {
+          type: "slider",
+          defaultValue: '17',
+          min: 1,
+          max: 17
+        }
+      }
+    },
+    {
+      opcode: 'distanceCalculation',
+      blockType: "reporter",
+      text: "$$amap_distanceCalculation",
+      pycode: "amap_request.distanceCalculation([COORD1],[COORD2])",
+      arguments: {
+        COORD1: {
+          type: "string",
+          defaultValue: '113.931543782553,22.749152832032',
+        },
+        COORD2: {
+          type: "string",
+          defaultValue: '113.931543782553,22.749152832032',
+        },
+      }
+    },
+    '---',
+  ],
+  menus: {
+    WEATHER_LIVES: [
+      { text: "$$amap_menu_weather_condition", value: 'weather', },
+      { text: "$$amap_menu_weather_temp", value: 'temperature', },
+      { text: "$$amap_menu_weather_winddir", value: 'winddirection', },
+      { text: "$$amap_menu_weather_windpw", value: 'windpower', },
+      { text: "$$amap_menu_weather_humi", value: 'humidity', },
+    ],
+    WEATHER_PREDIT: [
+      { text: "$$amap_menu_weather_dayweather", value: 'dayweather' },
+      { text: "$$amap_menu_weather_nightweather", value: 'nightweather' },
+      { text: "$$amap_menu_weather_daytemp", value: 'daytemp' },
+      { text: "$$amap_menu_weather_nighttemp", value: 'nighttemp' },
+      { text: "$$amap_menu_weather_daywind", value: 'daywind' },
+      { text: "$$amap_menu_weather_nightwind", value: 'nightwind' },
+      { text: "$$amap_menu_weather_daypower", value: 'daypower' },
+      { text: "$$amap_menu_weather_nightpower", value: 'nightpower' },
+    ],
+    COORDSYS: [
+      'gps',
+      'mapbar',
+      'baidu',
+    ]
+  }
+}

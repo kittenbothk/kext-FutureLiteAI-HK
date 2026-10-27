@@ -1,0 +1,236 @@
+{
+    id: "futureboard-lite_sugarCamera",
+    name: "$$sugarCamera",
+    color1: "#30caf9",
+    color2: "#1cb1e5",
+    color3: "#2daae0",
+    image: "_img/camera.png",
+    description: "$$sugarCamera_description",
+    tags: ['module'],
+    libs:{
+        "sugarCam": {
+            import: 'from sugar_cam import *'
+        },
+        "camWireless": {
+            import: 'from sugar_cam import *'
+        },
+        "camCB": {
+            import: 'from sugarCamColorBlob import *'
+        },
+    },
+
+    blocks: 
+    [
+        {
+            opcode: 'CamRunInit',
+            blockType: "command",
+            text: "$$sugarCamera_CamRunInit",
+            micropy: {
+                import: "from sugar_cam import SugarCam"
+            },
+            pycode: "sugarCam = SugarCam([UARTPOART])",
+            arguments:{
+                UARTPOART:{
+                    type: "string",
+                    defaultValue: 'uart0', 
+                    menu: 'uartPort'
+                },
+            }
+        },
+        "## $$sugarCamera_title_uart",
+        {
+            opcode: "CamButtonState",
+            blockType: "Boolean",
+            text: "$$sugarCamera_CamButtonState",
+            pycode: "sugarCam.buttonState([BUTTON])",
+            arguments:{
+                BUTTON: {
+                    type: 'string',
+                    menu: 'butten',
+                    defaultValue: 'BTNA'
+                }            
+            }
+        }, 
+        {
+            opcode: "CamSetColor",
+            blockType: "command",
+            text: "$$sugarCamera_CamSetColor",
+            pycode: "sugarCam.setColor([COLOR1],[COLOR2])",
+            arguments:{
+                COLOR1: {
+                type: 'colorrgb',
+                defaultValue: '#00A800',
+                
+                },
+                COLOR2: {
+                type: 'colorrgb',
+                defaultValue: '#00A800',
+                
+                }                
+            }
+        }, 
+        {
+            opcode: "CamSetAllColor",
+            blockType: "command",
+            text: "$$sugarCamera_CamSetAllColor",
+            pycode: "sugarCam.setAllColor([COLOR1])",
+            arguments:{
+                COLOR1: {
+                type: 'colorrgb',
+                defaultValue: '#00A800',
+                }                
+            }
+        }, 
+        {
+            opcode: "TakePicture",
+            blockType: "command",
+            text: "$$sugarCamera_TakePicture",
+            pycode: "sugarCam.takePicture([FILENAME])",
+            arguments:{
+                FILENAME:{
+                    type: "string",
+                    defaultValue: 'kittenbot.jpg', 
+                }
+            }
+        },
+        {
+            opcode: "CamPlayWAV",
+            blockType: "command",
+            text: "$$sugarCamera_CamPlayWAV",
+            pycode: "sugarCam.playWav([WAVFILE])",
+            arguments:{
+                WAVFILE:{
+                    type: "string",
+                    defaultValue: 'kittenblock.mp3', 
+                },
+            }
+        },
+        {
+            opcode: "CamGetQRcode",
+            blockType: "reporter",
+            text: "$$sugarCamera_CamGetQRcode",
+            pycode: "sugarCam.getQRcode()",
+        },
+        {
+            opcode: "CamIPADDR",
+            blockType: "reporter",
+            text: "$$sugarCamera_CamIPADDR",
+            pycode: "sugarCam.ipAddr()",
+        },
+        "## $$sugarCamWireless_title",
+        {
+            opcode: 'wirelessRunInit',
+            blockType: "command",
+            micropy: {
+                import: "from sugar_cam import SugarCamWireless"
+            },
+            text: "$$sugarCamWireless_runInit",
+            pycode: "camCB = SugarCamWireless([IPADDRESS],secret=[SECRET])",
+            arguments:{
+                IPADDRESS:{
+                    type: "string",
+                    defaultValue: '192.168.0.233'
+                },
+                SECRET:{
+                    type: "string",
+                    defaultValue: 'miao'
+                }
+            }
+        },
+        {
+            opcode: 'wirelessDisplay',
+            blockType: "command",
+            text: "$$sugarCamWireless_display",
+            pycode: "camCB.displayFrameJpg(screens)",
+        },
+        "## $$sugarCamera_title_ai", 
+        {
+            opcode: "CamOCR",
+            blockType: "reporter",
+            text: "$$sugarCamera_CamOCR",
+            pycode: "sugarCam.ocr()",
+        },
+        // "## $$sugarCamColorBlob_title",
+        {
+            opcode: 'colorBlobrunInit',
+            hide:true,
+            blockType: "command",
+            micropy: {
+                import: "from sugarCamColorBlob import SugarCamColorBlob"
+            },
+            text: "$$sugarCamColorBlob_runInit",
+            pycode: "camCB = SugarCamColorBlob([UARTPOART])",
+            arguments:{
+                UARTPOART:{
+                    type: "string",
+                    defaultValue: 'uart0', 
+                    menu: 'uartPort'
+                },
+            }
+        },
+        {
+            opcode: 'setDetectionColor',
+            blockType: "command",
+            hide:true,
+            text: "$$sugarCamColorBlob_setDetectionColor",
+            pycode: "camCB.setDetectionColor([COLORID])",
+            arguments:{
+                COLORID:{
+                    type: "number",
+                    defaultValue: '0', 
+                    menu: 'COLOEMENU'
+                },
+            }
+        },
+        {
+            opcode: 'readFromUart',
+            blockType: "command",
+            hide:true,
+            text: "$$sugarCamColorBlob_readFromUart",
+            pycode: "camCB.read_from_uart()",
+        },
+        {
+        opcode: "getIpAddress",
+        blockType: "reporter",
+        hide:true,
+        text: "$$sugarCamColorBlob_getIpAddress",
+        pycode: "camCB.getIpAddress()",
+        },
+        {
+        opcode: "getxywh",
+        blockType: "reporter",
+        hide:true,
+        text: "$$sugarCamColorBlob_getxywh",
+        pycode: "camCB.xywh[[INDEX]]",
+            arguments:{
+                INDEX:{
+                    type: "number",
+                    defaultValue: '0', 
+                    menu: 'RECTATTR'
+                },
+            }
+        },
+        "---",
+    ],
+    menus:{
+        uartPort:[
+            {value:'uart0', text:'UART0'},
+            {value:'uart1', text:'UART1'}
+        ],
+        butten:[
+            {text:'$$sugarCamera_BtnMenuA', value:'BTNA'},
+            {text:'$$sugarCamera_BtnMenuB', value:'BTNB'}
+        ],
+        RECTATTR:[
+            {text:'X', value:'0'},
+            {text:'Y', value:'1'},
+            {text:'W', value:'2'},
+            {text:'H', value:'3'},
+        ],
+        COLOEMENU:[
+            {text:'$$SUGARCAMCB_COLOR_MENU_RED', value:'0'},
+            {text:'$$SUGARCAMCB_COLOR_MENU_GREEN', value:'1'},
+            {text:'$$SUGARCAMCB_COLOR_MENU_BLUE', value:'2'}
+        ]
+    }
+}

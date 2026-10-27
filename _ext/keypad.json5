@@ -1,0 +1,45 @@
+{
+    id: "futureboard-lite_keypad",
+    name: "$$keypad",
+    color1: "#363F6A",
+    color2: "#22294A",
+    color3: "#191F3B",
+    image: "_img/keypad.png",
+    description: "$$keypad_description",
+    tags: ['module'],
+    libs:{
+        "*": {
+            import: 'from keypad4x4 import *'
+        },
+    },
+    blocks: 
+    [
+        {
+            opcode: 'runInit',
+            blockType: "command",
+            text: "$$keypad_runInit",
+            pycode: "keypad = Keypad([UARTPOART])",
+            arguments:{
+                UARTPOART :{
+                    type: "string",
+                    defaultValue: 'uart0', 
+                    menu: 'uartPort'
+                },
+            }
+        },
+
+        {
+            opcode: 'keyRead',
+            blockType: "reporter",
+            text: "$$keypad_keyRead",
+            pycode: 'keypad.read()',
+        },
+        '---'
+    ],
+    menus:{
+        uartPort:[
+            {value:'uart0', text:'UART0'},
+            {value:'uart1', text:'UART1'}
+        ],
+    }
+}

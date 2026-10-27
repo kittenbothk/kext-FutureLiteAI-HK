@@ -1,0 +1,46 @@
+{
+    id: "futureboard-lite_thread",
+    name: "$$thread",
+    color1: "#30caf9",
+    color2: "#1cb1e5",
+    color3: "#2daae0",
+    image: "_img/thread.png",
+    description: "$$thread_description",
+    tags: ['advanced'],
+    libs:{
+        "*": {
+            import: 'import _thread'
+        },
+    },
+    blocks: 
+    [
+        // { 
+        //     opcode: "threadInit",
+        //     blockType: "hat",
+        //     text: "$$thread_setup",
+        //     pycode: [
+        //         "@setup",
+        //         "def setup_task():",
+        //     ],
+        // },
+        { 
+            opcode: "threadExtend",
+            blockType: "hat",
+            text: "$$thread_threadId",
+            pycode: [
+                "_thread.start_new_thread(thread[THREADID], ())",
+                "def thread[THREADID]()"
+            ],
+            arguments:{
+                THREADID:{
+                    type: "value",
+                    defaultValue: 1, 
+                    menu: 'threadLine',
+                }
+            }
+        },        
+    ],    
+    menus:{
+        threadLine:['1','2','3','4','5']
+   }    
+}

@@ -1,0 +1,91 @@
+{
+    id: "futureboardLite_sugarUV",
+    name: "$$sugarUV",
+    color1: "#388EE5",
+    color2: "#2771BC",
+    color3: "#1C5FA2",
+    image: "_img/uv.png",
+    description: "$$sugarUV_description",
+    tags: ['module'],
+    libs:{
+        "sugarUV":{
+            import: "from sugar_UV import *",
+            instance: "LTR390()"
+        },
+    },
+    blocks: 
+    [
+        {
+            opcode: 'calibration_uvi',
+            blockType: "command",
+            text: "$$sugarUV_calibration_uvi",
+            pycode: 'sugarUV.calibration_uvi([DATA1])',
+            arguments: {
+                DATA1: {
+                    type: "number",
+                    defaultValue: 5
+                }
+            }
+        },
+        {
+            opcode: 'calibration_lux',
+            blockType: "command",
+            text: "$$sugarUV_calibration_lux",
+            pycode: 'sugarUV.calibration_lux([DATA1])',
+            arguments: {
+                DATA1: {
+                    type: "number",
+                    defaultValue: 2600
+                }
+            }
+        },
+        {
+            opcode: 'setWindowFactorUVI',
+            blockType: "command",
+            text: "$$sugarUV_setWindowFactorUVI",
+            pycode: 'sugarUV.window_factor = [DATA1]',
+            arguments: {    
+                DATA1: {
+                    type: "number",
+                    defaultValue: 20
+                }
+            }
+        },
+        {
+            opcode: 'getWindowFactorUVI',
+            blockType: "reporter",
+            text: "$$sugarUV_getWindowFactorUVI",
+            pycode: 'sugarUV.window_factor'
+        },
+        {
+            opcode: 'setWindowFactorLux',
+            blockType: "command",
+            text: "$$sugarUV_setWindowFactorLux",
+            pycode: 'sugarUV.factorkb_lux = [DATA1]',
+            arguments: {    
+                DATA1: {
+                    type: "number",
+                    defaultValue: 0.01
+                }
+            }
+        },
+        {
+            opcode: 'getWindowFactorLux',
+            blockType: "reporter",
+            text: "$$sugarUV_getWindowFactorLux",
+            pycode: 'sugarUV.factorkb_lux'
+        },
+        {
+            opcode: 'getuvi',
+            blockType: "reporter",
+            text: "$$sugarUV_getuvi",
+            pycode: 'sugarUV.uvi'
+        },
+        {
+            opcode: 'getlux',
+            blockType: "reporter",
+            text: "$$sugarUV_getlux",
+            pycode: 'sugarUV.lux'
+        },
+    ],
+}

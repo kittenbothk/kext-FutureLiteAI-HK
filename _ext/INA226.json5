@@ -1,0 +1,39 @@
+{
+    id: "futureboard-lite_ina226",
+    name: "$$ina226Detection",
+    color1: "#388EE5",
+    color2: "#2771BC",
+    color3: "#1C5FA2",
+    image: "_img/ina226.png",
+    description: "$$ina226Detection_description",
+    tags: ['module'],
+    libs: {
+        "*": {
+            import: 'from INA226 import *'
+        },
+        "ina226":{
+            instance: "INA226()"
+        },
+    },
+
+    blocks: 
+	[
+        {
+            opcode: 'getCurrent',
+            blockType: "reporter",
+            text: "$$ina226_get_current",
+            pycode: 'ina226.current_ma',
+			
+        },
+        {
+            opcode: 'getBusVoltage',
+            blockType: "reporter",
+            text: "$$ina226_get_bus_voltage",
+            pycode: 'ina226.bus_voltage_v',
+			
+        },
+    ],
+	menus: {
+    }
+}
+

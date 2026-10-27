@@ -1,0 +1,128 @@
+{
+    id: "futureboard-lite_sugarTTS",
+    name: "$$sugarTTS",
+    color1: "#30caf9",
+    color2: "#1cb1e5",
+    color3: "#2daae0",
+    image: "_img/tts.png",
+    description: "$$sugarTTS_description",
+    tutorial_url: "https://www.yuque.com/kittenbot/hardwares/sugar-tts",
+    tags: ['module'],
+    libs:{
+        "sugarCam": {
+            import: 'from sugar_tts import *'
+        },
+    },
+
+    blocks: 
+    [
+        {
+            opcode: 'CamRunInit',
+            blockType: "command",
+            text: "$$sugarTTS_CamRunInit",
+            micropy: {
+                import: "from sugar_tts import SugarTTS"
+            },
+            pycode: "sugarTTS = SugarTTS([UARTPOART])",
+            arguments:{
+                UARTPOART:{
+                    type: "string",
+                    defaultValue: 'uart0', 
+                    menu: 'uartPort'
+                },
+            }
+        },
+{
+      opcode: 'ttsMode',
+      blockType: "command",
+      text: "$$sugar_ttsMode",
+      pycode: 'sugarTTS.[MODE]',
+      arguments: {
+        MODE: {
+          type: "value",
+          defaultValue: "ttsMode()",
+          menu: 'TTSMODE',
+        }
+      }
+    },
+    {
+      opcode: 'ttsOperate',
+      blockType: "command",
+      text: "$$sugar_mp3Operate",
+      pycode: 'sugarTTS.[OPERATE]',
+      arguments: {
+        OPERATE: {
+          type: "value",
+          defaultValue: "next()",
+          menu: 'TTSOPERATE',
+        }
+      }
+    },
+    {
+      opcode: 'mp3PlayName',
+      blockType: "command",
+      text: "$$sugar_mp3playName",
+      pycode: 'sugarTTS.playName([NAME])',
+      arguments: {
+        NAME: {
+          type: "string",
+          defaultValue: "yequ.mp3",
+        }
+      }
+    },
+    {
+      opcode: 'mp3PlayId',
+      blockType: "command",
+      text: "$$sugar_mp3playId",
+      pycode: 'sugarTTS.playId([ID])',
+      arguments: {
+        ID: {
+          type: "number",
+          defaultValue: "1",
+        }
+      }
+    },
+    {
+      opcode: 'ttsPlayText',
+      blockType: "command",
+      text: "$$sugar_playText",
+      pycode: 'sugarTTS.playText([TEXT])',
+      arguments: {
+        TEXT: {
+          type: "string",
+          defaultValue: "你好啊",
+          hook: "textUnicode"
+        }
+      }
+    },
+    {
+      opcode: 'ttsPlayTextAwait',
+      blockType: "command",
+      text: "$$sugar_playTextAwait",
+      pycode: 'sugarTTS.playTextAwait([TEXT])',
+      arguments: {
+        TEXT: {
+          type: "string",
+          defaultValue: "你好啊",
+          hook: "textUnicode"
+        }
+      }
+    },
+    ],
+    menus:{
+        uartPort:[
+            {value:'uart0', text:'UART0'},
+            {value:'uart1', text:'UART1'}
+        ],
+        TTSOPERATE: [
+        { text: '$$sugar_menu_ttsoperate_pause', value: 'play()' },
+        { text: '$$sugar_menu_ttsoperate_stop', value: 'stop()' },
+        { text: '$$sugar_menu_ttsoperate_next', value: 'next()' },
+        { text: '$$sugar_menu_ttsoperate_prev', value: 'prev()' },
+        ],
+        TTSMODE: [
+            { text: '$$sugar_menu_ttsoperate_mp3', value: 'mp3Mode()' },
+            { text: '$$sugar_menu_ttsoperate_tts', value: 'ttsMode()' },
+        ]
+    }
+}

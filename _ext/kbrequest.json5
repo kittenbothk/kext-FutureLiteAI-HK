@@ -1,0 +1,51 @@
+{
+    id: "futureboard-lite_kbrequest",
+    name: "$$kbrequest",
+    color1: "#0339A6",
+    color2: "#0B378E",
+    color3: "#0B317D",
+    image: "_img/kbrequest.png",
+    description: "$$kbrequest_description",
+    tags: ["module"],
+    libs:{
+        "kbrst": {
+            import: "from kbrequest import *",
+            instance: "KBrequest()"
+        },
+    },
+    blocks: 
+    [
+        {
+            opcode: "kbrequestGetRequest",
+            blockType: "reporter",
+            text: "$$kbrequest_getRequest",
+            pycode: "kbrst.getRequest([URL])",
+            arguments:{
+                URL :{
+                    type: "string",
+                    defaultValue: "https://download.kittenbot.cn/helloworld.txt", 
+                },
+            }
+        },
+        {
+            opcode: "kbrequestgetStatusCode",
+            blockType: "reporter",
+            text: "$$kbrequest_getStatusCode",
+            pycode: "kbrst.[STATUS]()",
+            arguments:{
+                STATUS :{
+                    type: "value",
+                    defaultValue: "getStatusCode", 
+                    menu: "STATUSMENUS"
+                },
+            }
+        }
+    ],
+    menus:{
+        STATUSMENUS:[
+            {value:"getStatusCode", text:"$$kbrequest_status"},
+            {value:"getIsok", text:"$$kbrequest_isok"},
+            {value:"getUrl", text:"$$kbrequest_url"},
+        ],
+    }
+}

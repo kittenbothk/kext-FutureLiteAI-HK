@@ -1,0 +1,122 @@
+{
+    id: "futureboard-lite_SugarGPS",
+    name: "$$SugarGPS",
+    color1: "#30caf9",
+    color2: "#1cb1e5",
+    color3: "#2daae0",
+    image: "_img/gps.png",
+    description: "$$SugarGPS_description",
+    tutorial_url: "https://www.yuque.com/kittenbot/hardwares/sugar-gps",
+    tags: ["module"],
+    libs: {
+        gps:{
+            import: 'from sugar_gps import SugarGPS'
+        },
+    },
+    blocks: [
+        {
+            opcode: 'GPSInit',
+            blockType: "command",
+            text: "$$sugarGPS_runInit",
+            micropy: {
+                import: "from sugar_gps import SugarGPS"
+            },
+            pycode: "gps = SugarGPS([UARTPOART])",
+            arguments:{
+                UARTPOART:{
+                    type: "string",
+                    defaultValue: 'uart0', 
+                    menu: 'uartPort'
+                },
+            }
+        },
+        { 
+            opcode: 'GPSupdate', 
+            blockType: 'command',
+            pycode: 'gps.update()', 
+            text: "$$sugarGPS_udpate",
+        },
+        {
+            opcode: "GPSGetWeChatNumber",
+            blockType: "reporter",
+            text: "$$sugarGPS_getWeChatNumber",
+            pycode: "gps.getDataGGA(7)",
+        },
+        {
+            opcode: "GPSGetCogt",
+            blockType: "reporter",
+            text: "$$sugarGPS_getCogt",
+            pycode: "gps.getDataVTG(1)",
+        },
+        {
+            opcode: "GPSGetKph",
+            blockType: "reporter",
+            text: "$$sugarGPS_getKph",
+            pycode: "gps.getDataVTG(7)",
+        },
+        {
+            opcode: "GPSGetLocationDir",
+            blockType: "reporter",
+            text: "$$sugarGPS_getLocationDir",
+            pycode: "gps.getDataGGA([INDEX])",
+            arguments:{
+                INDEX:{
+                    type: "number",
+                    defaultValue: '3', 
+                    menu:"GPSLOCATIONDIR"
+                },
+            }
+        },
+        {
+            opcode: "GPSGetLocation",
+            blockType: "reporter",
+            text: "$$sugarGPS_getLocation",
+            pycode: "gps.getDataGGA([INDEX])",
+            arguments:{
+                INDEX:{
+                    type: "number",
+                    defaultValue: '2', 
+                    menu:"GPSLOCATION"
+                },
+            }
+        },
+        {
+            opcode: "GPSGetAltitude",
+            blockType: "reporter",
+            text: "$$sugarGPS_getAltitude",
+            pycode: "gps.getDataGGA(9)",
+        },
+        {
+            opcode: "GPSGetTime",
+            blockType: "reporter",
+            text: "$$sugarGPS_getTime",
+            pycode: "gps.getTime([INDEX])",
+            arguments:{
+                INDEX:{
+                    type: "number",
+                    defaultValue: '0', 
+                    menu:"GPSTIME"
+                },
+            }
+        },
+    ],
+    menus:{
+        GPSLOCATIONDIR:[
+            {value:'3', text:'$$sugarGPSMenu_ULat'},
+            {value:'5', text:'$$sugarGPSMenu_Ulon'}
+        ],
+        GPSLOCATION:[
+            {value:'2', text:'$$sugarGPSMenu_latitude'},
+            {value:'4', text:'$$sugarGPSMenu_longitude'}
+        ],
+        GPSTIME:[
+            {value:'0', text:'$$sugarGPSMenu_HH'},
+            {value:'1', text:'$$sugarGPSMenu_MM'},
+            {value:'2', text:'$$sugarGPSMenu_SS'}
+        ],
+        uartPort:[
+            {value:'uart0', text:'UART0'},
+            {value:'uart1', text:'UART1'}
+        ]
+    }
+}

@@ -1,0 +1,115 @@
+{
+    id: "futureboard_lineFollowingI2C",
+    name: "$$lineFollowingI2C",
+    color1: "#388EE5",
+    color2: "#2771BC",
+    color3: "#1C5FA2",
+    image: "_img/lineFollowingI2C.png",
+    description: "$$lineFollowingI2C_description",
+    tags: ['sensor'],
+    libs: {
+        "lfi2c": {
+            import: "from line_following_i2c import LineFollowingI2C",
+            instance: "LineFollowingI2C()",
+        },
+    },
+    blocks: 
+    [
+        {
+            opcode: 'update',
+            blockType: "command",
+            text: "$$lineFollowingI2C_update",
+            pycode: 'lfi2c.update()'
+        },
+        {
+            opcode: 'readStatus',
+            blockType: "command",
+            text: "$$lineFollowingI2C_readStatus",
+            pycode: 'lfi2c.readStatus()'
+        },
+        {
+            opcode: 'readConfidence',
+            blockType: "command",
+            text: "$$lineFollowingI2C_readConfidence",
+            pycode: 'lfi2c.readConfidence()'
+        },
+        {
+            opcode: 'readADC',
+            blockType: "command",
+            text: "$$lineFollowingI2C_readADC",
+            pycode: 'lfi2c.readADC()'
+        },
+        {
+            opcode: 'getStatus',
+            blockType: "Boolean",
+            text: "$$lineFollowingI2C_getStatus",
+            pycode: 'lfi2c.getStatus([INDEX]) == [STATUS]',
+            arguments:{
+                INDEX :{
+                    type: "number",
+                    defaultValue: 0, 
+                    menu: "SENSOR_INDEX"
+                },
+                STATUS :{
+                    type: "number",
+                    defaultValue: 1, 
+                    menu: "SENDOR_STATUS"
+                }
+            }
+        },
+        {
+            opcode: 'getConfidence',
+            blockType: "reporter",
+            text: "$$lineFollowingI2C_getConfidence",
+            pycode: 'lfi2c.getConfidence([INDEX])',
+            arguments:{
+                INDEX :{
+                    type: "number",
+                    defaultValue: 0, 
+                    menu: "SENSOR_INDEX"
+                },
+            }
+        },
+        {
+            opcode: 'getADC',
+            blockType: "reporter",
+            text: "$$lineFollowingI2C_getADC",
+            pycode: 'lfi2c.getADC([INDEX])',
+            arguments:{
+                INDEX :{
+                    type: "number",
+                    defaultValue: 0, 
+                    menu: "SENSOR_INDEX"
+                },
+            }
+        },
+        '---',
+        {
+            opcode: 'getADCCalibration',
+            blockType: "reporter",
+            text: "$$lineFollowingI2C_getADCCalibration",
+            pycode: 'lfi2c.readADCCalibration()[[INDEX]]',
+            arguments:{
+                INDEX :{
+                    type: "number",
+                    defaultValue: 0, 
+                    menu: "SENSOR_INDEX"
+                },
+            }
+        },
+    ],
+    menus: {
+        SENSOR_INDEX:[
+            { text: '$$lineFollowingI2C_menu_index0', value: 0},
+            { text: '$$lineFollowingI2C_menu_index1', value: 1},
+            { text: '$$lineFollowingI2C_menu_index2', value: 2},
+            { text: '$$lineFollowingI2C_menu_index3', value: 3},
+            { text: '$$lineFollowingI2C_menu_index4', value: 4},
+        ],
+        SENDOR_STATUS:[
+            { text: '$$lineFollowingI2C_menu_black', value: 1},
+            { text: '$$lineFollowingI2C_menu_white', value: 0},
+        ]
+    }
+}
+

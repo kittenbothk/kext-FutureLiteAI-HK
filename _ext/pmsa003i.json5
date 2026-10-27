@@ -1,0 +1,41 @@
+{
+    id: "futureboard-lite_sugarPM",
+    name: "$$sugarPM",
+    color1: "#388EE5",
+    color2: "#2771BC",
+    color3: "#1C5FA2",
+    image: "_img/pm25.png",
+    description: "$$sugarPM_title",
+    tutorial_url: "https://www.yuque.com/kittenbot/hardwares/sugar-pm25",
+    tags: ['module'],
+    libs:{
+        "pm":{
+            import: "from pmsa003i import *",
+            instance: "PMSA003I()"
+        },
+    },
+    blocks: 
+    [
+        {
+            opcode: 'sugarPM',
+            blockType: "reporter",
+            text: "$$sugarPM_getvalue",
+            pycode: 'pm.read()[[LX]]',
+            arguments: {
+                LX: {
+                type: "value",
+                defaultValue: '1',
+                menu: "PMTYPE"
+                }
+            }
+        },
+    ],
+    menus: {
+        PMTYPE:[
+            { text: 'pm1.0', value: '0'},
+            { text: 'pm2.5', value: '1'},
+            { text: 'pm10', value: '2'},
+        ]
+    }
+
+}

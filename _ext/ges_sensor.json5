@@ -1,0 +1,50 @@
+{
+  id: "futureboard-lite@kext_ges_sensor",
+  name: "$$ges_sensor",
+  tags: ["sensor", "advanced"],
+  color1: "#FF6B35",
+  color2: "#E55A2B",
+  color3: "#CC4A22",
+  image: "./_img/mq.png",
+  description: "$$ges_sensor_description",
+  libs: {
+    "*": {
+      import: 'from ges_sensor import *'
+    },
+  },
+  blocks:[
+    {
+      opcode: 'getGasSensorValue',
+      blockType: "reporter",
+      text: "$$ges_sensor_getGasSensorValue",
+      pycode: "get_gas_sensor_data([TYPE], [PORT])",
+      arguments: {
+        TYPE: {
+          type: "string",
+          defaultValue: 'MQ2',
+          menu: 'GAS_SENSOR_TYPE'
+        },
+        PORT: {
+          type: "string",
+          defaultValue: 'P1',
+          menu: 'GAS_SENSOR_PORT'
+        }
+      }
+    }
+  ],
+  menus: {
+    GAS_SENSOR_TYPE: [
+      { text: "$$ges_sensor_menu_mq2", value: 'MQ2' },
+      { text: "$$ges_sensor_menu_mq3", value: 'MQ3' },
+      { text: "$$ges_sensor_menu_mq5", value: 'MQ5' },
+      { text: "$$ges_sensor_menu_mq7", value: 'MQ7' },
+      { text: "$$ges_sensor_menu_mq135", value: 'MQ135' }
+    ],
+    GAS_SENSOR_PORT: [
+      { text: "Port1", value: 'P1' },
+      { text: "Port2", value: 'P2' },
+      { text: "Port3", value: 'P3' },
+      { text: "Port4", value: 'P4' }
+    ]
+  }
+}

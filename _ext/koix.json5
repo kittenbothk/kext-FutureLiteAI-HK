@@ -1,0 +1,2418 @@
+{
+  id: "futureboard-lite_koix",
+  name: "$$koix_name",
+  color1: "#4C525B",
+  color2: "#373D45",
+  color3: "#22262B",
+  image: "_img/koix.png",
+  description: "$$koix_description",
+  tags: ["module"],
+  libs: {
+    "*": {
+      import: "from koix import KOIX"
+    }
+  },
+  blocks: [
+    "## $$koix_title_general",
+    {
+      opcode: "koixInit",
+      blockType: "command",
+      text: "$$koix_init",
+      pycode: "koix = KOIX.open([PORT])",
+      arguments: {
+        PORT: {
+          type: "string",
+          defaultValue: "uart0",
+          menu: "uartPort"
+        }
+      }
+    },
+    {
+      opcode: "koixSwitchModel",
+      blockType: "command",
+      text: "$$koix_switch_model",
+      pycode: "koix.app_switch([MODEL])",
+      arguments: {
+        MODEL: {
+          type: "string",
+          defaultValue: "face",
+          menu: "apps"
+        }
+      }
+    },
+    {
+      opcode: "koixCapture",
+      blockType: "command",
+      text: "$$koix_capture",
+      pycode: "koix.capture([FILE])",
+      arguments: {
+        FILE: {
+          type: "string",
+          defaultValue: "photo.jpg"
+        }
+      }
+    },
+    {
+      opcode: "koixError",
+      blockType: "reporter",
+      text: "$$koix_error",
+      pycode: "koix.error()"
+    },
+    "---",
+    "## $$koix_face_title",
+    {
+      opcode: "koixFaceRequest",
+      blockType: "command",
+      text: "$$koix_face_request",
+      pycode: "koix.request('FACE')"
+    },
+    {
+      opcode: "koixFaceDetected",
+      blockType: "Boolean",
+      text: "$$koix_face_detected",
+      pycode: "koix.detected('FACE')"
+    },
+    {
+      opcode: "koixFaceCenter",
+      blockType: "Boolean",
+      text: "$$koix_face_center",
+      pycode: "koix.center_detected('FACE')"
+    },
+    {
+      opcode: "koixFaceNearest",
+      blockType: "reporter",
+      text: "$$koix_face_nearest",
+      pycode: "koix.nearest('FACE', [FIELD])",
+      arguments: {
+        FIELD: {
+          type: "string",
+          defaultValue: "id",
+          menu: "faceFields"
+        }
+      }
+    },
+    {
+      opcode: "koixFaceCount",
+      blockType: "reporter",
+      text: "$$koix_face_count",
+      pycode: "koix.count('FACE')"
+    },
+    {
+      opcode: "koixFaceValue",
+      blockType: "reporter",
+      text: "$$koix_face_value",
+      pycode: "koix.value('FACE', [INDEX], [FIELD])",
+      arguments: {
+        INDEX: {
+          type: "number",
+          defaultValue: 1
+        },
+        FIELD: {
+          type: "string",
+          defaultValue: "id",
+          menu: "faceFields"
+        }
+      }
+    },
+    {
+      opcode: "koixFaceIdExists",
+      blockType: "Boolean",
+      text: "$$koix_face_id_exists",
+      pycode: "koix.id_exists('FACE', [ID])",
+      arguments: {
+        ID: {
+          type: "number",
+          defaultValue: 1
+        }
+      }
+    },
+    {
+      opcode: "koixFaceIdCount",
+      blockType: "reporter",
+      text: "$$koix_face_id_count",
+      pycode: "koix.id_count('FACE', [ID])",
+      arguments: {
+        ID: {
+          type: "number",
+          defaultValue: 1
+        }
+      }
+    },
+    {
+      opcode: "koixFaceIdValue",
+      blockType: "reporter",
+      text: "$$koix_face_id_value",
+      pycode: "koix.id_value('FACE', [ID], 1, [FIELD])",
+      arguments: {
+        ID: {
+          type: "number",
+          defaultValue: 1
+        },
+        FIELD: {
+          type: "string",
+          defaultValue: "name",
+          menu: "faceFields"
+        }
+      }
+    },
+    {
+      opcode: "koixFaceIdIndexValue",
+      blockType: "reporter",
+      text: "$$koix_face_id_index_value",
+      pycode: "koix.id_value('FACE', [ID], [INDEX], [FIELD])",
+      arguments: {
+        ID: {
+          type: "number",
+          defaultValue: 1
+        },
+        INDEX: {
+          type: "number",
+          defaultValue: 1
+        },
+        FIELD: {
+          type: "string",
+          defaultValue: "name",
+          menu: "faceFields"
+        }
+      }
+    },
+    {
+      opcode: "koixFaceLearn",
+      blockType: "command",
+      text: "$$koix_face_learn_text",
+      pycode: "koix.learn('FACE', [ID], [LABEL])",
+      arguments: {
+        ID: {
+          type: "number",
+          defaultValue: 1
+        },
+        LABEL: {
+          type: "string",
+          defaultValue: "lily"
+        }
+      }
+    },
+    {
+      opcode: "koixFaceRename",
+      blockType: "command",
+      text: "$$koix_face_rename_text",
+      pycode: "koix.rename('FACE', [ID], [LABEL])",
+      arguments: {
+        ID: {
+          type: "number",
+          defaultValue: 1
+        },
+        LABEL: {
+          type: "string",
+          defaultValue: "lily"
+        }
+      }
+    },
+    {
+      opcode: "koixFaceForget",
+      blockType: "command",
+      text: "$$koix_face_forget_text",
+      pycode: "koix.forget('FACE')"
+    },
+    "---",
+    "## $$koix_object_title",
+    {
+      opcode: "koixObjectRequest",
+      blockType: "command",
+      text: "$$koix_object_request",
+      pycode: "koix.request('OBJECT')"
+    },
+    {
+      opcode: "koixObjectDetected",
+      blockType: "Boolean",
+      text: "$$koix_object_detected",
+      pycode: "koix.detected('OBJECT')"
+    },
+    {
+      opcode: "koixObjectClassDetected",
+      blockType: "Boolean",
+      text: "$$koix_object_class_detected",
+      pycode: "koix.id_exists('OBJECT', [TYPE])",
+      arguments: {
+        TYPE: {
+          type: "number",
+          defaultValue: 0,
+          menu: "objectClasses"
+        }
+      }
+    },
+    {
+      opcode: "koixObjectCenter",
+      blockType: "Boolean",
+      text: "$$koix_object_center",
+      pycode: "koix.center_detected('OBJECT')"
+    },
+    {
+      opcode: "koixObjectNearest",
+      blockType: "reporter",
+      text: "$$koix_object_nearest",
+      pycode: "koix.nearest('OBJECT', [FIELD])",
+      arguments: {
+        FIELD: {
+          type: "string",
+          defaultValue: "id",
+          menu: "objectFields"
+        }
+      }
+    },
+    {
+      opcode: "koixObjectCount",
+      blockType: "reporter",
+      text: "$$koix_object_count",
+      pycode: "koix.count('OBJECT')"
+    },
+    {
+      opcode: "koixObjectValue",
+      blockType: "reporter",
+      text: "$$koix_object_value",
+      pycode: "koix.value('OBJECT', [INDEX], [FIELD])",
+      arguments: {
+        INDEX: {
+          type: "number",
+          defaultValue: 1
+        },
+        FIELD: {
+          type: "string",
+          defaultValue: "id",
+          menu: "objectFields"
+        }
+      }
+    },
+    {
+      opcode: "koixObjectIdExists",
+      blockType: "Boolean",
+      text: "$$koix_object_id_exists",
+      pycode: "koix.id_exists('OBJECT', [ID])",
+      arguments: {
+        ID: {
+          type: "number",
+          defaultValue: 1
+        }
+      }
+    },
+    {
+      opcode: "koixObjectIdCount",
+      blockType: "reporter",
+      text: "$$koix_object_id_count",
+      pycode: "koix.id_count('OBJECT', [ID])",
+      arguments: {
+        ID: {
+          type: "number",
+          defaultValue: 1
+        }
+      }
+    },
+    {
+      opcode: "koixObjectIdValue",
+      blockType: "reporter",
+      text: "$$koix_object_id_value",
+      pycode: "koix.id_value('OBJECT', [ID], 1, [FIELD])",
+      arguments: {
+        ID: {
+          type: "number",
+          defaultValue: 1
+        },
+        FIELD: {
+          type: "string",
+          defaultValue: "name",
+          menu: "objectFields"
+        }
+      }
+    },
+    {
+      opcode: "koixObjectIdIndexValue",
+      blockType: "reporter",
+      text: "$$koix_object_id_index_value",
+      pycode: "koix.id_value('OBJECT', [ID], [INDEX], [FIELD])",
+      arguments: {
+        ID: {
+          type: "number",
+          defaultValue: 1
+        },
+        INDEX: {
+          type: "number",
+          defaultValue: 1
+        },
+        FIELD: {
+          type: "string",
+          defaultValue: "name",
+          menu: "objectFields"
+        }
+      }
+    },
+    "---",
+    "## $$koix_color_title",
+    {
+      opcode: "koixColorRequest",
+      blockType: "command",
+      text: "$$koix_color_request",
+      pycode: "koix.request('COLOR')"
+    },
+    {
+      opcode: "koixColorDetected",
+      blockType: "Boolean",
+      text: "$$koix_color_detected",
+      pycode: "koix.detected('COLOR')"
+    },
+    {
+      opcode: "koixColorCenter",
+      blockType: "Boolean",
+      text: "$$koix_color_center",
+      pycode: "koix.center_detected('COLOR')"
+    },
+    {
+      opcode: "koixColorNearest",
+      blockType: "reporter",
+      text: "$$koix_color_nearest",
+      pycode: "koix.nearest('COLOR', [FIELD])",
+      arguments: {
+        FIELD: {
+          type: "string",
+          defaultValue: "id",
+          menu: "colorFields"
+        }
+      }
+    },
+    {
+      opcode: "koixColorCount",
+      blockType: "reporter",
+      text: "$$koix_color_count",
+      pycode: "koix.count('COLOR')"
+    },
+    {
+      opcode: "koixColorValue",
+      blockType: "reporter",
+      text: "$$koix_color_value",
+      pycode: "koix.value('COLOR', [INDEX], [FIELD])",
+      arguments: {
+        INDEX: {
+          type: "number",
+          defaultValue: 1
+        },
+        FIELD: {
+          type: "string",
+          defaultValue: "id",
+          menu: "colorFields"
+        }
+      }
+    },
+    {
+      opcode: "koixColorIdExists",
+      blockType: "Boolean",
+      text: "$$koix_color_id_exists",
+      pycode: "koix.id_exists('COLOR', [ID])",
+      arguments: {
+        ID: {
+          type: "number",
+          defaultValue: 1
+        }
+      }
+    },
+    {
+      opcode: "koixColorIdCount",
+      blockType: "reporter",
+      text: "$$koix_color_id_count",
+      pycode: "koix.id_count('COLOR', [ID])",
+      arguments: {
+        ID: {
+          type: "number",
+          defaultValue: 1
+        }
+      }
+    },
+    {
+      opcode: "koixColorIdValue",
+      blockType: "reporter",
+      text: "$$koix_color_id_value",
+      pycode: "koix.id_value('COLOR', [ID], 1, [FIELD])",
+      arguments: {
+        ID: {
+          type: "number",
+          defaultValue: 1
+        },
+        FIELD: {
+          type: "string",
+          defaultValue: "name",
+          menu: "colorFields"
+        }
+      }
+    },
+    {
+      opcode: "koixColorIdIndexValue",
+      blockType: "reporter",
+      text: "$$koix_color_id_index_value",
+      pycode: "koix.id_value('COLOR', [ID], [INDEX], [FIELD])",
+      arguments: {
+        ID: {
+          type: "number",
+          defaultValue: 1
+        },
+        INDEX: {
+          type: "number",
+          defaultValue: 1
+        },
+        FIELD: {
+          type: "string",
+          defaultValue: "name",
+          menu: "colorFields"
+        }
+      }
+    },
+    {
+      opcode: "koixColorLearn",
+      blockType: "command",
+      text: "$$koix_color_learn_text",
+      pycode: "koix.learn('COLOR', [ID], [LABEL])",
+      arguments: {
+        ID: {
+          type: "number",
+          defaultValue: 1
+        },
+        LABEL: {
+          type: "string",
+          defaultValue: "lily"
+        }
+      }
+    },
+    {
+      opcode: "koixColorRename",
+      blockType: "command",
+      text: "$$koix_color_rename_text",
+      pycode: "koix.rename('COLOR', [ID], [LABEL])",
+      arguments: {
+        ID: {
+          type: "number",
+          defaultValue: 1
+        },
+        LABEL: {
+          type: "string",
+          defaultValue: "lily"
+        }
+      }
+    },
+    {
+      opcode: "koixColorForget",
+      blockType: "command",
+      text: "$$koix_color_forget_text",
+      pycode: "koix.forget('COLOR')"
+    },
+    "---",
+    "## $$koix_class_title",
+    {
+      opcode: "koixClassRequest",
+      blockType: "command",
+      text: "$$koix_class_request",
+      pycode: "koix.request('CLASS')"
+    },
+    {
+      opcode: "koixClassDetected",
+      blockType: "Boolean",
+      text: "$$koix_class_detected",
+      pycode: "koix.detected('CLASS')"
+    },
+    {
+      opcode: "koixClassValue",
+      blockType: "reporter",
+      text: "$$koix_class_value",
+      pycode: "koix.value('CLASS', 1, [FIELD])",
+      arguments: {
+        FIELD: {
+          type: "string",
+          defaultValue: "id",
+          menu: "classFields"
+        }
+      }
+    },
+    {
+      opcode: "koixClassLearn",
+      blockType: "command",
+      text: "$$koix_class_learn_text",
+      pycode: "koix.learn('CLASS', [ID], [LABEL])",
+      arguments: {
+        ID: {
+          type: "number",
+          defaultValue: 1
+        },
+        LABEL: {
+          type: "string",
+          defaultValue: "lily"
+        }
+      }
+    },
+    {
+      opcode: "koixClassRename",
+      blockType: "command",
+      text: "$$koix_class_rename_text",
+      pycode: "koix.rename('CLASS', [ID], [LABEL])",
+      arguments: {
+        ID: {
+          type: "number",
+          defaultValue: 1
+        },
+        LABEL: {
+          type: "string",
+          defaultValue: "lily"
+        }
+      }
+    },
+    {
+      opcode: "koixClassForget",
+      blockType: "command",
+      text: "$$koix_class_forget_text",
+      pycode: "koix.forget('CLASS')"
+    },
+    "---",
+    "## $$koix_gesture_title",
+    {
+      opcode: "koixGestureRequest",
+      blockType: "command",
+      text: "$$koix_gesture_request",
+      pycode: "koix.request('GESTURE')"
+    },
+    {
+      opcode: "koixGestureDetected",
+      blockType: "Boolean",
+      text: "$$koix_gesture_detected",
+      pycode: "koix.detected('GESTURE')"
+    },
+    {
+      opcode: "koixGestureCenter",
+      blockType: "Boolean",
+      text: "$$koix_gesture_center",
+      pycode: "koix.center_detected('GESTURE')"
+    },
+    {
+      opcode: "koixGestureNearest",
+      blockType: "reporter",
+      text: "$$koix_gesture_nearest",
+      pycode: "koix.nearest('GESTURE', [FIELD])",
+      arguments: {
+        FIELD: {
+          type: "string",
+          defaultValue: "id",
+          menu: "gestureFields"
+        }
+      }
+    },
+    {
+      opcode: "koixGestureCount",
+      blockType: "reporter",
+      text: "$$koix_gesture_count",
+      pycode: "koix.count('GESTURE')"
+    },
+    {
+      opcode: "koixGestureValue",
+      blockType: "reporter",
+      text: "$$koix_gesture_value",
+      pycode: "koix.value('GESTURE', [INDEX], [FIELD])",
+      arguments: {
+        INDEX: {
+          type: "number",
+          defaultValue: 1
+        },
+        FIELD: {
+          type: "string",
+          defaultValue: "id",
+          menu: "gestureFields"
+        }
+      }
+    },
+    {
+      opcode: "koixGestureIdExists",
+      blockType: "Boolean",
+      text: "$$koix_gesture_id_exists",
+      pycode: "koix.id_exists('GESTURE', [ID])",
+      arguments: {
+        ID: {
+          type: "number",
+          defaultValue: 1
+        }
+      }
+    },
+    {
+      opcode: "koixGestureIdCount",
+      blockType: "reporter",
+      text: "$$koix_gesture_id_count",
+      pycode: "koix.id_count('GESTURE', [ID])",
+      arguments: {
+        ID: {
+          type: "number",
+          defaultValue: 1
+        }
+      }
+    },
+    {
+      opcode: "koixGestureIdValue",
+      blockType: "reporter",
+      text: "$$koix_gesture_id_value",
+      pycode: "koix.id_value('GESTURE', [ID], 1, [FIELD])",
+      arguments: {
+        ID: {
+          type: "number",
+          defaultValue: 1
+        },
+        FIELD: {
+          type: "string",
+          defaultValue: "name",
+          menu: "gestureFields"
+        }
+      }
+    },
+    {
+      opcode: "koixGestureIdIndexValue",
+      blockType: "reporter",
+      text: "$$koix_gesture_id_index_value",
+      pycode: "koix.id_value('GESTURE', [ID], [INDEX], [FIELD])",
+      arguments: {
+        ID: {
+          type: "number",
+          defaultValue: 1
+        },
+        INDEX: {
+          type: "number",
+          defaultValue: 1
+        },
+        FIELD: {
+          type: "string",
+          defaultValue: "name",
+          menu: "gestureFields"
+        }
+      }
+    },
+    {
+      opcode: "koixGestureLearn",
+      blockType: "command",
+      text: "$$koix_gesture_learn_text",
+      pycode: "koix.learn('GESTURE', [ID], [LABEL])",
+      arguments: {
+        ID: {
+          type: "number",
+          defaultValue: 1
+        },
+        LABEL: {
+          type: "string",
+          defaultValue: "lily"
+        }
+      }
+    },
+    {
+      opcode: "koixGestureRename",
+      blockType: "command",
+      text: "$$koix_gesture_rename_text",
+      pycode: "koix.rename('GESTURE', [ID], [LABEL])",
+      arguments: {
+        ID: {
+          type: "number",
+          defaultValue: 1
+        },
+        LABEL: {
+          type: "string",
+          defaultValue: "lily"
+        }
+      }
+    },
+    {
+      opcode: "koixGestureForget",
+      blockType: "command",
+      text: "$$koix_gesture_forget_text",
+      pycode: "koix.forget('GESTURE')"
+    },
+    "---",
+    "## $$koix_pose_title",
+    {
+      opcode: "koixPoseRequest",
+      blockType: "command",
+      text: "$$koix_pose_request",
+      pycode: "koix.request('POSE')"
+    },
+    {
+      opcode: "koixPoseDetected",
+      blockType: "Boolean",
+      text: "$$koix_pose_detected",
+      pycode: "koix.detected('POSE')"
+    },
+    {
+      opcode: "koixPoseCenter",
+      blockType: "Boolean",
+      text: "$$koix_pose_center",
+      pycode: "koix.center_detected('POSE')"
+    },
+    {
+      opcode: "koixPoseNearest",
+      blockType: "reporter",
+      text: "$$koix_pose_nearest",
+      pycode: "koix.nearest('POSE', [FIELD])",
+      arguments: {
+        FIELD: {
+          type: "string",
+          defaultValue: "id",
+          menu: "poseFields"
+        }
+      }
+    },
+    {
+      opcode: "koixPoseCount",
+      blockType: "reporter",
+      text: "$$koix_pose_count",
+      pycode: "koix.count('POSE')"
+    },
+    {
+      opcode: "koixPoseValue",
+      blockType: "reporter",
+      text: "$$koix_pose_value",
+      pycode: "koix.value('POSE', [INDEX], [FIELD])",
+      arguments: {
+        INDEX: {
+          type: "number",
+          defaultValue: 1
+        },
+        FIELD: {
+          type: "string",
+          defaultValue: "id",
+          menu: "poseFields"
+        }
+      }
+    },
+    {
+      opcode: "koixPoseIdExists",
+      blockType: "Boolean",
+      text: "$$koix_pose_id_exists",
+      pycode: "koix.id_exists('POSE', [ID])",
+      arguments: {
+        ID: {
+          type: "number",
+          defaultValue: 1
+        }
+      }
+    },
+    {
+      opcode: "koixPoseIdCount",
+      blockType: "reporter",
+      text: "$$koix_pose_id_count",
+      pycode: "koix.id_count('POSE', [ID])",
+      arguments: {
+        ID: {
+          type: "number",
+          defaultValue: 1
+        }
+      }
+    },
+    {
+      opcode: "koixPoseIdValue",
+      blockType: "reporter",
+      text: "$$koix_pose_id_value",
+      pycode: "koix.id_value('POSE', [ID], 1, [FIELD])",
+      arguments: {
+        ID: {
+          type: "number",
+          defaultValue: 1
+        },
+        FIELD: {
+          type: "string",
+          defaultValue: "name",
+          menu: "poseFields"
+        }
+      }
+    },
+    {
+      opcode: "koixPoseIdIndexValue",
+      blockType: "reporter",
+      text: "$$koix_pose_id_index_value",
+      pycode: "koix.id_value('POSE', [ID], [INDEX], [FIELD])",
+      arguments: {
+        ID: {
+          type: "number",
+          defaultValue: 1
+        },
+        INDEX: {
+          type: "number",
+          defaultValue: 1
+        },
+        FIELD: {
+          type: "string",
+          defaultValue: "name",
+          menu: "poseFields"
+        }
+      }
+    },
+    {
+      opcode: "koixPoseLearn",
+      blockType: "command",
+      text: "$$koix_pose_learn_text",
+      pycode: "koix.learn('POSE', [ID], [LABEL])",
+      arguments: {
+        ID: {
+          type: "number",
+          defaultValue: 1
+        },
+        LABEL: {
+          type: "string",
+          defaultValue: "lily"
+        }
+      }
+    },
+    {
+      opcode: "koixPoseRename",
+      blockType: "command",
+      text: "$$koix_pose_rename_text",
+      pycode: "koix.rename('POSE', [ID], [LABEL])",
+      arguments: {
+        ID: {
+          type: "number",
+          defaultValue: 1
+        },
+        LABEL: {
+          type: "string",
+          defaultValue: "lily"
+        }
+      }
+    },
+    {
+      opcode: "koixPoseForget",
+      blockType: "command",
+      text: "$$koix_pose_forget_text",
+      pycode: "koix.forget('POSE')"
+    },
+    "---",
+    "## $$koix_falldown_title",
+    {
+      opcode: "koixFalldownRequest",
+      blockType: "command",
+      text: "$$koix_falldown_request",
+      pycode: "koix.request('FALLDOWN')"
+    },
+    {
+      opcode: "koixFalldownDetected",
+      blockType: "Boolean",
+      text: "$$koix_falldown_detected",
+      pycode: "koix.detected('FALLDOWN')"
+    },
+    {
+      opcode: "koixFalldownCenter",
+      blockType: "Boolean",
+      text: "$$koix_falldown_center",
+      pycode: "koix.center_detected('FALLDOWN')"
+    },
+    {
+      opcode: "koixFalldownNearest",
+      blockType: "reporter",
+      text: "$$koix_falldown_nearest",
+      pycode: "koix.nearest('FALLDOWN', [FIELD])",
+      arguments: {
+        FIELD: {
+          type: "string",
+          defaultValue: "state",
+          menu: "falldownFields"
+        }
+      }
+    },
+    {
+      opcode: "koixFalldownCount",
+      blockType: "reporter",
+      text: "$$koix_falldown_count",
+      pycode: "koix.count('FALLDOWN')"
+    },
+    {
+      opcode: "koixFalldownValue",
+      blockType: "reporter",
+      text: "$$koix_falldown_value",
+      pycode: "koix.value('FALLDOWN', [INDEX], [FIELD])",
+      arguments: {
+        INDEX: {
+          type: "number",
+          defaultValue: 1
+        },
+        FIELD: {
+          type: "string",
+          defaultValue: "state",
+          menu: "falldownFields"
+        }
+      }
+    },
+    "---",
+    "## $$koix_license_plate_title",
+    {
+      opcode: "koixLicensePlateRequest",
+      blockType: "command",
+      text: "$$koix_license_plate_request",
+      pycode: "koix.request('LICENSE_PLATE')"
+    },
+    {
+      opcode: "koixLicensePlateDetected",
+      blockType: "Boolean",
+      text: "$$koix_license_plate_detected",
+      pycode: "koix.detected('LICENSE_PLATE')"
+    },
+    {
+      opcode: "koixLicensePlateCenter",
+      blockType: "Boolean",
+      text: "$$koix_license_plate_center",
+      pycode: "koix.center_detected('LICENSE_PLATE')"
+    },
+    {
+      opcode: "koixLicensePlateNearest",
+      blockType: "reporter",
+      text: "$$koix_license_plate_nearest",
+      pycode: "koix.nearest('LICENSE_PLATE', [FIELD])",
+      arguments: {
+        FIELD: {
+          type: "string",
+          defaultValue: "plate",
+          menu: "license_plateFields"
+        }
+      }
+    },
+    {
+      opcode: "koixLicensePlateCount",
+      blockType: "reporter",
+      text: "$$koix_license_plate_count",
+      pycode: "koix.count('LICENSE_PLATE')"
+    },
+    {
+      opcode: "koixLicensePlateValue",
+      blockType: "reporter",
+      text: "$$koix_license_plate_value",
+      pycode: "koix.value('LICENSE_PLATE', [INDEX], [FIELD])",
+      arguments: {
+        INDEX: {
+          type: "number",
+          defaultValue: 1
+        },
+        FIELD: {
+          type: "string",
+          defaultValue: "plate",
+          menu: "license_plateFields"
+        }
+      }
+    },
+    "---",
+    "## $$koix_ocr_title",
+    {
+      opcode: "koixOCRRequest",
+      blockType: "command",
+      text: "$$koix_ocr_request",
+      pycode: "koix.request('OCR')"
+    },
+    {
+      opcode: "koixOCRDetected",
+      blockType: "Boolean",
+      text: "$$koix_ocr_detected",
+      pycode: "koix.detected('OCR')"
+    },
+    {
+      opcode: "koixOCRCenter",
+      blockType: "Boolean",
+      text: "$$koix_ocr_center",
+      pycode: "koix.center_detected('OCR')"
+    },
+    {
+      opcode: "koixOCRNearest",
+      blockType: "reporter",
+      text: "$$koix_ocr_nearest",
+      pycode: "koix.nearest('OCR', [FIELD])",
+      arguments: {
+        FIELD: {
+          type: "string",
+          defaultValue: "text",
+          menu: "ocrFields"
+        }
+      }
+    },
+    {
+      opcode: "koixOCRCount",
+      blockType: "reporter",
+      text: "$$koix_ocr_count",
+      pycode: "koix.count('OCR')"
+    },
+    {
+      opcode: "koixOCRValue",
+      blockType: "reporter",
+      text: "$$koix_ocr_value",
+      pycode: "koix.value('OCR', [INDEX], [FIELD])",
+      arguments: {
+        INDEX: {
+          type: "number",
+          defaultValue: 1
+        },
+        FIELD: {
+          type: "string",
+          defaultValue: "text",
+          menu: "ocrFields"
+        }
+      }
+    },
+    "---",
+    "## $$koix_followline_title",
+    {
+      opcode: "koixFollowLineRequest",
+      blockType: "command",
+      text: "$$koix_followline_request",
+      pycode: "koix.request('FOLLOWLINE')"
+    },
+    {
+      opcode: "koixFollowLineDetected",
+      blockType: "Boolean",
+      text: "$$koix_followline_detected",
+      pycode: "koix.detected('FOLLOWLINE')"
+    },
+    {
+      opcode: "koixFollowLineValue",
+      blockType: "reporter",
+      text: "$$koix_followline_value",
+      pycode: "koix.value('FOLLOWLINE', 1, [FIELD])",
+      arguments: {
+        FIELD: {
+          type: "string",
+          defaultValue: "offset",
+          menu: "followlineFields"
+        }
+      }
+    },
+    "---",
+    "## $$koix_apriltag_title",
+    {
+      opcode: "koixAprilTagRequest",
+      blockType: "command",
+      text: "$$koix_apriltag_request",
+      pycode: "koix.request('APRILTAG')"
+    },
+    {
+      opcode: "koixAprilTagDetected",
+      blockType: "Boolean",
+      text: "$$koix_apriltag_detected",
+      pycode: "koix.detected('APRILTAG')"
+    },
+    {
+      opcode: "koixAprilTagCenter",
+      blockType: "Boolean",
+      text: "$$koix_apriltag_center",
+      pycode: "koix.center_detected('APRILTAG')"
+    },
+    {
+      opcode: "koixAprilTagNearest",
+      blockType: "reporter",
+      text: "$$koix_apriltag_nearest",
+      pycode: "koix.nearest('APRILTAG', [FIELD])",
+      arguments: {
+        FIELD: {
+          type: "string",
+          defaultValue: "id",
+          menu: "apriltagFields"
+        }
+      }
+    },
+    {
+      opcode: "koixAprilTagCount",
+      blockType: "reporter",
+      text: "$$koix_apriltag_count",
+      pycode: "koix.count('APRILTAG')"
+    },
+    {
+      opcode: "koixAprilTagValue",
+      blockType: "reporter",
+      text: "$$koix_apriltag_value",
+      pycode: "koix.value('APRILTAG', [INDEX], [FIELD])",
+      arguments: {
+        INDEX: {
+          type: "number",
+          defaultValue: 1
+        },
+        FIELD: {
+          type: "string",
+          defaultValue: "id",
+          menu: "apriltagFields"
+        }
+      }
+    },
+    {
+      opcode: "koixAprilTagIdExists",
+      blockType: "Boolean",
+      text: "$$koix_apriltag_id_exists",
+      pycode: "koix.id_exists('APRILTAG', [ID])",
+      arguments: {
+        ID: {
+          type: "number",
+          defaultValue: 1
+        }
+      }
+    },
+    {
+      opcode: "koixAprilTagIdCount",
+      blockType: "reporter",
+      text: "$$koix_apriltag_id_count",
+      pycode: "koix.id_count('APRILTAG', [ID])",
+      arguments: {
+        ID: {
+          type: "number",
+          defaultValue: 1
+        }
+      }
+    },
+    {
+      opcode: "koixAprilTagIdValue",
+      blockType: "reporter",
+      text: "$$koix_apriltag_id_value",
+      pycode: "koix.id_value('APRILTAG', [ID], 1, [FIELD])",
+      arguments: {
+        ID: {
+          type: "number",
+          defaultValue: 1
+        },
+        FIELD: {
+          type: "string",
+          defaultValue: "name",
+          menu: "apriltagFields"
+        }
+      }
+    },
+    {
+      opcode: "koixAprilTagIdIndexValue",
+      blockType: "reporter",
+      text: "$$koix_apriltag_id_index_value",
+      pycode: "koix.id_value('APRILTAG', [ID], [INDEX], [FIELD])",
+      arguments: {
+        ID: {
+          type: "number",
+          defaultValue: 1
+        },
+        INDEX: {
+          type: "number",
+          defaultValue: 1
+        },
+        FIELD: {
+          type: "string",
+          defaultValue: "name",
+          menu: "apriltagFields"
+        }
+      }
+    },
+    "---",
+    "## $$koix_qrcode_title",
+    {
+      opcode: "koixQRCodeRequest",
+      blockType: "command",
+      text: "$$koix_qrcode_request",
+      pycode: "koix.request('QRCODE')"
+    },
+    {
+      opcode: "koixQRCodeDetected",
+      blockType: "Boolean",
+      text: "$$koix_qrcode_detected",
+      pycode: "koix.detected('QRCODE')"
+    },
+    {
+      opcode: "koixQRCodeCenter",
+      blockType: "Boolean",
+      text: "$$koix_qrcode_center",
+      pycode: "koix.center_detected('QRCODE')"
+    },
+    {
+      opcode: "koixQRCodeNearest",
+      blockType: "reporter",
+      text: "$$koix_qrcode_nearest",
+      pycode: "koix.nearest('QRCODE', [FIELD])",
+      arguments: {
+        FIELD: {
+          type: "string",
+          defaultValue: "content",
+          menu: "qrcodeFields"
+        }
+      }
+    },
+    {
+      opcode: "koixQRCodeCount",
+      blockType: "reporter",
+      text: "$$koix_qrcode_count",
+      pycode: "koix.count('QRCODE')"
+    },
+    {
+      opcode: "koixQRCodeValue",
+      blockType: "reporter",
+      text: "$$koix_qrcode_value",
+      pycode: "koix.value('QRCODE', [INDEX], [FIELD])",
+      arguments: {
+        INDEX: {
+          type: "number",
+          defaultValue: 1
+        },
+        FIELD: {
+          type: "string",
+          defaultValue: "content",
+          menu: "qrcodeFields"
+        }
+      }
+    },
+    "---",
+    "## $$koix_barcode_title",
+    {
+      opcode: "koixBarcodeRequest",
+      blockType: "command",
+      text: "$$koix_barcode_request",
+      pycode: "koix.request('BARCODE')"
+    },
+    {
+      opcode: "koixBarcodeDetected",
+      blockType: "Boolean",
+      text: "$$koix_barcode_detected",
+      pycode: "koix.detected('BARCODE')"
+    },
+    {
+      opcode: "koixBarcodeCenter",
+      blockType: "Boolean",
+      text: "$$koix_barcode_center",
+      pycode: "koix.center_detected('BARCODE')"
+    },
+    {
+      opcode: "koixBarcodeNearest",
+      blockType: "reporter",
+      text: "$$koix_barcode_nearest",
+      pycode: "koix.nearest('BARCODE', [FIELD])",
+      arguments: {
+        FIELD: {
+          type: "string",
+          defaultValue: "content",
+          menu: "barcodeFields"
+        }
+      }
+    },
+    {
+      opcode: "koixBarcodeCount",
+      blockType: "reporter",
+      text: "$$koix_barcode_count",
+      pycode: "koix.count('BARCODE')"
+    },
+    {
+      opcode: "koixBarcodeValue",
+      blockType: "reporter",
+      text: "$$koix_barcode_value",
+      pycode: "koix.value('BARCODE', [INDEX], [FIELD])",
+      arguments: {
+        INDEX: {
+          type: "number",
+          defaultValue: 1
+        },
+        FIELD: {
+          type: "string",
+          defaultValue: "content",
+          menu: "barcodeFields"
+        }
+      }
+    },
+    "---",
+    "## $$koix_traffic_sign_title",
+    {
+      opcode: "koixTrafficSignRequest",
+      blockType: "command",
+      text: "$$koix_traffic_sign_request",
+      pycode: "koix.request('TRAFFIC_SIGN')"
+    },
+    {
+      opcode: "koixTrafficSignDetected",
+      blockType: "Boolean",
+      text: "$$koix_traffic_sign_detected",
+      pycode: "koix.detected('TRAFFIC_SIGN')"
+    },
+    {
+      opcode: "koixTrafficSignCenter",
+      blockType: "Boolean",
+      text: "$$koix_traffic_sign_center",
+      pycode: "koix.center_detected('TRAFFIC_SIGN')"
+    },
+    {
+      opcode: "koixTrafficSignNearest",
+      blockType: "reporter",
+      text: "$$koix_traffic_sign_nearest",
+      pycode: "koix.nearest('TRAFFIC_SIGN', [FIELD])",
+      arguments: {
+        FIELD: {
+          type: "string",
+          defaultValue: "id",
+          menu: "traffic_signFields"
+        }
+      }
+    },
+    {
+      opcode: "koixTrafficSignCount",
+      blockType: "reporter",
+      text: "$$koix_traffic_sign_count",
+      pycode: "koix.count('TRAFFIC_SIGN')"
+    },
+    {
+      opcode: "koixTrafficSignValue",
+      blockType: "reporter",
+      text: "$$koix_traffic_sign_value",
+      pycode: "koix.value('TRAFFIC_SIGN', [INDEX], [FIELD])",
+      arguments: {
+        INDEX: {
+          type: "number",
+          defaultValue: 1
+        },
+        FIELD: {
+          type: "string",
+          defaultValue: "id",
+          menu: "traffic_signFields"
+        }
+      }
+    },
+    {
+      opcode: "koixTrafficSignIdExists",
+      blockType: "Boolean",
+      text: "$$koix_traffic_sign_id_exists",
+      pycode: "koix.id_exists('TRAFFIC_SIGN', [ID])",
+      arguments: {
+        ID: {
+          type: "number",
+          defaultValue: 1
+        }
+      }
+    },
+    {
+      opcode: "koixTrafficSignIdCount",
+      blockType: "reporter",
+      text: "$$koix_traffic_sign_id_count",
+      pycode: "koix.id_count('TRAFFIC_SIGN', [ID])",
+      arguments: {
+        ID: {
+          type: "number",
+          defaultValue: 1
+        }
+      }
+    },
+    {
+      opcode: "koixTrafficSignIdValue",
+      blockType: "reporter",
+      text: "$$koix_traffic_sign_id_value",
+      pycode: "koix.id_value('TRAFFIC_SIGN', [ID], 1, [FIELD])",
+      arguments: {
+        ID: {
+          type: "number",
+          defaultValue: 1
+        },
+        FIELD: {
+          type: "string",
+          defaultValue: "name",
+          menu: "traffic_signFields"
+        }
+      }
+    },
+    {
+      opcode: "koixTrafficSignIdIndexValue",
+      blockType: "reporter",
+      text: "$$koix_traffic_sign_id_index_value",
+      pycode: "koix.id_value('TRAFFIC_SIGN', [ID], [INDEX], [FIELD])",
+      arguments: {
+        ID: {
+          type: "number",
+          defaultValue: 1
+        },
+        INDEX: {
+          type: "number",
+          defaultValue: 1
+        },
+        FIELD: {
+          type: "string",
+          defaultValue: "name",
+          menu: "traffic_signFields"
+        }
+      }
+    },
+    "---",
+    "## $$koix_rgb_title",
+    {
+      opcode: "koixRgbAllColor",
+      blockType: "command",
+      text: "$$koix_rgb_all_color",
+      pycode: "koix.rgb_all([COLOR])",
+      arguments: {
+        COLOR: {
+          type: "colorrgb",
+          defaultValue: "#ff0000"
+        }
+      }
+    },
+    {
+      opcode: "koixRgbAllChannels",
+      blockType: "command",
+      text: "$$koix_rgb_all_channels",
+      pycode: "koix.rgb_all(([RED], [GREEN], [BLUE]))",
+      arguments: {
+        RED: {
+          type: "slider",
+          defaultValue: 255,
+          min: 0,
+          max: 255
+        },
+        GREEN: {
+          type: "slider",
+          defaultValue: 0,
+          min: 0,
+          max: 255
+        },
+        BLUE: {
+          type: "slider",
+          defaultValue: 0,
+          min: 0,
+          max: 255
+        }
+      }
+    },
+    {
+      opcode: "koixRgbPixelColor",
+      blockType: "command",
+      text: "$$koix_rgb_pixel_color",
+      pycode: "koix.rgb_pixel([INDEX], [COLOR])",
+      arguments: {
+        INDEX: {
+          type: "number",
+          defaultValue: 0
+        },
+        COLOR: {
+          type: "colorrgb",
+          defaultValue: "#0000ff"
+        }
+      }
+    },
+    {
+      opcode: "koixRgbPixelChannels",
+      blockType: "command",
+      text: "$$koix_rgb_pixel_channels",
+      pycode: "koix.rgb_pixel([INDEX], ([RED], [GREEN], [BLUE]))",
+      arguments: {
+        INDEX: {
+          type: "number",
+          defaultValue: 0
+        },
+        RED: {
+          type: "slider",
+          defaultValue: 0,
+          min: 0,
+          max: 255
+        },
+        GREEN: {
+          type: "slider",
+          defaultValue: 0,
+          min: 0,
+          max: 255
+        },
+        BLUE: {
+          type: "slider",
+          defaultValue: 255,
+          min: 0,
+          max: 255
+        }
+      }
+    },
+    {
+      opcode: "koixRgbPixelOff",
+      blockType: "command",
+      text: "$$koix_rgb_pixel_off",
+      pycode: "koix.rgb_pixel_off([INDEX])",
+      arguments: {
+        INDEX: {
+          type: "number",
+          defaultValue: 0
+        }
+      }
+    },
+    {
+      opcode: "koixRgbOff",
+      blockType: "command",
+      text: "$$koix_rgb_off",
+      pycode: "koix.rgb_off()"
+    },
+    {
+      opcode: "koixRgbAnimation",
+      blockType: "command",
+      text: "$$koix_rgb_animation",
+      pycode: "koix.rgb_animation([ANIMATION], [CYCLES])",
+      arguments: {
+        ANIMATION: {
+          type: "string",
+          defaultValue: "WARM_BREATH",
+          menu: "rgbAnimations"
+        },
+        CYCLES: {
+          type: "number",
+          defaultValue: 1
+        }
+      }
+    },
+    {
+      opcode: "koixRgbStop",
+      blockType: "command",
+      text: "$$koix_rgb_stop",
+      pycode: "koix.rgb_stop()"
+    },
+    {
+      opcode: "koixRgbBusy",
+      blockType: "Boolean",
+      text: "$$koix_rgb_busy",
+      pycode: "koix.rgb_busy()"
+    },
+    {
+      opcode: "koixRgbState",
+      blockType: "reporter",
+      text: "$$koix_rgb_state",
+      pycode: "koix.rgb_state()"
+    },
+    {
+      opcode: "koixRgbEffect",
+      blockType: "reporter",
+      text: "$$koix_rgb_effect",
+      pycode: "koix.rgb_effect()"
+    },
+    {
+      opcode: "koixRgbError",
+      blockType: "reporter",
+      text: "$$koix_rgb_error",
+      pycode: "koix.rgb_error()"
+    },
+    "---",
+    "## $$koix_audio_title",
+    {
+      opcode: "koixBuzzerTone",
+      blockType: "command",
+      text: "$$koix_buzzer_tone",
+      pycode: "koix.tone([FREQUENCY], [DURATION])",
+      arguments: {
+        FREQUENCY: {
+          type: "number",
+          defaultValue: 440
+        },
+        DURATION: {
+          type: "number",
+          defaultValue: 0.5
+        }
+      }
+    },
+    {
+      opcode: "koixBuzzerNote",
+      blockType: "command",
+      text: "$$koix_buzzer_note",
+      pycode: "koix.note([NOTE], [DURATION])",
+      arguments: {
+        NOTE: {
+          type: "string",
+          defaultValue: "c5"
+        },
+        DURATION: {
+          type: "number",
+          defaultValue: 0.5
+        }
+      }
+    },
+    {
+      opcode: "koixBuzzerRest",
+      blockType: "command",
+      text: "$$koix_buzzer_rest",
+      pycode: "koix.rest([DURATION])",
+      arguments: {
+        DURATION: {
+          type: "number",
+          defaultValue: 0.5
+        }
+      }
+    },
+    {
+      opcode: "koixBuzzerMelody",
+      blockType: "command",
+      text: "$$koix_buzzer_melody",
+      pycode: "koix.melody([MELODY], [BPM])",
+      arguments: {
+        MELODY: {
+          type: "string",
+          defaultValue: "CORRECT",
+          menu: "audioMelodies"
+        },
+        BPM: {
+          type: "number",
+          defaultValue: 120
+        }
+      }
+    },
+    {
+      opcode: "koixBuzzerScore",
+      blockType: "command",
+      text: "$$koix_buzzer_score",
+      pycode: "koix.melody([SCORE], [BPM])",
+      arguments: {
+        SCORE: {
+          type: "string",
+          defaultValue: "c5:1 d e r:2 g:4"
+        },
+        BPM: {
+          type: "number",
+          defaultValue: 120
+        }
+      }
+    },
+    {
+      opcode: "koixBuzzerVolume",
+      blockType: "command",
+      text: "$$koix_buzzer_volume",
+      pycode: "koix.set_volume([VOLUME])",
+      arguments: {
+        VOLUME: {
+          type: "number",
+          defaultValue: 80
+        }
+      }
+    },
+    {
+      opcode: "koixAudioPlayFile",
+      blockType: "command",
+      text: "$$koix_audio_play_file",
+      pycode: "koix.play_file([PATH])",
+      arguments: {
+        PATH: {
+          type: "string",
+          defaultValue: "/data/music/01.wav"
+        }
+      }
+    },
+    {
+      opcode: "koixAudioPlayDir",
+      blockType: "command",
+      text: "$$koix_audio_play_dir",
+      pycode: "koix.play_dir([DIRECTORY], [SELECTION])",
+      arguments: {
+        DIRECTORY: {
+          type: "string",
+          defaultValue: "/data/music"
+        },
+        SELECTION: {
+          type: "string",
+          defaultValue: "ALL"
+        }
+      }
+    },
+    {
+      opcode: "koixAudioList",
+      blockType: "reporter",
+      text: "$$koix_audio_list",
+      pycode: "koix.audio_list_text([DIRECTORY], [OFFSET], [LIMIT])",
+      arguments: {
+        DIRECTORY: {
+          type: "string",
+          defaultValue: "/data/music"
+        },
+        OFFSET: {
+          type: "number",
+          defaultValue: 0
+        },
+        LIMIT: {
+          type: "number",
+          defaultValue: 8
+        }
+      }
+    },
+    {
+      opcode: "koixAudioStop",
+      blockType: "command",
+      text: "$$koix_audio_stop",
+      pycode: "koix.audio_stop()"
+    },
+    {
+      opcode: "koixAudioBusy",
+      blockType: "Boolean",
+      text: "$$koix_audio_busy",
+      pycode: "koix.audio_busy()"
+    },
+    {
+      opcode: "koixAudioState",
+      blockType: "reporter",
+      text: "$$koix_audio_state",
+      pycode: "koix.audio_state()"
+    },
+    {
+      opcode: "koixAudioError",
+      blockType: "reporter",
+      text: "$$koix_audio_error",
+      pycode: "koix.audio_error()"
+    },
+    "---",
+    "## $$koix_mic_title",
+    {
+      opcode: "koixMicRecord",
+      blockType: "command",
+      text: "$$koix_mic_record",
+      pycode: "koix.record([DURATION], [FILENAME])",
+      arguments: {
+        DURATION: {
+          type: "slider",
+          defaultValue: 5,
+          min: 1,
+          max: 60
+        },
+        FILENAME: {
+          type: "string",
+          defaultValue: "voice.wav"
+        }
+      }
+    },
+    {
+      opcode: "koixMicLevel",
+      blockType: "reporter",
+      text: "$$koix_mic_level",
+      pycode: "koix.sound_level()"
+    },
+    // {
+    //   opcode: "koixMicBusy",
+    //   blockType: "Boolean",
+    //   text: "$$koix_mic_busy",
+    //   pycode: "koix.mic_busy()"
+    // },
+    "---",
+    "## $$koix_title_advanced",
+    {
+      opcode: "koixStream",
+      blockType: "command",
+      text: "$$koix_stream",
+      pycode: "koix.set_stream([ENABLE])",
+      arguments: {
+        ENABLE: {
+          type: "value",
+          defaultValue: "True",
+          menu: "switch"
+        }
+      }
+    },
+    {
+      opcode: "koixVersion",
+      blockType: "reporter",
+      text: "$$koix_version",
+      pycode: "koix.version_text()"
+    },
+    {
+      opcode: "koixCaps",
+      blockType: "reporter",
+      text: "$$koix_caps",
+      pycode: "koix.caps_text()"
+    },
+    {
+      opcode: "koixParamList",
+      blockType: "reporter",
+      text: "$$koix_param_list",
+      pycode: "koix.param_text()"
+    },
+    {
+      opcode: "koixParamGet",
+      blockType: "reporter",
+      text: "$$koix_param_get",
+      pycode: "koix.param_value([INDEX])",
+      arguments: {
+        INDEX: {
+          type: "number",
+          defaultValue: 0
+        }
+      }
+    },
+    {
+      opcode: "koixParamSet",
+      blockType: "Boolean",
+      text: "$$koix_param_set",
+      pycode: "koix.param_set([INDEX], [VALUE])",
+      arguments: {
+        INDEX: {
+          type: "number",
+          defaultValue: 0
+        },
+        VALUE: {
+          type: "string",
+          defaultValue: "0"
+        }
+      }
+    },
+    {
+      opcode: "koixRaw",
+      blockType: "reporter",
+      text: "$$koix_raw",
+      pycode: "koix.send([COMMAND])",
+      arguments: {
+        COMMAND: {
+          type: "string",
+          defaultValue: "CAPS?"
+        }
+      }
+    }
+  ],
+  menus: {
+    uartPort: [
+      {
+        value: "uart0",
+        text: "UART0"
+      },
+      {
+        value: "uart1",
+        text: "UART1"
+      }
+    ],
+    apps: [
+      {
+        value: "face",
+        text: "$$koix_app_face"
+      },
+      {
+        value: "object",
+        text: "$$koix_app_object"
+      },
+      {
+        value: "color",
+        text: "$$koix_app_color"
+      },
+      {
+        value: "self_learning",
+        text: "$$koix_app_self_learning"
+      },
+      {
+        value: "gesture",
+        text: "$$koix_app_gesture"
+      },
+      {
+        value: "pose",
+        text: "$$koix_app_pose"
+      },
+      {
+        value: "falldown",
+        text: "$$koix_app_falldown"
+      },
+      {
+        value: "license_plate",
+        text: "$$koix_app_license_plate"
+      },
+      {
+        value: "ocr",
+        text: "$$koix_app_ocr"
+      },
+      {
+        value: "followline",
+        text: "$$koix_app_followline"
+      },
+      {
+        value: "apriltag",
+        text: "$$koix_app_apriltag"
+      },
+      {
+        value: "qrcode",
+        text: "$$koix_app_qrcode"
+      },
+      {
+        value: "barcode",
+        text: "$$koix_app_barcode"
+      },
+      {
+        value: "traffic_sign",
+        text: "$$koix_app_traffic_sign"
+      }
+    ],
+    switch: [
+      {
+        value: "True",
+        text: "$$koix_on"
+      },
+      {
+        value: "False",
+        text: "$$koix_off"
+      }
+    ],
+    rgbAnimations: [
+      { value: "WARM_BREATH", text: "$$koix_rgb_animation_warm_breath" },
+      { value: "RAINBOW_GLOW", text: "$$koix_rgb_animation_rainbow_glow" },
+      { value: "WARNING_FLASH", text: "$$koix_rgb_animation_warning_flash" },
+      { value: "CORRECT_FLASH", text: "$$koix_rgb_animation_correct_flash" }
+    ],
+    audioMelodies: [
+      { value: "SILENT", text: "$$koix_melody_silent" },
+      { value: "CORRECT", text: "$$koix_melody_correct" },
+      { value: "ERROR", text: "$$koix_melody_error" },
+      { value: "NOTICE", text: "$$koix_melody_notice" },
+      { value: "BA_DING", text: "BA_DING" },
+      { value: "JUMP_UP", text: "JUMP_UP" },
+      { value: "JUMP_DOWN", text: "JUMP_DOWN" },
+      { value: "POWER_UP", text: "POWER_UP" },
+      { value: "POWER_DOWN", text: "POWER_DOWN" },
+      { value: "BADDY", text: "BADDY" },
+      { value: "DADA", text: "DADA" },
+      { value: "WAWA", text: "WAWA" },
+      { value: "PUNCHLINE", text: "PUNCHLINE" },
+      { value: "RING", text: "RING" },
+      { value: "FUNK", text: "FUNK" },
+      { value: "ENTERTAINER", text: "ENTERTAINER" },
+      { value: "ODE", text: "ODE" },
+      { value: "WEDDING", text: "WEDDING" },
+      { value: "BIRTHDAY", text: "$$koix_melody_birthday" },
+      { value: "CHASE", text: "CHASE" },
+      { value: "BLUES", text: "BLUES" },
+      { value: "PRELUDE", text: "PRELUDE" },
+      { value: "NYAN", text: "NYAN" },
+      { value: "FUNERAL", text: "FUNERAL" }
+    ],
+    faceFields: [
+      {
+        value: "id",
+        text: "$$koix_f_id"
+      },
+      {
+        value: "name",
+        text: "$$koix_f_name"
+      },
+      {
+        value: "cx",
+        text: "$$koix_f_cx"
+      },
+      {
+        value: "cy",
+        text: "$$koix_f_cy"
+      },
+      {
+        value: "w",
+        text: "$$koix_f_w"
+      },
+      {
+        value: "h",
+        text: "$$koix_f_h"
+      },
+      {
+        value: "score",
+        text: "$$koix_f_score"
+      },
+      {
+        value: "emotion",
+        text: "$$koix_f_emotion"
+      },
+      {
+        value: "emotion_score",
+        text: "$$koix_f_emotion_score"
+      }
+    ],
+    objectFields: [
+      {
+        value: "id",
+        text: "$$koix_f_id"
+      },
+      {
+        value: "name",
+        text: "$$koix_f_name"
+      },
+      {
+        value: "cx",
+        text: "$$koix_f_cx"
+      },
+      {
+        value: "cy",
+        text: "$$koix_f_cy"
+      },
+      {
+        value: "w",
+        text: "$$koix_f_w"
+      },
+      {
+        value: "h",
+        text: "$$koix_f_h"
+      },
+      {
+        value: "score",
+        text: "$$koix_f_score"
+      }
+    ],
+    objectClasses: [
+      { value: 0, text: "$$koix_object_class_person" },
+      { value: 1, text: "$$koix_object_class_bicycle" },
+      { value: 2, text: "$$koix_object_class_car" },
+      { value: 3, text: "$$koix_object_class_motorcycle" },
+      { value: 4, text: "$$koix_object_class_airplane" },
+      { value: 5, text: "$$koix_object_class_bus" },
+      { value: 6, text: "$$koix_object_class_train" },
+      { value: 7, text: "$$koix_object_class_truck" },
+      { value: 8, text: "$$koix_object_class_boat" },
+      { value: 9, text: "$$koix_object_class_traffic_light" },
+      { value: 10, text: "$$koix_object_class_fire_hydrant" },
+      { value: 11, text: "$$koix_object_class_stop_sign" },
+      { value: 12, text: "$$koix_object_class_parking_meter" },
+      { value: 13, text: "$$koix_object_class_bench" },
+      { value: 14, text: "$$koix_object_class_bird" },
+      { value: 15, text: "$$koix_object_class_cat" },
+      { value: 16, text: "$$koix_object_class_dog" },
+      { value: 17, text: "$$koix_object_class_horse" },
+      { value: 18, text: "$$koix_object_class_sheep" },
+      { value: 19, text: "$$koix_object_class_cow" },
+      { value: 20, text: "$$koix_object_class_elephant" },
+      { value: 21, text: "$$koix_object_class_bear" },
+      { value: 22, text: "$$koix_object_class_zebra" },
+      { value: 23, text: "$$koix_object_class_giraffe" },
+      { value: 24, text: "$$koix_object_class_backpack" },
+      { value: 25, text: "$$koix_object_class_umbrella" },
+      { value: 26, text: "$$koix_object_class_handbag" },
+      { value: 27, text: "$$koix_object_class_tie" },
+      { value: 28, text: "$$koix_object_class_suitcase" },
+      { value: 29, text: "$$koix_object_class_frisbee" },
+      { value: 30, text: "$$koix_object_class_skis" },
+      { value: 31, text: "$$koix_object_class_snowboard" },
+      { value: 32, text: "$$koix_object_class_sports_ball" },
+      { value: 33, text: "$$koix_object_class_kite" },
+      { value: 34, text: "$$koix_object_class_baseball_bat" },
+      { value: 35, text: "$$koix_object_class_baseball_glove" },
+      { value: 36, text: "$$koix_object_class_skateboard" },
+      { value: 37, text: "$$koix_object_class_surfboard" },
+      { value: 38, text: "$$koix_object_class_tennis_racket" },
+      { value: 39, text: "$$koix_object_class_bottle" },
+      { value: 40, text: "$$koix_object_class_wine_glass" },
+      { value: 41, text: "$$koix_object_class_cup" },
+      { value: 42, text: "$$koix_object_class_fork" },
+      { value: 43, text: "$$koix_object_class_knife" },
+      { value: 44, text: "$$koix_object_class_spoon" },
+      { value: 45, text: "$$koix_object_class_bowl" },
+      { value: 46, text: "$$koix_object_class_banana" },
+      { value: 47, text: "$$koix_object_class_apple" },
+      { value: 48, text: "$$koix_object_class_sandwich" },
+      { value: 49, text: "$$koix_object_class_orange" },
+      { value: 50, text: "$$koix_object_class_broccoli" },
+      { value: 51, text: "$$koix_object_class_carrot" },
+      { value: 52, text: "$$koix_object_class_hot_dog" },
+      { value: 53, text: "$$koix_object_class_pizza" },
+      { value: 54, text: "$$koix_object_class_donut" },
+      { value: 55, text: "$$koix_object_class_cake" },
+      { value: 56, text: "$$koix_object_class_chair" },
+      { value: 57, text: "$$koix_object_class_couch" },
+      { value: 58, text: "$$koix_object_class_potted_plant" },
+      { value: 59, text: "$$koix_object_class_bed" },
+      { value: 60, text: "$$koix_object_class_dining_table" },
+      { value: 61, text: "$$koix_object_class_toilet" },
+      { value: 62, text: "$$koix_object_class_tv" },
+      { value: 63, text: "$$koix_object_class_laptop" },
+      { value: 64, text: "$$koix_object_class_mouse" },
+      { value: 65, text: "$$koix_object_class_remote" },
+      { value: 66, text: "$$koix_object_class_keyboard" },
+      { value: 67, text: "$$koix_object_class_cell_phone" },
+      { value: 68, text: "$$koix_object_class_microwave" },
+      { value: 69, text: "$$koix_object_class_oven" },
+      { value: 70, text: "$$koix_object_class_toaster" },
+      { value: 71, text: "$$koix_object_class_sink" },
+      { value: 72, text: "$$koix_object_class_refrigerator" },
+      { value: 73, text: "$$koix_object_class_book" },
+      { value: 74, text: "$$koix_object_class_clock" },
+      { value: 75, text: "$$koix_object_class_vase" },
+      { value: 76, text: "$$koix_object_class_scissors" },
+      { value: 77, text: "$$koix_object_class_teddy_bear" },
+      { value: 78, text: "$$koix_object_class_hair_drier" },
+      { value: 79, text: "$$koix_object_class_toothbrush" }
+    ],
+    colorFields: [
+      {
+        value: "id",
+        text: "$$koix_f_id"
+      },
+      {
+        value: "name",
+        text: "$$koix_f_name"
+      },
+      {
+        value: "cx",
+        text: "$$koix_f_cx"
+      },
+      {
+        value: "cy",
+        text: "$$koix_f_cy"
+      },
+      {
+        value: "w",
+        text: "$$koix_f_w"
+      },
+      {
+        value: "h",
+        text: "$$koix_f_h"
+      }
+    ],
+    classFields: [
+      {
+        value: "id",
+        text: "$$koix_f_id"
+      },
+      {
+        value: "name",
+        text: "$$koix_f_name"
+      },
+      {
+        value: "score",
+        text: "$$koix_f_score"
+      }
+    ],
+    gestureFields: [
+      {
+        value: "id",
+        text: "$$koix_f_id"
+      },
+      {
+        value: "name",
+        text: "$$koix_f_name"
+      },
+      {
+        value: "cx",
+        text: "$$koix_f_cx"
+      },
+      {
+        value: "cy",
+        text: "$$koix_f_cy"
+      },
+      {
+        value: "w",
+        text: "$$koix_f_w"
+      },
+      {
+        value: "h",
+        text: "$$koix_f_h"
+      },
+      {
+        value: "score",
+        text: "$$koix_f_score"
+      },
+      {
+        value: "finger_count",
+        text: "$$koix_f_finger_count"
+      }
+    ],
+    poseFields: [
+      {
+        value: "id",
+        text: "$$koix_f_id"
+      },
+      {
+        value: "name",
+        text: "$$koix_f_name"
+      },
+      {
+        value: "cx",
+        text: "$$koix_f_cx"
+      },
+      {
+        value: "cy",
+        text: "$$koix_f_cy"
+      },
+      {
+        value: "w",
+        text: "$$koix_f_w"
+      },
+      {
+        value: "h",
+        text: "$$koix_f_h"
+      },
+      {
+        value: "score",
+        text: "$$koix_f_score"
+      }
+    ],
+    falldownFields: [
+      {
+        value: "state",
+        text: "$$koix_f_state"
+      },
+      {
+        value: "name",
+        text: "$$koix_f_name"
+      },
+      {
+        value: "cx",
+        text: "$$koix_f_cx"
+      },
+      {
+        value: "cy",
+        text: "$$koix_f_cy"
+      },
+      {
+        value: "w",
+        text: "$$koix_f_w"
+      },
+      {
+        value: "h",
+        text: "$$koix_f_h"
+      },
+      {
+        value: "score",
+        text: "$$koix_f_score"
+      }
+    ],
+    license_plateFields: [
+      {
+        value: "plate",
+        text: "$$koix_f_plate"
+      },
+      {
+        value: "cx",
+        text: "$$koix_f_cx"
+      },
+      {
+        value: "cy",
+        text: "$$koix_f_cy"
+      },
+      {
+        value: "w",
+        text: "$$koix_f_w"
+      },
+      {
+        value: "h",
+        text: "$$koix_f_h"
+      },
+      {
+        value: "score",
+        text: "$$koix_f_score"
+      }
+    ],
+    ocrFields: [
+      {
+        value: "text",
+        text: "$$koix_f_text"
+      },
+      {
+        value: "cx",
+        text: "$$koix_f_cx"
+      },
+      {
+        value: "cy",
+        text: "$$koix_f_cy"
+      },
+      {
+        value: "w",
+        text: "$$koix_f_w"
+      },
+      {
+        value: "h",
+        text: "$$koix_f_h"
+      },
+      {
+        value: "score",
+        text: "$$koix_f_score"
+      }
+    ],
+    followlineFields: [
+      {
+        value: "offset",
+        text: "$$koix_f_offset"
+      },
+      {
+        value: "angle",
+        text: "$$koix_f_angle"
+      },
+      {
+        value: "direction",
+        text: "$$koix_f_direction"
+      },
+      {
+        value: "x",
+        text: "$$koix_f_x"
+      },
+      {
+        value: "y",
+        text: "$$koix_f_y"
+      }
+    ],
+    apriltagFields: [
+      {
+        value: "id",
+        text: "$$koix_f_id"
+      },
+      {
+        value: "rotation",
+        text: "$$koix_f_rotation"
+      },
+      {
+        value: "cx",
+        text: "$$koix_f_cx"
+      },
+      {
+        value: "cy",
+        text: "$$koix_f_cy"
+      },
+      {
+        value: "w",
+        text: "$$koix_f_w"
+      },
+      {
+        value: "h",
+        text: "$$koix_f_h"
+      }
+    ],
+    qrcodeFields: [
+      {
+        value: "content",
+        text: "$$koix_f_content"
+      },
+      {
+        value: "cx",
+        text: "$$koix_f_cx"
+      },
+      {
+        value: "cy",
+        text: "$$koix_f_cy"
+      },
+      {
+        value: "w",
+        text: "$$koix_f_w"
+      },
+      {
+        value: "h",
+        text: "$$koix_f_h"
+      }
+    ],
+    barcodeFields: [
+      {
+        value: "content",
+        text: "$$koix_f_content"
+      },
+      {
+        value: "format",
+        text: "$$koix_f_format"
+      },
+      {
+        value: "cx",
+        text: "$$koix_f_cx"
+      },
+      {
+        value: "cy",
+        text: "$$koix_f_cy"
+      },
+      {
+        value: "w",
+        text: "$$koix_f_w"
+      },
+      {
+        value: "h",
+        text: "$$koix_f_h"
+      }
+    ],
+    traffic_signFields: [
+      {
+        value: "id",
+        text: "$$koix_f_id"
+      },
+      {
+        value: "name",
+        text: "$$koix_f_name"
+      },
+      {
+        value: "cx",
+        text: "$$koix_f_cx"
+      },
+      {
+        value: "cy",
+        text: "$$koix_f_cy"
+      },
+      {
+        value: "w",
+        text: "$$koix_f_w"
+      },
+      {
+        value: "h",
+        text: "$$koix_f_h"
+      },
+      {
+        value: "score",
+        text: "$$koix_f_score"
+      }
+    ]
+  }
+}

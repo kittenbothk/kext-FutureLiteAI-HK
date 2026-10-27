@@ -1,0 +1,47 @@
+{
+
+    id: "futureboard-lite__fileOperations",
+    name: "$$fileOperations",
+    color1: "#3EC2EB",
+    color2: "#3AB2D8",
+    color3: "#26A4CC",
+    image: "./_img/os.png",
+    description: "$$futureboard-lite_description_fileOperations",
+    tags: ["advanced"],
+    libs: {
+            '*':{
+                import: 'from fileOperations import *'
+            },
+    },
+    blocks: [
+        {
+            opcode: 'readFileLines',
+            blockType: 'reporter',
+            text: '$$fileOperations_readFileLines',
+            pycode: "read_file_lines([FILENAME])[[LINE]-1]",
+                arguments: {
+                    FILENAME: {
+                        type: 'string',
+                        defaultValue: 'test.txt',
+                    },
+                    LINE: {
+                        type: 'number',
+                        defaultValue: '1',
+                    },
+                },
+        },
+        {
+            opcode: 'readFile',
+            blockType: 'reporter',
+            text: '$$fileOperations_readFile',
+            pycode: "read_file([FILENAME])",
+            arguments: {
+                FILENAME: {
+                    type: 'string',
+                    defaultValue: 'test.txt',
+                },
+            },
+        },
+        '---',
+    ],
+}

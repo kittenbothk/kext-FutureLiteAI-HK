@@ -1,0 +1,324 @@
+{
+    id: "futureboard-lite_sugarASR",
+    name: "$$sugarASR",
+    color1: "#30caf9",
+    color2: "#1cb1e5",
+    color3: "#2daae0",
+    image: "_img/asr.png",
+    description: "$$ASR_description",
+    tutorial_url: "https://www.yuque.com/kittenbot/hardwares/sugar-asr",
+    tags: ['module'],
+    libs:{
+        "asr": {
+            import: 'from sugar_asr import *'
+        },
+    },
+
+    blocks: 
+    [
+        {
+            opcode: 'runInit',
+            blockType: "command",
+            text: "$$sugarASR_runInit",
+            micropy: {
+                import: "from sugar_asr import SugarASR"
+            },
+            pycode: "asr = SugarASR([UARTPOART])",
+            arguments:{
+                UARTPOART:{
+                    type: "string",
+                    defaultValue: 'uart0', 
+                    menu: 'uartPort'
+                },
+            }
+        },
+        '---',
+        //-------------------------------------------
+        { 
+            opcode: 'isAudioFired', 
+            blockType: 'Boolean',
+            pycode: 'asr.detected()', 
+            text: "$$sugarASR_isAudioFired"
+        },
+        //-------------------------------------------
+        { 
+            opcode: 'isAudioAwake', 
+            blockType: 'Boolean',
+            pycode: "asr.cmd == '100'", 
+            text: "$$sugarASR_isAudioAwake"
+        },
+        //-------------------------------------------
+        { 
+            opcode: 'isLEDWord', 
+            blockType: 'Boolean',
+            pycode: "asr.cmd == '[LEDWORD]'", 
+            arguments:{
+                LEDWORD:{
+                    type:"number",
+                    defaultValue: '200', 
+                    menu: 'led'
+                },
+            },
+            text: "$$sugarASR_isLEDWord"
+        },
+        //-------------------------------------------
+        { 
+            opcode: 'isExecutorWord', 
+            blockType: 'Boolean',
+            text: "$$sugarASR_isExecutorWord",
+            pycode: "asr.cmd == '[EXECUTORWORD]'", 
+            arguments:{
+                EXECUTORWORD:{
+                    type:"number",
+                    defaultValue: '300', 
+                    menu: 'executor'
+                },
+            },
+        },
+        //-------------------------------------------
+        { 
+            opcode: 'isQueryWord', 
+            blockType: 'Boolean',
+            text: "$$sugarASR_isQueryWord",
+            pycode: "asr.cmd == '[QUERYWORD]'", 
+            arguments:{
+                QUERYWORD:{
+                    type:"number",
+                    defaultValue: '400', 
+                    menu: 'query'
+                },
+            },
+        },
+        //-------------------------------------------
+        { 
+            opcode: 'isCustomizeWord', 
+            blockType: 'Boolean',
+            text: "$$sugarASR_isCustomizeWord",
+            pycode: "asr.cmd == '[CUSTOMIZE]'", 
+            arguments:{
+                CUSTOMIZE:{
+                    type:"number",
+                    defaultValue: '901', 
+                    menu: 'customize'
+                },
+            },
+        },
+        //-------------------------------------------
+        { 
+            opcode: 'isCammand', 
+            blockType: 'Boolean',
+            pycode: "asr.cmd == [CAMMAND]", 
+            arguments:{
+                CAMMAND:{
+                    type: "string",
+                    defaultValue: '910', 
+                },
+            },
+            text: "$$ASR_isCammand"
+        },
+        //-------------------------------------------
+        '---',
+        { 
+            opcode: 'runAudioWord', 
+            blockType: "command",
+            text: "$$sugarASR_runAudioWord",
+            pycode: "asr.tts_words([KEYWORD])", 
+            arguments:{
+                KEYWORD:{
+                    type:"number",
+                    defaultValue: '1', 
+                    menu: 'keyword'
+                },
+            },
+        },
+        //-------------------------------------------
+        { 
+            opcode: 'runInt', 
+            blockType: "command",
+            text: "$$sugarASR_runInt",
+            pycode: "asr.tts_int([INT])", 
+            arguments:{
+                INT:{
+                    type:"number",
+                    defaultValue: 1,
+                },
+            },
+        },
+        //-------------------------------------------
+        { 
+            opcode: 'runDouble', 
+            blockType: "command",
+            text: "$$sugarASR_runDouble",
+            pycode: "asr.tts_double([DOUBLE])", 
+            arguments:{
+                DOUBLE:{
+                    type:"number",
+                    defaultValue: '1.23', 
+                    type: "number"
+                },
+            },
+
+        },
+        //-------------------------------------------
+        { 
+            opcode: 'runDate', 
+            blockType: "command",
+            pycode: "asr.tts_date([Y], [M], [D])", 
+            arguments:{
+                Y:{
+                    type:"number",
+                    defaultValue: '2016', 
+                    type: "number"                       
+                },
+                M:{
+                    type:"number",
+                    defaultValue: '1', 
+                    type: "number"
+                },
+                D:{
+                    type:"number",
+                    defaultValue: '6', 
+                    type: "number"
+                },
+            },
+            text: "$$sugarASR_runDate"
+        },
+        { 
+            opcode: 'runHour', 
+            blockType: "command",
+            text: "$$sugarASR_runHour",
+            pycode: "asr.tts_clock([H], [MIN])", 
+            arguments:{
+                H:{
+                    type:"number",
+                    defaultValue: '0', 
+                    type: "number"
+                },
+                MIN:{
+                    type:"number",
+                    defaultValue: '0', 
+                    type: "number"
+                },
+            },
+        },
+        '---',
+    ],
+    menus:{
+        executor: [
+            { value: '300', text: '$$sugarASR_menu_openDoor' },
+            { value: '301', text: '$$sugarASR_menu_closeDoor' },
+            { value: '302', text: '$$sugarASR_menu_openWindow' },
+            { value: '303', text: '$$sugarASR_menu_closeWindow' },
+            { value: '304', text: '$$sugarASR_menu_openCurtains' },
+            { value: '305', text: '$$sugarASR_menu_closeCurtains' },
+            { value: '306', text: '$$sugarASR_menu_hangerOut' },
+            { value: '307', text: '$$sugarASR_menu_hangerIn ' },
+            { value: '308', text: '$$sugarASR_menu_fanOn' },
+            { value: '309', text: '$$sugarASR_menu_fanOff' },
+            { value: '310', text: '$$sugarASR_menu_speedUp' },
+            { value: '311', text: '$$sugarASR_menu_slowDown' },
+            { value: '312', text: '$$sugarASR_menu_airConditionerOn' },
+            { value: '313', text: '$$sugarASR_menu_airConditionerOff' },
+            { value: '314', text: '$$sugarASR_menu_musicOn' },
+            { value: '315', text: '$$sugarASR_menu_musicOff' },
+            { value: '316', text: '$$sugarASR_menu_pause' },
+            { value: '317', text: '$$sugarASR_menu_previousSong' },
+            { value: '318', text: '$$sugarASR_menu_nextSong' },
+            { value: '319', text: '$$sugarASR_menu_volumeUp' },
+            { value: '320', text: '$$sugarASR_menu_volumeDown' },
+            { value: '321', text: '$$sugarASR_menu_robotOn' },
+            { value: '322', text: '$$sugarASR_menu_robotOff' },
+            { value: '323', text: '$$sugarASR_menu_robot stop' },
+            { value: '324', text: '$$sugarASR_menu_moveForward' },
+            { value: '325', text: '$$sugarASR_menu_moveBackward' },
+            { value: '326', text: '$$sugarASR_menu_turnLeft' },
+            { value: '327', text: '$$sugarASR_menu_turnRight' },
+            { value: '328', text: '$$sugarASR_menu_liftOn' },
+            { value: '329', text: '$$sugarASR_menu_firstFloor' },
+            { value: '330', text: '$$sugarASR_menu_secondFloor' },
+            { value: '331', text: '$$sugarASR_menu_thirdFloor' },
+            { value: '332', text: '$$sugarASR_menu_testMode' },
+
+        ],
+        led: [
+            { value: '200', text: '$$sugarASR_menu_lightOn' },
+            { value: '201', text: '$$sugarASR_menu_lightOff' },
+            { value: '202', text: '$$sugarASR_menu_brighter' },
+            { value: '203', text: '$$sugarASR_menu_dimmer' },
+            { value: '204', text: '$$sugarASR_menu_redLightOn' },
+            { value: '205', text: '$$sugarASR_menu_greenLightOn' },
+            { value: '206', text: '$$sugarASR_menu_yellowLightOn' },
+            { value: '207', text: '$$sugarASR_menu_blueLightOn' },
+            { value: '208', text: '$$sugarASR_menu_sittingRoomLightOn' },
+            { value: '209', text: '$$sugarASR_menu_sitting roomLightOff' },
+            { value: '210', text: '$$sugarASR_menu_kitchenLightOn' },
+            { value: '211', text: '$$sugarASR_menu_kitchenLightOff' },
+            { value: '212', text: '$$sugarASR_menu_bedroomLightOn' },
+            { value: '213', text: '$$sugarASR_menu_bedroomLightOff' },
+            { value: '214', text: '$$sugarASR_menu_balconyLightOn' },
+            { value: '215', text: '$$sugarASR_menu_balconyLightOff' },
+            { value: '216', text: '$$sugarASR_menu_bathroomLightOn' },
+            { value: '217', text: '$$sugarASR_menu_bathroomLightOff' },
+            { value: '218', text: '$$sugarASR_menu_allLightOn' },
+            { value: '219', text: '$$sugarASR_menu_allLightOff' },
+        ],
+        query: [
+            { value: '400', text: '$$sugarASR_menu_checkTemperature' },
+            { value: '401', text: '$$sugarASR_menu_checkHumidity' },
+            { value: '402', text: '$$sugarASR_menu_checkWeather' },
+            { value: '403', text: '$$sugarASR_menu_checkTime' },
+            { value: '404', text: '$$sugarASR_menu_checkDate' },
+            { value: '405', text: '$$sugarASR_menu_measureDistance' },
+            { value: '406', text: '$$sugarASR_menu_measureTemperature' },
+            { value: '407', text: '$$sugarASR_menu_measureWeight' },
+            { value: '408', text: '$$sugarASR_menu_measureHeight' },
+        ],
+        customize: [
+            { value: '901', text: '$$sugarASR_menu_One' },
+            { value: '902', text: '$$sugarASR_menu_Two' },
+            { value: '903', text: '$$sugarASR_menu_Three' },
+            { value: '904', text: '$$sugarASR_menu_Four' },
+            { value: '905', text: '$$sugarASR_menu_Five' },
+            { value: '906', text: '$$sugarASR_menu_Six' },
+            { value: '907', text: '$$sugarASR_menu_Seven' },
+            { value: '908', text: '$$sugarASR_menu_Eight' },
+            { value: '909', text: '$$sugarASR_menu_Nine' },
+            { value: '910', text: '$$sugarASR_menu_Ten' },
+        ],
+        keyword: [
+            { value: '1', text: '$$sugarASR_menu_temp' , },
+            { value: '2', text: '$$sugarASR_menu_humi' , },
+            { value: '5', text: '$$sugarASR_menu_welcome' , },
+            { value: '6', text: '$$sugarASR_menu_distance' , },
+            { value: '7', text: '$$sugarASR_menu_mm' , },
+            { value: '8', text: '$$sugarASR_menu_cm' , },
+            { value: '9', text: '$$sugarASR_menu_m' , },
+            { value: '10', text: '$$sugarASR_menu_tiwen' , },
+            { value: '11', text: '$$sugarASR_menu_weight' , },
+            { value: '12', text: '$$sugarASR_menu_g' , },
+            { value: '13', text: '$$sugarASR_menu_kg' , },
+            { value: '14', text: '$$sugarASR_menu_key' , },
+            { value: '15', text: '$$sugarASR_menu_weather' , },
+            { value: '16', text: '$$sugarASR_menu_sunny' , },
+            { value: '17', text: '$$sugarASR_menu_cloudy' , },
+            { value: '18', text: '$$sugarASR_menu_rain' , },
+            { value: '19', text: '$$sugarASR_menu_snow' , },
+            { value: '20', text: '$$sugarASR_menu_haze' , },
+            { value: '21', text: '$$sugarASR_menu_big' , },
+            { value: '22', text: '$$sugarASR_menu_middle' , },
+            { value: '23', text: '$$sugarASR_menu_small' , },
+            { value: '24', text: '$$sugarASR_menu_jilou' , },
+            { value: '25', text: '$$sugarASR_menu_yes' , },
+            { value: '26', text: '$$sugarASR_menu_no' , },
+            { value: '27', text: '$$sugarASR_menu_percent' , },
+            { value: '28', text: '$$sugarASR_menu_right' , },
+            { value: '29', text: '$$sugarASR_menu_wrong' , },
+            { value: '30', text: '$$sugarASR_menu_du' , },
+            { value: '33', text: '$$sugarASR_menu_ok' , },
+        ],
+        uartPort:[
+            {value:'uart0', text:'UART0'},
+            {value:'uart1', text:'UART1'}
+        ]
+    }
+}

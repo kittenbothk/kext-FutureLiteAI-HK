@@ -1,0 +1,120 @@
+{
+    id: "futureboard-lite@kext_solar",
+    name: "$$solar",
+    color1: "#EDA82F",
+    color2: "#E58A07",
+    color3: "#CC7309",
+    image: "./_img/solar.png",
+    description: "$$solar_description",
+    tutorial_url: "https://www.yuque.com/kittenbot/hardwares/sugar-solar",
+    tags: ['module'],
+    libs:{
+        "solar":{
+            import: "from sugar_solar import *",
+            instance: "Solar()"
+        },
+    },
+    blocks: 
+    [
+        {
+            opcode: 'setPower', 
+            blockType: 'command',
+            pycode: 'solar.set_power([ONOFF])', 
+            arguments:{
+                ONOFF:{
+                    type: "number",
+                    defaultValue: '1', 
+                    menu: 'powerState'
+                },
+            },
+            text: "$$solar_setPower"
+        },
+        {
+            opcode: 'level', 
+            blockType: 'reporter',
+            pycode: 'solar.battery_level()',
+            text: "$$solar_level"
+        },
+        '---',
+        {
+            opcode: 'readRTC', 
+            blockType: 'reporter',
+            pycode: 'solar.read_rtc()[[INDEX]]', 
+            arguments:{
+                INDEX:{
+                    type: "number",
+                    defaultValue: '0', 
+                    menu: 'timeType'
+                },
+            },
+            text: "$$solar_readRTC"
+        },
+        {
+            opcode: 'setRTC', 
+            blockType: 'command',
+            pycode: 'solar.set_rtc([Y],[M],[D],[H],[MINUTE],[S])', 
+            arguments:{
+                Y:{
+                    type: "number",
+                    defaultValue: '2024', 
+                },
+                M:{
+                    type: "number",
+                    defaultValue: '6', 
+                },
+                D:{
+                    type: "number",
+                    defaultValue: '6', 
+                },
+                H:{
+                    type: "number",
+                    defaultValue: '15', 
+                },
+                MINUTE:{
+                    type: "number",
+                    defaultValue: '45', 
+                },                
+                S:{
+                    type: "number",
+                    defaultValue: '30', 
+                },
+            },
+            text: "$$solar_setRTC"
+        },
+        {
+            opcode: 'setAlarm', 
+            blockType: 'command',
+            pycode: 'solar.set_alarm([H],[M],[S],down=1)', 
+            arguments:{
+                H:{
+                    type: "number",
+                    defaultValue: '15', 
+                },
+                M:{
+                    type: "number",
+                    defaultValue: '48', 
+                },                
+                S:{
+                    type: "number",
+                    defaultValue: '30', 
+                },
+            },
+            text: "$$solar_setAlarm"
+        },
+    ],
+    menus:{
+        timeType:[
+            {text:"$$solar_menuTimeTypeYear",value:0},
+            {text:"$$solar_menuTimeTypeMonth",value:1},
+            {text:"$$solar_menuTimeTypeDay",value:2},
+            {text:"$$solar_menuTimeTypeHour",value:3},
+            {text:"$$solar_menuTimeTypeMinute",value:4},
+            {text:"$$solar_menuTimeTypeSec",value:5},
+
+        ],
+        powerState:[
+            {text:"$$futureboard_menu_onoff_off",value:0},
+            {text:"$$futureboard_menu_onoff_on",value:1},
+        ]
+    }
+}

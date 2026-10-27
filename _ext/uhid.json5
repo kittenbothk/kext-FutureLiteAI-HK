@@ -1,0 +1,64 @@
+{
+    id: "futureboard-lite_hid",
+    name: "$$hid",
+    color1: "#0099FF",
+    color2: "#0080ff",
+    color3: "#0a7aea",
+    image: "./_img/hid.png",
+    description: "$$hid_description",
+    tags: ["advanced"],
+    libs: {
+      keyboard:{
+        import: 'from uhid import UKeyboard',
+        instance: 'UKeyboard()'
+        },
+    },
+    blocks: [
+        {
+            opcode: 'pressAndRelease',
+            blockType: 'command',
+            text: '$$futureboard-lite_pressAndRelease',
+            pycode: "keyboard.press_and_release([KEY],[DELAY])",
+            arguments: {
+                KEY: {
+                    type: 'string',
+                    defaultValue: 'A',
+                },
+                DELAY: {
+                    type: 'number',
+                    defaultValue: '0.05',
+                },
+            },
+        },
+        {
+            opcode: 'pressKey',
+            blockType: 'command',
+            text: '$$futureboard-lite_pressKey',
+            pycode: "keyboard.press_key([KEY])",
+            arguments: {
+                KEY: {
+                    type: 'string',
+                    defaultValue: 'A',
+                }
+            },
+        },
+        {
+            opcode: 'releaseKey',
+            blockType: 'command',
+            text: '$$futureboard-lite_releaseKey',
+            pycode: "keyboard.release_key([KEY])",
+            arguments: {
+                KEY: {
+                    type: 'string',
+                    defaultValue: 'A',
+                }
+            },
+        },
+        {
+            opcode: 'releaseAll',
+            blockType: 'command',
+            text: '$$futureboard-lite_releaseAll',
+            pycode: "keyboard.release_all()",
+        },
+    ],
+}

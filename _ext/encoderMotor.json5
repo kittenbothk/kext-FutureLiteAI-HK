@@ -1,0 +1,233 @@
+{
+    id: "futureboard-lite_encoderMotor",
+    name: "$$encoderMotor",
+    color1: "#D359CD",
+    color2: "#B736B1",
+    color3: "#9E2E98",
+    image: "_img/encoderMotor33.png",
+    description: "$$encoderMotor_description",
+    tags: ['actuator', 'motor'],
+    libs: {
+        "*": {
+            import: 'from encoderMotor import EncoderMotor'
+        },
+    },
+    blocks: [
+        {
+            opcode: "encoderMotorInit",
+            blockType: "command",
+            text: "$$encoderMotor_init",
+            pycode: "encoder_motor = EncoderMotor([UART])",
+            arguments: {
+                UART: {
+                    type: "string",
+                    defaultValue: 'uart0',
+                    menu: 'uartPort'
+                }
+            }
+        },
+        '---',
+        {
+            opcode: 'encoderMotorChangeId',
+            blockType: "command",
+            text: "$$encoderMotor_changeId",
+            pycode: 'encoder_motor.change_id([ID])',
+            arguments: {
+                ID: {
+                    type: "number",
+                    defaultValue: "1",
+                    menu: "CHANGEABLE_ID"
+                }
+            }
+        },
+        {
+            opcode: 'encoderMotorRelease',
+            blockType: "command",
+            text: "$$encoderMotor_release",
+            pycode: 'encoder_motor.release([ID],[MODE])',
+            arguments: {
+                ID: {
+                    type: "number",
+                    defaultValue: "1",
+                    menu: "MOTOR_ID"
+                },
+                MODE: {
+                    type: "number",
+                    defaultValue: "3",
+                    menu: "TORQUE_MODE"
+                }
+            }
+        },
+        {
+            opcode: 'encoderMotorQuickQuery',
+            blockType: "Boolean",
+            text: "$$encoderMotor_quickQuery",
+            pycode: 'encoder_motor.quick_query([ID])',			
+            arguments: {
+                ID: {
+                    type: "number",
+                    defaultValue: "1",
+                    menu: "CHANGEABLE_ID"
+                }
+            }
+        },
+        '---',
+        {
+            opcode: 'encoderMotorSetMode',
+            blockType: "command",
+            text: "$$encoderMotor_setMode",
+            pycode: 'encoder_motor.set_mode([MODE_ID])',
+            arguments: {
+                MODE_ID: {
+                    type: "number",
+                    defaultValue: "2",
+                    menu: "CONTROL_MODE"
+                }
+            }
+        },
+        {
+            opcode: 'encoderMotorSetPositionWithDelay',
+            blockType: "command",
+            text: "$$encoderMotor_setPositionWithDelay",
+            pycode: 'encoder_motor.set_position_delay([ID],[POSITION],[DELAY])',
+            arguments: {
+                ID: {
+                    type: "number",
+                    defaultValue: "1",
+                    menu: "MOTOR_ID"
+                },
+                POSITION: {
+                    type: "number",
+                    defaultValue: "90",
+                },
+                DELAY: {
+                    type: "number",
+                    defaultValue: 1000,
+                }
+            }
+        },
+        {
+            opcode: 'encoderMotorSetPositionWithSpeed',
+            blockType: "command",
+            text: "$$encoderMotor_setPositionWithSpeed",
+            pycode: 'encoder_motor.set_position_speed([ID],[POSITION],[SPEED])',
+            arguments: {
+                ID: {
+                    type: "number",
+                    defaultValue: "1",
+                    menu: "MOTOR_ID"
+                },
+                POSITION: {
+                    type: "number",
+                    defaultValue: "90",
+                },
+                SPEED: {
+                    type: 'slider',
+                    defaultValue: 180,
+                    min: 0,
+                    max: 480,
+                }
+            }
+        },
+        '---',
+        {
+            opcode: 'encoderMotorSetSpeedWithDelay',
+            blockType: "command",
+            text: "$$encoderMotor_setSpeedWithDelay",
+            pycode: 'encoder_motor.set_speed([ID],[SPEED],[DELAY])',
+            arguments: {
+                ID: {
+                    type: "number",
+                    defaultValue: "1",
+                    menu: "MOTOR_ID"
+                },
+                SPEED: {
+                    type: 'slider',
+                    defaultValue: 360,
+                    min: -480,
+                    max: 480,
+                },
+                DELAY: {
+                    type: "number",
+                    defaultValue: 1000,
+                }
+            }
+        },
+        {
+            opcode: 'encoderMotorSetSpeed',
+            blockType: "command",
+            text: "$$encoderMotor_setSpeed",
+            pycode: 'encoder_motor.set_speed([ID],[SPEED],0)',
+            arguments: {
+                ID: {
+                    type: "number",
+                    defaultValue: "1",
+                    menu: "MOTOR_ID"
+                },
+                SPEED: {
+                    type: 'slider',
+                    defaultValue: 360,
+                    min: -480,
+                    max: 480,
+                },
+            }
+        },
+        {
+            opcode: 'encoderMotorStop',
+            blockType: "command",
+            text: "$$encoderMotor_stop",
+            pycode: 'encoder_motor.stop()',
+        },
+        '---',
+        {
+            opcode: 'encoderMotorGetPosition',
+            blockType: "reporter",
+            text: "$$encoderMotor_getPosition",
+            pycode: 'encoder_motor.get_position([ID])',
+            arguments: {
+                ID: {
+                    type: "number",
+                    defaultValue: "1",
+                    menu: "CHANGEABLE_ID"
+                }
+            }
+        },
+    ],
+    menus:{
+        CHANGEABLE_ID: [
+            { text: '$$encoderMotor_menu_id1', value: 0x01 },
+            { text: '$$encoderMotor_menu_id2', value: 0x02 },
+            { text: '$$encoderMotor_menu_id3', value: 0x03 },
+            { text: '$$encoderMotor_menu_id4', value: 0x04 },
+            { text: '$$encoderMotor_menu_id5', value: 0x05 },
+            { text: '$$encoderMotor_menu_id6', value: 0x06 },
+            { text: '$$encoderMotor_menu_id7', value: 0x07 },
+            { text: '$$encoderMotor_menu_id8', value: 0x08 },
+        ],
+        MOTOR_ID: [
+            { text: '$$encoderMotor_menu_idAll', value: 0xfd },
+            { text: '$$encoderMotor_menu_id1', value: 0x01 },
+            { text: '$$encoderMotor_menu_id2', value: 0x02 },
+            { text: '$$encoderMotor_menu_id3', value: 0x03 },
+            { text: '$$encoderMotor_menu_id4', value: 0x04 },
+            { text: '$$encoderMotor_menu_id5', value: 0x05 },
+            { text: '$$encoderMotor_menu_id6', value: 0x06 },
+            { text: '$$encoderMotor_menu_id7', value: 0x07 },
+            { text: '$$encoderMotor_menu_id8', value: 0x08 },
+        ],
+        CONTROL_MODE: [
+            { text: '$$encoderMotor_menu_controlAbsolute', value: 0x00 },
+            { text: '$$encoderMotor_menu_controlRelative', value: 0x02 },
+        ],
+        TORQUE_MODE: [
+            { text: '$$encoderMotor_menu_torque1', value: 0x00 }, //无阻尼无扭矩=释放(可扭动)
+            // { text: '$$encoderMotor_menu_torque2', value: 0x01 }, //有阻尼无扭矩
+            // { text: 'encoderMotor_menu_torque_3', value: 0x02 }, //扭矩预开启
+            { text: '$$encoderMotor_menu_torque3', value: 0x03 } //打开扭矩(默认)=默认锁定(不可扭动)
+        ],
+        uartPort:[
+            {value:'uart0', text:'UART0'},
+            {value:'uart1', text:'UART1'}
+        ]
+    }
+}

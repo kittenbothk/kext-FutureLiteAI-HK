@@ -1,0 +1,178 @@
+{
+    "id": "futureboard-lite_mp3Player",
+    "name": "$$mp3_player_name",
+    "color1": "#388EE5",
+    "color2": "#2771BC",
+    "color3": "#1C5FA2",
+    "image": "_img/mp3_1.png",
+    "description": "$$mp3_player_description",
+    "tags": [
+        "module"
+    ],
+    "libs": {
+        "*": {
+            "import": "from mp3_player import MP3Player, Mp3Command, SongMode, PlaylistMode"
+        },
+        "mp3_[PORT]": {
+            "instance": "MP3Player('[PORT]')"
+        }
+    },
+    "blocks": [
+        {
+            "opcode": "mp3SetVolume",
+            "blockType": "command",
+            "text": "$$mp3_player_volume",
+            "pycode": "mp3_[PORT].set_volume([VOLUME])",
+            "arguments": {
+                "PORT": {
+                    "type": "value",
+                    "menu": "MP3_PORT",
+                    "defaultValue": "P1"
+                },
+                "VOLUME": {
+                    "type": "slider",
+                    "defaultValue": 15,
+                    "min": 0,
+                    "max": 30
+                }
+            }
+        },
+        {
+            "opcode": "mp3PlaySong",
+            "blockType": "command",
+            "text": "$$mp3_player_song",
+            "pycode": "mp3_[PORT].play_song(int([NUMBER]), [MODE])",
+            "arguments": {
+                "PORT": {
+                    "type": "value",
+                    "menu": "MP3_PORT",
+                    "defaultValue": "P1"
+                },
+                "NUMBER": {
+                    "type": "number",
+                    "defaultValue": 1
+                },
+                "MODE": {
+                    "type": "value",
+                    "menu": "MP3_SONG_MODE",
+                    "defaultValue": "SongMode.PLAY_ONCE"
+                }
+            }
+        },
+        {
+            "opcode": "mp3SendCommand",
+            "blockType": "command",
+            "text": "$$mp3_player_command",
+            "pycode": "mp3_[PORT].send_command([COMMAND])",
+            "arguments": {
+                "PORT": {
+                    "type": "value",
+                    "menu": "MP3_PORT",
+                    "defaultValue": "P1"
+                },
+                "COMMAND": {
+                    "type": "value",
+                    "menu": "MP3_COMMAND",
+                    "defaultValue": "Mp3Command.PLAY"
+                }
+            }
+        },
+        {
+            "opcode": "mp3SetPlaylistMode",
+            "blockType": "command",
+            "text": "$$mp3_player_playlist",
+            "pycode": "mp3_[PORT].set_playlist_mode([MODE])",
+            "arguments": {
+                "PORT": {
+                    "type": "value",
+                    "menu": "MP3_PORT",
+                    "defaultValue": "P1"
+                },
+                "MODE": {
+                    "type": "value",
+                    "menu": "MP3_PLAYLIST_MODE",
+                    "defaultValue": "PlaylistMode.LOOP"
+                }
+            }
+        },
+        {
+            "opcode": "mp3Reset",
+            "blockType": "command",
+            "text": "$$mp3_player_reset",
+            "pycode": "mp3_[PORT].reset_module()",
+            "arguments": {
+                "PORT": {
+                    "type": "value",
+                    "menu": "MP3_PORT",
+                    "defaultValue": "P1"
+                }
+            }
+        }
+    ],
+    "menus": {
+        "MP3_PORT": [
+            {
+                "text": "P1",
+                "value": "P1"
+            },
+            {
+                "text": "P2",
+                "value": "P2"
+            },
+            {
+                "text": "P3",
+                "value": "P3"
+            },
+            {
+                "text": "P4",
+                "value": "P4"
+            }
+        ],
+        "MP3_COMMAND": [
+            {
+                "text": "$$mp3_player_play",
+                "value": "Mp3Command.PLAY"
+            },
+            {
+                "text": "$$mp3_player_pause",
+                "value": "Mp3Command.PAUSE"
+            },
+            {
+                "text": "$$mp3_player_stop",
+                "value": "Mp3Command.STOP"
+            },
+            {
+                "text": "$$mp3_player_play_pause",
+                "value": "Mp3Command.PLAY_PAUSE"
+            },
+            {
+                "text": "$$mp3_player_previous_track",
+                "value": "Mp3Command.PREVIOUS_TRACK"
+            },
+            {
+                "text": "$$mp3_player_next_track",
+                "value": "Mp3Command.NEXT_TRACK"
+            }
+        ],
+        "MP3_SONG_MODE": [
+            {
+                "text": "$$mp3_player_once",
+                "value": "SongMode.PLAY_ONCE"
+            },
+            {
+                "text": "$$mp3_player_repeat",
+                "value": "SongMode.REPEAT"
+            }
+        ],
+        "MP3_PLAYLIST_MODE": [
+            {
+                "text": "$$mp3_player_loop",
+                "value": "PlaylistMode.LOOP"
+            },
+            {
+                "text": "$$mp3_player_random",
+                "value": "PlaylistMode.RANDOM"
+            }
+        ]
+    }
+}
